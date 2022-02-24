@@ -1,0 +1,56 @@
+/* Sign in Form */
+.form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+    /* Sign in Form - Checkbox */
+    .form-signin__remember {
+        font-weight: 400;
+    }
+    /* Sign in Form - Inputs */
+    .form-signin__input{
+        position: relative;
+        box-sizing: border-box;
+        height: auto;
+        padding: 10px;
+        font-size: 16px;
+    }
+    .form-signin__input:focus {
+        z-index: 2;
+    }
+    .form-signin__input[type="email"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    .form-signin__input[type="password"] {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+/* Media Queries */
+@media only screen and (max-width: 600px) {
+    /* Sign in Form */
+    .form-signin {
+        max-width: 300px;
+    }
+    .form-signin .form-control {
+        font-size: 14px;
+    }
+        /* Sign in title */
+        .form-signin__title{
+            font-size: 22px;
+        }
+        /* Remember me */
+        .form-signin__remember{
+            font-size: 14px;
+        }
+        /* Sign In button */
+        .form-signin__submit{
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+        }
+}
