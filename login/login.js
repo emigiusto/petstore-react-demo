@@ -41,7 +41,7 @@ function checkUserPassword(user,password) {
     if (password !== localStorage.getItem("password")) {
         return {message: "The password is incorrect", status: false}
     }
-    return {message: "You have successfully logged into PetStore", status: true}
+    return {message: "Login successful into PetStore", status: true}
 }
 
 //Alert message
@@ -51,6 +51,7 @@ function alert(message, type) {
     wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible alert-message-box" role="alert">' + message + 
                         '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'
     alertPlaceholder.append(wrapper)
+    //Deletes message after 5 secs
     setTimeout(function (){
         wrapper.innerHTML= "";
     }, 5000);
