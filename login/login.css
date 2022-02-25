@@ -54,3 +54,21 @@
             font-size: 1rem;
         }
 }
+/* Alert box styles */
+.alert-message-box{
+    max-width: 600px;
+    margin: auto;
+    position: absolute;
+    bottom: 30px;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
+}
+
+/* Toggeable classes */
+    .hidden{
+        display: none;
+    }
+
+
