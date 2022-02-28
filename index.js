@@ -16,6 +16,7 @@ function addEventListeners() {
 
 
 
+
 function render(data) {
     data.forEach(element => {
         var newCard = document.createElement('div');
@@ -26,7 +27,7 @@ function render(data) {
                 <div class="card-body">
                     <h5 class="card-title">`+ element.title +`</h5>
                     <p class="card-text">`+ element.type +`</p>
-                    <a href="#" class="btn btn-primary">See details</a>
+                    <a href="/productDetail/productDetail.html?`+ "id=" + element.id +`" class="btn btn-primary">See details</a>
                 </div>
             </div>`
         document.getElementById("offerProducts").appendChild(newCard)
