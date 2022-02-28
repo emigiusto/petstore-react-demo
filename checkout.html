@@ -17,140 +17,137 @@
             <!-- Header containter -->
 <body class="bg-light" style="min-height: 8000px;">
     <div class="container">
-        <div class="py-5 text-center">
-                        <!-- We need a store logo image below, just put a placeholder -->
-            <img class="mb-4 d-block mx-auto"
-                src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png" alt="Store Logo"
-                width="92" height="92">
-            <h2>Checkout page</h2>
-            <p class="lead">Checkout For your order by filling out the following form</p>
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="py-5 text-center">
+                                <!-- We need a store logo image below, just put a placeholder -->
+                    <img class="mb-4 d-block mx-auto"
+                        src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png" alt="Store Logo"
+                        width="92" height="92">
+                    <h2>Checkout page</h2>
+                    <p class="lead">Checkout For your order by filling out the following form</p>
+                </div>
+            </div>
+        </div>
+        <!-- Filling out form containter -->
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                    <h4 class="mb-3">What is your Billing Adress? </h4>
+                    <form novalidate>
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <label for="firstName" class="form-label">First Name </label>
+                                <input id="FirstName" type="text" class="form-control" placeholder="Mads" required>
+                                <div class="invalid-feedback"> Valid name required!
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="LastName" class="form-label">Last Name </label>
+                                <input id="LastName" type="text" class="form-control" placeholder="Mikkelsen" required>
+                                <div class="invalid-feedback"> Valid last name required!
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label for="username" class="form-label">Username </label>
+                                <div class="input-group">
+                                    <span class="input-group-text">@</span>
+                                </div>
+                                <input id="username" type="text" class="form-control" placeholder="mmikkelsen" required>
+                            </div>
+                            <div class="invalid-feedback"> Valid username required!
+                            </div>
+                            <div class="col-md-5">
+                                <label for="country" class="form-label">Country</label>
+                                <select id="country" class="form-control">
+                                    <option value="Australia">Denmark</option>
+                                    <option value=" ">Choose...</option>
+                                    <option value=" ">Choose again...</option>
+                                </select>
+                            </div>
+                            <div class="invalid-feedback"> Valid Country required!
+                            </div>
+                            <div class="col-md-4">
+                                <label for="Region" class="form-label">Region </label>
+                                <select id="Region" class="form-control">
+                                    <option value="Zealand">Zealand</option>
+                                    <option value="Jylland">Jylland</option>
+                                    <option value="Germany">Germany</option>
+                                    <option value="Germany">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="zipcode" class="form-label">Zip Code</label>
+
+                                <input id="zipcode" type="number" class="form-control" placeholder="2200" required>
+                            </div>
+                        </div>
+                        <hr class="my-4">
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input id="sameAdress" type="checkbox" class="form-check-input">
+                                <label class="form-check-label" for="sameAddress">My Shipping adress is the same as biling</label>
+                            </div>
+                            <div class="form-check">
+                                <input id="safeInfo" type="checkbox" class="form-check-input">
+                                <label class="form-check-label" for="saveInfo">Save my info</label>
+                            </div>
+                        </div>
+                        <hr class="my-4">
+                        <h4 class="mb-3">Payments</h4>
+                        <div class="form-check">
+                            <input id="creditCard" name="paymentMethod" type="radio" class="form-check-input" checked required>
+                            <label for="creditCard">credit Card</label>
+                        </div>
+                        <div class="form-check">
+                            <input id="debit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+                            <label for="debit">Debit Card</label>
+                        </div>
+                        <div class="form-check">
+                            <input id="payPal" name="paymentMethod" type="radio" class="form-check-input" checked required>
+                            <label for="payPal">PayPal</label>
+                        </div>
+                        <div class="row my-3 gy-3">
+                            <div class="col-md-6">
+                                <label for="cardname" class="form-label">
+                                    Name on Card
+                                </label>
+                                <input id="fullNameoncard" type="text" class="form-control">
+                                <small class="text-muted">
+                                    Full Name as displayed on Card.
+                                </small>
+                                <div class="invalid-feedback">Name On Card is required</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cardnumber" class="form-label">
+                                    Credit C nr
+                                </label>
+                                <input id="cc-number" type="text" class="form-control">
+                                .
+                                <div class="invalid-feedback">Details of Credit Card is required!</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="cc-expire" class="form-label">
+                                Expiration
+                            </label>
+                            <input id="cc-expire" type="text" class="form-control">
+                            <div class="invalid-feedback">Expiration required!
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="cc-cvv" class="form-label">
+                                CVV
+                            </label>
+                            <input id="CVV" type="text" class="form-control">
+                            <div class="invalid-feedback">CVV required!
+                            </div>
+                        </div>
+                        <hr class="my-4">
+                        <button class="w-100 btn btn-primary btn-lg btn-block">Confirm My Checkout!</button>
+                </div>
+                </form>
         </div>
     </div>
-            <!-- Filling out form containter -->
-    <div class="container">
-        <h4 class="mb-3">What is your Billing Adress? </h4>
-        <form novalidate>
-            <div class="row g-3">
-                <div class="col-sm-6">
-                    <label for="firstName" class="form-label">First Name </label>
-                    <input id="FirstName" type="text" class="form-control" placeholder="Mads" required>
-                    <div class="invalid-feedback"> Valid name required!
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <label for="LastName" class="form-label">Last Name </label>
-                    <input id="LastName" type="text" class="form-control" placeholder="Mikkelsen" required>
-                    <div class="invalid-feedback"> Valid last name required!
-                    </div>
-                </div>
-                <div class="col-12">
-                    <label for="username" class="form-label">Username </label>
-                    <div class="input-group">
-                        <span class="input-group-text">@</span>
-                    </div>
-                    <input id="username" type="text" class="form-control" placeholder="mmikkelsen" required>
-                </div>
-                <div class="invalid-feedback"> Valid username required!
-                </div>
-                <div class="col-md-5">
-                    <label for="country" class="form-label">Country</label>
-                    <select id="country" class="form-control">
-                        <option value="Australia">Denmark</option>
-                        <option value=" ">Choose...</option>
-                        <option value=" ">Choose again...</option>
-                    </select>
-                </div>
-                <div class="invalid-feedback"> Valid Country required!
-                </div>
-                <div class="col-md-4">
-                    <label for="Region" class="form-label">Region </label>
-                    <select id="Region" class="form-control">
-                        <option value="Zealand">Zealand</option>
-                        <option value="Jylland">Jylland</option>
-                        <option value="Germany">Germany</option>
-                        <option value="Germany">Other</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label for="zipcode" class="form-label">Zip Code</label>
-
-                    <input id="zipcode" type="number" class="form-control" placeholder="2200" required>
-                </div>
-            </div>
-            <hr class="my-4">
-            <div class="col-12">
-                <div class="form-check">
-                    <input id="sameAdress" type="checkbox" class="form-check-input">
-                    <label class="form-check-label" for="sameAddress">My Shipping adress is the same as biling</label>
-                </div>
-                <div class="form-check">
-                    <input id="safeInfo" type="checkbox" class="form-check-input">
-                    <label class="form-check-label" for="saveInfo">Save my info</label>
-                </div>
-            </div>
-            <hr class="my-4">
-
-
-            <h4 class="mb-3">Payments</h4>
-            <div class="form-check">
-                <input id="creditCard" name="paymentMethod" type="radio" class="form-check-input" checked required>
-                <label for="creditCard">credit Card</label>
-            </div>
-            <div class="form-check">
-                <input id="debit" name="paymentMethod" type="radio" class="form-check-input" checked required>
-                <label for="debit">Debit Card</label>
-            </div>
-            <div class="form-check">
-                <input id="payPal" name="paymentMethod" type="radio" class="form-check-input" checked required>
-                <label for="payPal">PayPal</label>
-            </div>
-
-            <div class="row my-3 gy-3">
-                <div class="col-md-6">
-                    <label for="cardname" class="form-label">
-                        Name on Card
-                    </label>
-                    <input id="fullNameoncard" type="text" class="form-control">
-                    <small class="text-muted">
-                        Full Name as displayed on Card.
-                    </small>
-                    <div class="invalid-feedback">Name On Card is required</div>
-                </div>
-                <div class="col-md-6">
-                    <label for="cardnumber" class="form-label">
-                        Credit C nr
-                    </label>
-                    <input id="cc-number" type="text" class="form-control">
-                    .
-                    <div class="invalid-feedback">Details of Credit Card is required!</div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <label for="cc-expire" class="form-label">
-                    Expiration
-                </label>
-                <input id="cc-expire" type="text" class="form-control">
-                <div class="invalid-feedback">Expiration required!
-                </div>
-            </div>
-            <div class="col-md-3">
-                <label for="cc-cvv" class="form-label">
-                    CVV
-                </label>
-                <input id="CVV" type="text" class="form-control">
-                <div class="invalid-feedback">CVV required!
-                </div>
-            </div>
-            <hr class="my-4">
-            <button class="w-100 btn btn-primary btn-lg btn-block">Confirm My Checkout!</button>
-    </div>
-
-
-    </form>
-    </div>
-
-
 
     <!-- Bootstrap JS + Jquery -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
