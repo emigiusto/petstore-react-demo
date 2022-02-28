@@ -2,3 +2,23 @@
 .nav-bar__container__header__brand{
     font-size: 26px;   
 }
+
+.main{
+
+}
+
+    .main__section{
+        min-height: 100px;
+    }
+
+        .main__section__header{
+            
+        }
+            .main__section__header__title{
+                font-size: 26px;
+            }
+
+            .main__section__header__description{
+                color: grey;
+                font-size: 18px;
+            }
