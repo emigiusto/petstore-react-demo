@@ -21,7 +21,6 @@ function initLogin() {
         if (login.status) { //Success!
             //Hide Login
             document.getElementById("loginForm").classList.add("hidden")
-            alert(login.message,true)
             //Stores user data
             localStorage.setItem('userEmail',data.get("email"));
             localStorage.setItem('userPassword', data.get("password"));
@@ -32,9 +31,8 @@ function initLogin() {
             document.getElementById("loginForm").reset();
             //Change State on nav bar from NotLoggedIn to LoggedIn
             //... awaiting design details to implement
-        } else {
-            alert(login.message,false)
         }
+        alert(login.message,login.status)
     } 
 
     //Updates value of checkbox in every click
