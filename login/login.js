@@ -21,7 +21,7 @@ function initLogin() {
         if (login.status) { //Success!
             //Hide Login
             document.getElementById("loginForm").classList.add("hidden")
-            alert(login.message,"success")
+            alert(login.message,true)
             //Stores user data
             localStorage.setItem('userEmail',data.get("email"));
             localStorage.setItem('userPassword', data.get("password"));
@@ -33,7 +33,7 @@ function initLogin() {
             //Change State on nav bar from NotLoggedIn to LoggedIn
             //... awaiting design details to implement
         } else {
-            alert(login.message,"warning")
+            alert(login.message,false)
         }
     } 
 
@@ -55,11 +55,20 @@ function initLogin() {
     }
 
     //Alert message
-    function alert(message, type) {
+    function alert(message, status) {
         var alertPlaceholder = document.body
+        var type = status ? 'bg-success' : 'bg-danger';
+        console.log(type)
+        console.log(status)
         var wrapper = document.createElement('div')
-        wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible alert-message-box" role="alert">' + message + 
-                            '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'
+        wrapper.innerHTML = '<div class="toast align-items-center text-white '+ type +' border-0 show alert-message-box" role="alert" aria-live="assertive" aria-atomic="true">'
+                            + '<div class="d-flex">'
+                            + '<div class="toast-body">'
+                            + message
+                            + '</div>'
+                            + '<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>'
+                            + '</div>'
+                            + '</div>'
         alertPlaceholder.append(wrapper)
         //Deletes Alert Message after 5 secs
         setTimeout(function (){
