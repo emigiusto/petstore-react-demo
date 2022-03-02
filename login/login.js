@@ -58,8 +58,6 @@ function initLogin() {
     function alert(message, status) {
         var alertPlaceholder = document.body
         var type = status ? 'bg-success' : 'bg-danger';
-        console.log(type)
-        console.log(status)
         var wrapper = document.createElement('div')
         wrapper.innerHTML = '<div class="toast align-items-center text-white '+ type +' border-0 show alert-message-box" role="alert" aria-live="assertive" aria-atomic="true">'
                             + '<div class="d-flex">'
@@ -67,8 +65,7 @@ function initLogin() {
                             + message
                             + '</div>'
                             + '<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>'
-                            + '</div>'
-                            + '</div>'
+                            + '</div></div>'
         alertPlaceholder.append(wrapper)
         //Deletes Alert Message after 5 secs
         setTimeout(function (){
