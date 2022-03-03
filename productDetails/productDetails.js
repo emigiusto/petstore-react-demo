@@ -32,14 +32,20 @@ function filterProduct(data, id) {
 function render(data) {
     data.forEach(element => {
         var newProduct = document.createElement('div');
-        newProduct.innerHTML = `<div>
-                <div><img src="`+ element.image +`" class="card-img-top p-4" alt="..."></div>
-                <div>
-                    <h5>`+ element.title +`</h5>
-                    <p>`+ element.type +`</p>
-                    <a href="#" class="btn btn-primary">See details</a>
-                </div>
-            </div>`
+        newProduct.innerHTML = `<div class="row p-5 mx-5">
+        <div class="col-sm">
+          <div class="col px-2 pb-2"><h3>`+ element.title +`</h3></div>
+          <div class="col px-2 pb-2">`+ element.description +`</div>
+          <div class="col px-2 pb-2"><h3>`+ element.price +` EURO</h3></div>
+          <div class="col px-2 pb-2"><button type="button" class="btn btn-dark">Add to cart</button></div>
+        </div>
+        <div class="col-sm">
+          <div class="col-sm-12 d-flex justify-content-center">
+              <img src="`+ element.image +`" alt="">
+          </div>
+        </div>
+      </div>`
+
         console.log(data);
         document.getElementById("product").appendChild(newProduct)
     });
