@@ -1,0 +1,33 @@
+.card__image{
+    object-fit: contain;
+    height: 300px;
+}
+.card__body__title{
+    font-size: 1.2rem;
+    min-height: 3rem;
+}
+
+/* Media queries Tablet to Large screens */
+@media (min-width: 768px) and (max-width: 1199.98px) { 
+    .card__body__button-cont > *{
+        font-size: 0.8rem !important;
+        padding: 8px !important;
+    }
+    .card__body__title{
+        font-size: 1rem;
+    }
+    .card__image{
+        height: 200px;
+    }
+}
+/* Media queries Small screens */
+@media (max-width: 768px) { 
+    .card__body__button-cont {
+        justify-content: space-around !important;
+    }
+    .card__body__button-cont > *{
+        padding: 10px !important;
+    }
+}
+
+

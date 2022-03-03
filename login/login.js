@@ -1,15 +1,17 @@
 window.onload = function() {
     initLogin();
+    addEventListeners()
 };
 
 function initLogin() {
     //Initialize LocalStorage - Hardcoded email and user
     localStorage.setItem('email', 'test@itu.dk');
     localStorage.setItem('password', '123456');
-    //Initialize Event Listeners:
-        //Form Submit
-        document.getElementById("loginForm").addEventListener('submit', handleForm);
-    
+}
+
+function addEventListeners() {
+    //Form Submit
+    document.getElementById("loginForm").addEventListener('submit', handleForm);
 }
 
 //Events Callbacks
