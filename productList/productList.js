@@ -131,7 +131,7 @@ function loadProducts() {
                     correctName = "Canned Cat Food"
                     break;
             default:
-                correctName = paramNameOfFilter.toUpperCase()
+                correctName = paramNameOfFilter ? paramNameOfFilter.toUpperCase() : ""
                 break;
         }
         return correctName
