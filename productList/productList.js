@@ -46,11 +46,11 @@ function filterProducts (data, queryparams) {
 
 function render(data) {
     data.forEach(element => {
-        var newCard = document.createElement('div');
-        newCard.classList.add('col')
+        var newCard = document.createElement('container-fluid');
+        newCard.classList.add('col-sm-4')
          // is a node
         newCard.innerHTML = `<div class="card">
-                <div><img src="`+ element.image +`" class="card-img-top p-4" width=100 height=100 alt="..."></div>
+                <div><img src="`+ element.image +`" class="card-img-top p-4" width=500 height=500 alt="..."></div>
                 <div class="card-body">
                     <h5 class="card-title">`+ element.title +`</h5>
                     <p class="card-text">`+ element.type +`</p>
