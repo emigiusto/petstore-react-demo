@@ -92,10 +92,7 @@ function loadProducts() {
     }
     //Render a Bootstrap toast
     function toast(message) {
-        console.log("toast!")
-        console.log(message)
         var alertPlaceholder = document.body
-        console.log(alertPlaceholder)
         var wrapper = document.createElement('html')
         wrapper.innerHTML = '<div class="toast align-items-center text-white bg-success border-0 show alert-message-box" role="alert" aria-live="assertive" aria-atomic="true">'
                             + '<div class="d-flex">'
