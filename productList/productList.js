@@ -78,8 +78,9 @@ function loadProducts() {
     }
     //Update title and helper function
     function updateDescription(filterObject) {
+        console.log(!filterObject)
         let title = ""
-        if (!filterObject.done) {
+        if (!filterObject) {
             title = title + "Filtered by: " + filterNameConverter(filterObject.next().value);
 
             let counter = filterObject.next()
