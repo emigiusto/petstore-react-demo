@@ -42,6 +42,8 @@ function loadProducts() {
             console.log("Product with id " + id + " has been added. Cart was empty")
         }
         localStorage.setItem("product-array", JSON.stringify(currentProductList));
+        console.log("Updated Cart:")
+        console.log(currentProductList)
     }
 
     //Clears the cart in local storage - NOT BEING USED - Only for testing in the console
