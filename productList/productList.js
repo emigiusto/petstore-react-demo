@@ -30,18 +30,19 @@ function loadProducts() {
                 currentProductList = currentProductList.filter(product => product.id != id)
                 let updatedProduct = {amount: found.amount+1 ,...newProduct}
                 currentProductList.push(updatedProduct)
-                console.log("Product with id " + id + " has been added. The product was already on the cart, +1 amount updated")
+                //console.log("Product with id " + id + " has been added. The product was already on the cart, +1 amount updated")
                 
             } else { //1) b) Product is NOT on the cart --- Add product
                 currentProductList.push({amount: 1, ...newProduct})
-                console.log("Product with id " + id + " has been added. Cart didn't have the product")
+                //console.log("Product with id " + id + " has been added. Cart didn't have the product")
             }
         } else { //2) Cart is empty
             currentProductList = []
             currentProductList.push({amount: 1, ...newProduct})
-            console.log("Product with id " + id + " has been added. Cart was empty")
+            //console.log("Product with id " + id + " has been added. Cart was empty")
         }
         localStorage.setItem("product-array", JSON.stringify(currentProductList));
+        toast("Product added to cart")
         console.log("Updated Cart:")
         console.log(currentProductList)
     }
@@ -88,6 +89,26 @@ function loadProducts() {
             }
         }
         document.getElementById("description").innerHTML = title;
+    }
+    //Render a Bootstrap toast
+    function toast(message) {
+        console.log("toast!")
+        console.log(message)
+        var alertPlaceholder = document.body
+        console.log(alertPlaceholder)
+        var wrapper = document.createElement('html')
+        wrapper.innerHTML = '<div class="toast align-items-center text-white bg-success border-0 show alert-message-box" role="alert" aria-live="assertive" aria-atomic="true">'
+                            + '<div class="d-flex">'
+                            + '<div class="toast-body">'
+                            + message
+                            + '</div>'
+                            + '<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>'
+                            + '</div></div>'
+        alertPlaceholder.append(wrapper)
+        //Deletes Alert Message after 3 secs
+        setTimeout(function (){
+            wrapper.innerHTML= "";
+        }, 3000);
     }
 // ----------------------------------------------------------//
 //HELPER FUNCTIONS
