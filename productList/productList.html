@@ -20,10 +20,39 @@
     <main class="main">
         <div class="row main__section pb-4">
             <div class="col-10 col-xs-12 mx-auto">
-                <div class="row p-3 main__section__header">
+                <div class="row py-3 main__section__header">
                     <h2 class="main__section__header__title" id="title">Products</h2>
-                    <p class="main__section__header__description" id="description"></p>
                 </div>
+                <p class="main__section__header__description" id="description">Filters</p>
+                <section id="filters" class="main__section__filters row d-flex flex-row align-items-center my-3">
+                    <div class="m-2 px-0 main__section__filters__item filters-select dropdown">
+                        <button name="breed" class="btn btn-outline-secondary dropdown-toggle" type="button" id="breed"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Breed
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><button class="dropdown-item" onclick="addFilter('breed','all')">All</button></li>
+                            <li><button class="dropdown-item" onclick="addFilter('breed','giant')">Giant</button></li>
+                            <li><button class="dropdown-item" onclick="addFilter('breed','large')">Large</button></li>
+                            <li><button class="dropdown-item" onclick="addFilter('breed','medium')">Medium</button></li>
+                            <li><button class="dropdown-item" onclick="addFilter('breed','small')">Small</button></li>
+                        </ul>
+                    </div>
+                    <div class="m-2 px-0 main__section__filters__item filters-select dropdown">
+                        <button name="size" class="btn btn-outline-secondary dropdown-toggle" type="button" id="size"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Size
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                            <li><button class="dropdown-item" onclick="addFilter('size','all')">All</button></li>
+                            <li><button class="dropdown-item" onclick="addFilter('size','puppy')">Puppy</button></li>
+                            <li><button class="dropdown-item" onclick="addFilter('size','adult')">Adult</button></li>
+                        </ul>
+                    </div>
+                    <button id="sterilized" type="button" class="m-2 main__section__filters__item  btn btn-outline-secondary" onclick="toggleFilters(this)">Sterilized</button>
+                    <button id="offer" type="button" class="m-2 main__section__filters__item  btn btn-outline-secondary" onclick="toggleFilters(this)">Offers</button>
+                    <button id="arrival" type="button" class="m-2 main__section__filters__item  btn btn-outline-secondary" onclick="toggleFilters(this)">New arrivals</button>
+                </section>
                 <section id="products" class="main__section__products row">
                 </section>
             </div>

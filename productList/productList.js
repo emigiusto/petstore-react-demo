@@ -1,21 +1,36 @@
 window.onload = function() {
-    loadProducts();
+    init();
 };
 //Global variable of products fetched from the database
 var productsList;
+var filtersList;
 
-function loadProducts() {
+
+function init() {
     const urlParams = new URLSearchParams(window.location.search);
     const filterObject = paramsToObject(urlParams.entries());
-    updateDescription(urlParams.values());
-    //Fetch dba
-    productsList = fetch("../../ShopifyProducts.json")
-        .then(response => response.json())
-        .then(data => {
-            render(filterProducts(data, filterObject));
-            productsList = data;
-        });
+    loadProducts(filterObject);
+    loadFilters(filterObject);
 }
+
+    function loadProducts(filterObject) {
+        //Fetch dba
+        productsList = fetch("../../ShopifyProducts.json")
+            .then(response => response.json())
+            .then(data => {
+                render(filterProducts(data, filterObject));
+                productsList = data;
+            });
+    }
+
+    function loadFilters(newfilterObject) {
+        filtersList = newfilterObject;
+        Object.keys(filtersList).forEach((key, index) => {
+            if (typeof filtersList[key]=="string") {
+                document.getElementById(key).innerHTML = capitalizeFirstLetter(filtersList[key]);
+            }
+        });
+    }
 
 // ----------------------------------------------------------//
 //CART HANDLE FUNCTIONS
@@ -56,6 +71,7 @@ function loadProducts() {
 //RENDERING FUNCTIONS
     //Renders the list of products already filtered. Generates cards
     function render(filteredData) {
+        document.getElementById("products").innerHTML = ""
         filteredData.forEach(element => {
             var newCard = document.createElement('div');
             newCard.classList.add('col-sm-4')
@@ -66,7 +82,9 @@ function loadProducts() {
                     <div><img src="`+ element.image +`" class="card-img-top p-4 card__image" width=500 height=500 alt="..."></div>
                     <div class="card-body">
                         <h5 class="card-title card__body__title">`+ element.title +`</h5>
-                        <p class="card-text card__body__type">`+ element.type +`</p>
+                        <p class="card-text card__body__type">`+ element.type +`. Breed: `+ element.breed +`</p>
+                        <p class="card-text card__body__type">Pet size: `+ element.size + `</p>
+                        <p class="card-text card__body__type fs-5 fw-bolder">`+ element.price +`eu</p>
                         <div class="d-flex justify-content-between card__body__button-cont">
                             <a href="../productDetails/productDetails.html?id=` + element.id + `"class="btn btn-primary">Details</a>
                             <button id="addToCart" onClick="addToCart(` + element.id + `)" value=` + element.id + ` class="btn btn-success align-self-end">Add to Cart</button>
@@ -75,20 +93,6 @@ function loadProducts() {
                 </div>`
             document.getElementById("products").appendChild(newCard)
         });
-    }
-    //Update title and helper function
-    function updateDescription(filterObject) {
-        let title = ""
-        if (!filterObject) {
-            title = title + "Filtered by: " + filterNameConverter(filterObject.next().value);
-
-            let counter = filterObject.next()
-            while (!counter.done) {
-                title =+ ", " + filterNameConverter(counter.value)
-                counter = filterObject.next();
-            }
-        }
-        document.getElementById("description").innerHTML = title;
     }
     //Render a Bootstrap toast
     function toast(message) {
@@ -106,6 +110,38 @@ function loadProducts() {
         setTimeout(function (){
             wrapper.innerHTML= "";
         }, 3000);
+    }
+    //Filter menu handler
+    function addFilter (filterType, value) {
+        var newFilterObject = {...filtersList}
+        newFilterObject[filterType] = value;
+        //Refresh objects and filters
+        loadProducts(newFilterObject);
+        loadFilters(newFilterObject);
+    }
+
+    //Filter menu handler
+    function removeFilter (filter) {
+        var newFilterObject = {...filtersList}
+        delete newFilterObject[filter];
+        //Refresh objects and filters
+        loadProducts(newFilterObject);
+        loadFilters(newFilterObject);
+    }
+
+    //Toggle Filter buttons
+    function toggleFilters(that) {
+        if (that.getAttribute("active")) { //Remove filter
+            that.removeAttribute("active");
+            that.classList.add("btn-outline-secondary");
+            that.classList.remove("btn-secondary");
+            removeFilter(that.id);
+        } else { //Add filter
+            that.setAttribute("active", true); 
+            that.classList.remove("btn-outline-secondary");
+            that.classList.add("btn-secondary");
+            addFilter(that.id,true);
+        }
     }
 // ----------------------------------------------------------//
 //HELPER FUNCTIONS
@@ -136,19 +172,23 @@ function loadProducts() {
         }
         return correctName
     }
-
-    //Filter dataset by any {key: value} passed in queryparams
-    function filterProducts (data, queryparams) {
+//FILTERS FUNCTION
+    //Filter dataset by any {key1: value1, key2: value2, ..} passed in filterObject
+    function filterProducts (data, filterObject) {
         return data.filter((function (item){
-            //Iterating through all queryparam keys
-            for(const [key, value] of Object.entries(queryparams)) { 
+            //Iterating through all filterObject keys
+            for(const [key, value] of Object.entries(filterObject)) { 
                 if (typeof item[key]=="string") {
-                    if(item[key].toLowerCase().trim().replace(/\s/g, '') != value) return false;
+                    if(item[key].toLowerCase().trim().replace(/\s/g, '') != value && value != "all") return false;
                 } else {
+                    //Numeric values
                     if(item[key] != value) return false;
                 }
-                
             }
             return true
         }))
+    }
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
