@@ -84,7 +84,7 @@ function init() {
                         <h5 class="card-title card__body__title">`+ element.title +`</h5>
                         <p class="card-text card__body__type">`+ element.type +`. Breed: `+ element.breed +`</p>
                         <p class="card-text card__body__type">Pet size: `+ element.size + `</p>
-                        <p class="card-text card__body__type fs-5 fw-bolder">`+ element.price +`eu</p>
+                        <p class="card-text card__body__type fs-5 fw-bolder">`+ element.price +` eu</p>
                         <div class="d-flex justify-content-between card__body__button-cont">
                             <a href="../productDetails/productDetails.html?id=` + element.id + `"class="btn btn-primary">Details</a>
                             <button id="addToCart" onClick="addToCart(` + element.id + `)" value=` + element.id + ` class="btn btn-success align-self-end">Add to Cart</button>
