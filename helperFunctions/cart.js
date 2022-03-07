@@ -2,11 +2,20 @@ import {toast} from "../helperFunctions/toast.js";
 //Clears the cart in local storage - NOT BEING USED - Only for testing in the console
 export function clearCart() {
     localStorage.removeItem("product-array");
+    localStorage.removeItem("cart size")
 }
 
 //Add to cart function. Will never run before products are loaded "loadProducts()", 
 //so it's safe from the asynchronous perspective ;)
 export function addToCart(newProduct) {
+    if (localStorage.getItem('cart size') !== null) {
+        let cartString = localStorage.getItem("cart size")
+        let cartInt = parseInt(cartString)
+        console.log(cartInt)
+        localStorage.setItem("cart size", cartInt + 1)
+    } else {
+        localStorage.setItem("cart size", 1)
+    }
     let currentProductList = JSON.parse(localStorage.getItem("product-array"));
     if (currentProductList) { //1) Cart is not empty
         var found = currentProductList.find(element => element.id == newProduct.id)

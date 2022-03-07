@@ -1,9 +1,21 @@
 import {clearCart} from "/helperFunctions/cart.js"
+import {createHeader} from "/components/header.js"
+import {createFooter} from "/components/footer.js"
 
 window.onload = function() {
+    displayHeader()
     loadProduct();
     addEventListeners()
+    displayFooter()
 };
+
+function displayHeader() {
+    document.getElementById("navbar").innerHTML = createHeader()
+}
+function displayFooter() {
+    document.getElementById("footerCart").innerHTML = createFooter()
+}
+
 function loadProduct() {
     var MyDataString = localStorage.getItem("product-array")
     var data = JSON.parse(MyDataString)
