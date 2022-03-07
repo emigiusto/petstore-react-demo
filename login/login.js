@@ -24,7 +24,7 @@ function addEventListeners() {
     function handleForm(event) { 
         event.preventDefault(); 
         const data = new FormData(event.target);
-        var login = checkUserPassword(data.get("email"),data.get("password"))
+        let login = checkUserPassword(data.get("email"),data.get("password"))
         if (login.status) { //Success!
             //Hide Login
             document.getElementById("loginForm").classList.add("hidden")
@@ -39,7 +39,7 @@ function addEventListeners() {
             //Change State on nav bar from NotLoggedIn to LoggedIn
             //... awaiting design details to implement
         }
-        var type = login.status ? 'success' : 'danger';
+        let type = login.status ? 'success' : 'danger';
         toast(login.message,type,3000)
     } 
 

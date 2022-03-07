@@ -49,7 +49,7 @@ function init() {
     function render(filteredData) {
         document.getElementById("products").innerHTML = ""
         filteredData.forEach(element => {
-            var newCard = document.createElement('div');
+            let newCard = document.createElement('div');
             newCard.classList.add('col-sm-4')
             newCard.classList.add('col-lg-3')
             // is a node
@@ -73,7 +73,7 @@ function init() {
 
     //Filter menu handler
     function addFilter (filterType, value) {
-        var newFilterObject = {...filtersList}
+        let newFilterObject = {...filtersList}
         newFilterObject[filterType] = value;
         //Refresh objects and filters
         loadProducts(newFilterObject);
@@ -82,7 +82,7 @@ function init() {
 
     //Filter menu handler
     function removeFilter (filter) {
-        var newFilterObject = {...filtersList}
+        let newFilterObject = {...filtersList}
         delete newFilterObject[filter];
         //Refresh objects and filters
         loadProducts(newFilterObject);
@@ -109,7 +109,3 @@ function handleAddToCart(id) {
     let newProduct = filterProducts(productsList, { id: id })[0]
     addToCart(newProduct);
 }
-
-
-
-//CART HANDLING FUNCTIONS
