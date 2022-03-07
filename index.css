@@ -27,3 +27,8 @@
     object-fit: contain;
     height: 300px;
 }
+
+.card__body__title{
+    font-size: 1.2rem;
+    min-height: 3rem;
+}

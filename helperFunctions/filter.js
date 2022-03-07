@@ -6,7 +6,7 @@ export function filterProducts(data, filterObject) {
             if (typeof item[key] == "string") {
                 if (item[key].toLowerCase().trim().replace(/\s/g, '') != value && value != "all") return false;
             } else {
-                //Numeric values
+                //Numeric and boolean values 
                 if (item[key] != value) return false;
             }
         }
