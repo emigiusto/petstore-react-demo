@@ -52,10 +52,9 @@ function init() {
             let newCard = document.createElement('div');
             newCard.classList.add('col-sm-4')
             newCard.classList.add('col-lg-3')
-            // is a node
             newCard.innerHTML = 
                 `<div class="card mb-4">
-                    <div><img src="`+ element.image +`" class="card-img-top p-4 card__image" width=500 height=500 alt="..."></div>
+                    <div><img src="`+ element.image +`" class="card-img-top p-4 card__image" alt="`+ element.title +`"></div>
                     <div class="card-body">
                         <h5 class="card-title card__body__title">`+ element.title +`</h5>
                         <p class="card-text card__body__type">`+ element.type +`. Breed: `+ element.breed +`</p>
