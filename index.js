@@ -1,7 +1,8 @@
 import {createFooter} from "./components/footer.js"
-
 import {filterProducts} from "./helperFunctions/filter.js"
 import {createHeader} from "./components/header.js"
+import {addToCart} from "../helperFunctions/cart.js";
+
 
 window.onload = function() {
     loadProducts();
@@ -22,8 +23,8 @@ function renderAllCategories(jsonData) {
         {"arrival": true}).slice(0,3);
     let filterByDelivery = filterProducts(jsonData, 
         {"delivery": true}).slice(0,3);
-    render(filterByOffer, 'offerProducts');
-    render(filterByArrival, 'arrivalProducts');
+        render(filterByOffer, 'offerProducts');
+        render(filterByArrival, 'arrivalProducts');
     render(filterByDelivery, 'deliveryProducts');
 }
 
@@ -40,6 +41,12 @@ function renderHeader(){
     document.getElementById("header").innerHTML = createHeader();
 }
 
+//Defining global function
+window.handleAddToCart = handleAddToCart;
+function handleAddToCart(id){
+    let newProduct = filterProducts(productsList, { id: id })[0];
+    addToCart(newProduct);
+}
 function render(data, elementId) {
     data.forEach(element => {
         let newCard = document.createElement('div');
@@ -62,4 +69,3 @@ function render(data, elementId) {
         document.getElementById(elementId).appendChild(newCard)
     });
 }
-
