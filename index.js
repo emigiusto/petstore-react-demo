@@ -1,6 +1,9 @@
+import {createFooter} from "./components/footer.js"
+
 window.onload = function() {
     loadProducts();
     addEventListeners()
+    renderFooter();
 };
 var data;
 function loadProducts() {
@@ -14,8 +17,9 @@ function addEventListeners() {
     //
 }
 
-
-
+function renderFooter(){
+    document.getElementById("footer").innerHTML = createFooter();
+}
 
 function render(data) {
     data.forEach(element => {
