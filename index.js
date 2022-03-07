@@ -1,10 +1,13 @@
 import {createFooter} from "./components/footer.js"
+
 import {filterProducts} from "./helperFunctions/filter.js"
+import {createHeader} from "./components/header.js"
 
 window.onload = function() {
     loadProducts();
     addEventListeners()
     renderFooter();
+    renderHeader();
 };
 function loadProducts() {
     fetch("../ShopifyProducts.json")
@@ -31,6 +34,10 @@ function addEventListeners() {
 
 function renderFooter(){
     document.getElementById("footer").innerHTML = createFooter();
+}
+
+function renderHeader(){
+    document.getElementById("header").innerHTML = createHeader();
 }
 
 function render(data, elementId) {
