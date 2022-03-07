@@ -1,3 +1,5 @@
+import {toast} from "../helperFunctions/toast.js";
+
 window.onload = function() {
     initLogin();
     addEventListeners()
@@ -8,6 +10,9 @@ function initLogin() {
     localStorage.setItem('email', 'test@itu.dk');
     localStorage.setItem('password', '123456');
 }
+
+//Change scope of functions to global
+window.handleCheckbox = handleCheckbox;
 
 function addEventListeners() {
     //Form Submit
@@ -34,7 +39,8 @@ function addEventListeners() {
             //Change State on nav bar from NotLoggedIn to LoggedIn
             //... awaiting design details to implement
         }
-        alert(login.message,login.status)
+        var type = login.status ? 'success' : 'danger';
+        toast(login.message,type,3000)
     } 
 
     //Updates value of checkbox in every click
@@ -52,23 +58,4 @@ function addEventListeners() {
             return {message: "The password is incorrect", status: false}
         }
         return {message: "Login successful into PetStore", status: true}
-    }
-
-    //Alert message
-    function alert(message, status) {
-        var alertPlaceholder = document.body
-        var type = status ? 'bg-success' : 'bg-danger';
-        var wrapper = document.createElement('div')
-        wrapper.innerHTML = '<div class="toast align-items-center text-white '+ type +' border-0 show alert-message-box" role="alert" aria-live="assertive" aria-atomic="true">'
-                            + '<div class="d-flex">'
-                            + '<div class="toast-body">'
-                            + message
-                            + '</div>'
-                            + '<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>'
-                            + '</div></div>'
-        alertPlaceholder.append(wrapper)
-        //Deletes Alert Message after 5 secs
-        setTimeout(function (){
-            wrapper.innerHTML= "";
-        }, 5000);
     }
