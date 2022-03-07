@@ -1,9 +1,11 @@
 import {createFooter} from "./components/footer.js"
+import {createHeader} from "./components/header.js"
 
 window.onload = function() {
     loadProducts();
     addEventListeners()
     renderFooter();
+    renderHeader();
 };
 var data;
 function loadProducts() {
@@ -19,6 +21,10 @@ function addEventListeners() {
 
 function renderFooter(){
     document.getElementById("footer").innerHTML = createFooter();
+}
+
+function renderHeader(){
+    document.getElementById("header").innerHTML = createHeader();
 }
 
 function render(data) {
