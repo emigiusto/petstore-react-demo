@@ -22,3 +22,8 @@
                 color: grey;
                 font-size: 18px;
             }
+
+.card__image{
+    object-fit: contain;
+    height: 300px;
+}

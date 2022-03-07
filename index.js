@@ -27,7 +27,7 @@ function render(data) {
         newCard.classList.add('col')
          // is a node
         newCard.innerHTML = `<div class="card">
-                <div><img src="`+ element.image +`" class="card-img-top p-4" width=100 height=100 alt="..."></div>
+                <div><img src="`+ element.image +`" class="card__image card-img-top p-4" alt="..."></div>
                 <div class="card-body">
                     <h5 class="card-title">`+ element.title +`</h5>
                     <p class="card-text">`+ element.type +`</p>
@@ -37,3 +37,4 @@ function render(data) {
         document.getElementById("offerProducts").appendChild(newCard)
     });
 }
+
