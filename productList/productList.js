@@ -23,19 +23,33 @@ function init() {
     loadFilters(filterObject);
 }
 
-    //Render functions: 
+    /* Updates list of products with a certain filter by rendering Bootstraps cards for each of them
+    filterObject has the form of: {key1: value1, key2: value2, ..} Example:
+        {
+            "breed" : "giant",
+            "sterilized": true
+        }
+    */
     function loadProducts(filterObject) {
         //Fetch dba
         productsList = fetch("../../ShopifyProducts.json")
             .then(response => response.json())
             .then(data => {
-                render(filterProducts(data, filterObject));
-                productsList = data;
+                render(filterProducts(data, filterObject)); //Renders the list of products filtered by the filterObject received
+                productsList = data; //Saves list of product in global variable
             });
     }
 
-    function loadFilters(newfilterObject) {
-        filtersList = newfilterObject;
+    /* Updates the filter menu with the current filters defined by the user. Only works for filters with multiple options (dropdowns)
+    filterObject has the form of: {key1: value1, key2: value2, ..} Example:
+    The name of filters should match the id of the container element of the
+        {
+            "breed" : "giant",
+            "type": "dog"
+        }
+    */
+    function loadFilters(filterObject) {
+        filtersList = filterObject; //Updates global variable
         Object.keys(filtersList).forEach((key, index) => {
             if (typeof filtersList[key]=="string") {
                 document.getElementById(key).innerHTML = capitalizeFirstLetter(filtersList[key]);
@@ -43,9 +57,27 @@ function init() {
         });
     }
 
+    //Updates the state of filters that have active/non-active behaviour. 
+    // For example if the html element active property is set to true AddFilter() is called, otherwise removeFilter() is called 
+    function toggleFilters(that) {
+        if (that.getAttribute("active")) { //Remove filter
+            that.removeAttribute("active");
+            that.classList.add("btn-outline-secondary");
+            that.classList.remove("btn-secondary");
+            removeFilter(that.id);
+        } else { //Add filter
+            that.setAttribute("active", true); 
+            that.classList.remove("btn-outline-secondary");
+            that.classList.add("btn-secondary");
+            addFilter(that.id,true);
+        }
+    }
+
 // ----------------------------------------------------------//
 //RENDERING FUNCTIONS
-    //Renders the list of products already filtered. Generates cards
+    //Renders the list of products received in the array filteredData by generating a Bootstrap card for each product
+    //Inserts the list in the container with id = "products"
+    //filteredData is an array of type [{Product1},{Product2},{Product3}]
     function render(filteredData) {
         document.getElementById("products").innerHTML = ""
         filteredData.forEach(element => {
@@ -70,40 +102,28 @@ function init() {
         });
     }
 
-    //Filter menu handler
+    //Adds a new filter with the parameters received. For example: filterType= "breed" and value="giant"
+    //Re-renders all displayed products and filters
     function addFilter (filterType, value) {
         let newFilterObject = {...filtersList}
         newFilterObject[filterType] = value;
-        //Refresh objects and filters
+        //Refresh product Lists and filters menu
         loadProducts(newFilterObject);
         loadFilters(newFilterObject);
     }
 
-    //Filter menu handler
+    //Removes a new filter with the parameters received. For example: filter = "breed"
+    //Re-renders all displayed products and filters
     function removeFilter (filter) {
         let newFilterObject = {...filtersList}
         delete newFilterObject[filter];
-        //Refresh objects and filters
+        //Refresh product Lists and filters menu
         loadProducts(newFilterObject);
         loadFilters(newFilterObject);
     }
 
-    //Toggle Filter buttons
-    function toggleFilters(that) {
-        if (that.getAttribute("active")) { //Remove filter
-            that.removeAttribute("active");
-            that.classList.add("btn-outline-secondary");
-            that.classList.remove("btn-secondary");
-            removeFilter(that.id);
-        } else { //Add filter
-            that.setAttribute("active", true); 
-            that.classList.remove("btn-outline-secondary");
-            that.classList.add("btn-secondary");
-            addFilter(that.id,true);
-        }
-    }
-
-//Events handlers
+//Handles the event bound to addToCart button.
+//Receives and id, filters the list of products by that id and calls addToCart with the new product
 function handleAddToCart(id) {
     let newProduct = filterProducts(productsList, { id: id })[0]
     addToCart(newProduct);

@@ -1,3 +1,5 @@
+//Receives an String and returns the same string with the first letter capitalized. 
+// Example: capitalizeFirstLetter("example") ---> "Example"
 export function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
