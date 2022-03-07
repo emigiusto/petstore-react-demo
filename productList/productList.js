@@ -107,7 +107,7 @@ function init() {
 //Events handlers
 function handleAddToCart(id) {
     let newProduct = filterProducts(productsList, { id: id })[0]
-    addToCart(id,newProduct);
+    addToCart(newProduct);
 }
 
 

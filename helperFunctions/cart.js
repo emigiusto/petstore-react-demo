@@ -6,13 +6,12 @@ export function clearCart() {
 
 //Add to cart function. Will never run before products are loaded "loadProducts()", 
 //so it's safe from the asynchronous perspective ;)
-export function addToCart(id,newProduct) {
-    
+export function addToCart(newProduct) {
     let currentProductList = JSON.parse(localStorage.getItem("product-array"));
     if (currentProductList) { //1) Cart is not empty
-        var found = currentProductList.find(element => element.id == id)
+        var found = currentProductList.find(element => element.id == newProduct.id)
         if (found) { //1) a) Product is already on the cart --- Add one unit!
-            currentProductList = currentProductList.filter(product => product.id != id)
+            currentProductList = currentProductList.filter(product => product.id != newProduct.id)
             let updatedProduct = { amount: found.amount + 1, ...newProduct }
             currentProductList.push(updatedProduct)
             //console.log("Product with id " + id + " has been added. The product was already on the cart, +1 amount updated")
