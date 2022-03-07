@@ -5,17 +5,15 @@ window.onload = function() {
 };
 var data;
 function loadProduct() {
-    const urlParams = new URLSearchParams(window.location.search);
-    let id = urlParams.get("id")
-    fetch("../../ShopifyProducts.json")
-        .then(response => response.json())
-        .then(data => render(filterProduct(data, id)));
+    var MyDataString = localStorage.getItem("product-array")
+    var data = JSON.parse(MyDataString)
+    render(data)
 }
 
 function render(data) {
     data.forEach(element => { 
         var newProduct = document.createElement('div');
-        newproduct.classList.add('col-sm-4')
+        newProduct.classList.add('col-sm-4')
          // is a node
         newProduct.innerHTML = `<li class="row">
         <div class="col-lg-3 product-img-layout">
@@ -37,6 +35,6 @@ function render(data) {
             </div>
         </div>
     </li>`
-        document.getElementById("cartList").appendChild(newproduct)
+        document.getElementById("cartList").appendChild(newProduct)
     });
 }
