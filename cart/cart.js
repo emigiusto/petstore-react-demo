@@ -24,16 +24,6 @@ function loadProduct() {
     render(data)
 }
 
-function renderFooter(){
-    document.getElementById("footer").innerHTML = createFooter();
-}
-
-function renderHeader(){
-    document.getElementById("header").innerHTML = createHeader();
-}
-
-function addEventListeners(){}
-
 function handleClearCart() {
     clearCart()
     loadProduct()
