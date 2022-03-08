@@ -116,7 +116,7 @@ export function createHeader() {
           <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="#">
-                Cart
+                Cart (`+ cart() +`)
               </a>
             </li>
             <li class="nav-item">
@@ -129,3 +129,15 @@ export function createHeader() {
       </div>
     </nav>`;
 }
+
+function cart() {
+  var cartsize;
+  if (localStorage.getItem("cart size") == null) {
+    cartsize = "0"
+  } else {
+    cartsize = localStorage.getItem("cart size")
+  }
+  return cartsize;
+}
+
+

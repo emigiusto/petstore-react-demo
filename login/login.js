@@ -27,12 +27,13 @@ function initLogin() {
 window.handleCheckbox = handleCheckbox;
 
 function addEventListeners() {
-    //Form Submit
+    //Login Form Submit
     document.getElementById("loginForm").addEventListener('submit', handleForm);
 }
 
 //Events Callbacks
-    //Login Form Handler
+    //Login Form Handler. 
+    //Extracts all input fields data and if checkUserPassword return status = true, and stores user's data into localStorage
     function handleForm(event) { 
         event.preventDefault(); 
         const data = new FormData(event.target);
@@ -61,7 +62,7 @@ function addEventListeners() {
     }
 
 //Auxiliar functions
-    //Check if the user and password entered are correct
+    //Check if the user and password entered are correct and returns an object with message and status.
     function checkUserPassword(user,password) {
         if (user !== localStorage.getItem("email")) {
             return {message: "The email does not correspond to an existing account", status: false}

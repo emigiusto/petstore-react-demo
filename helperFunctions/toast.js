@@ -1,6 +1,10 @@
 //Render a Bootstrap toast
-    //For types go to Bootstrap background utiliy: https://getbootstrap.com/docs/5.1/utilities/background/
+    //For type parameter go to Bootstrap background utiliy: https://getbootstrap.com/docs/5.1/utilities/background/
     //Pending improvement: Use Bootstrap native Toast Functions: https://getbootstrap.com/docs/5.1/components/toasts/#basic
+//Receives as parameter the message (string), the type (string) and how much time in milliseconds should pass until the toast is self-destroyed (number)
+//Example: toast("Oh no, wrong answer", "warning",5000) ---> will render a toast with that message, in a orange warning background colour and for 5 seconds
+//If type is not passed the default is "success"
+//If milisecs is not passed the default is 2 seconds (2000 millisecs)
 export function toast(message,type,milisecs) {
     //Default values
     var cType= type ? type : "success";
@@ -21,9 +25,8 @@ export function toast(message,type,milisecs) {
     //Bind event listener to Toast close button
     document.getElementById("closeToast").addEventListener('click', function(e){e.target.parentElement.parentElement.innerHTML = ""})
     
-    //Deletes Alert Message after X secs (default 2)
+    //Deletes Alert Message after X secs (default 2 seconds)
     setTimeout(function () {
         wrapper.innerHTML = "";
     }, cMilisecs);
 }
-
