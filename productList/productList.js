@@ -32,7 +32,7 @@ function renderFooter() {
   }
   
   function renderHeader() {
-    document.getElementById("header").innerHTML = createHeader();
+    document.getElementById("navbar").innerHTML = createHeader();
   }
 
     /* Updates list of products with a certain filter by rendering Bootstraps cards for each of them

@@ -21,7 +21,7 @@ function renderFooter(){
 }
 
 function renderHeader(){
-    document.getElementById("header").innerHTML = createHeader();
+    document.getElementById("navbar").innerHTML = createHeader();
 }
 
 
