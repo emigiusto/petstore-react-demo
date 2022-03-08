@@ -1,5 +1,5 @@
 export function createHeader() {
-  return (`
+  return `
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
@@ -127,6 +127,5 @@ export function createHeader() {
           </ul>
         </div>
       </div>
-    </nav>`
-  );
+    </nav>`;
 }

@@ -1,6 +1,11 @@
+import {createFooter} from "/components/footer.js"
+import {createHeader} from "/components/header.js"
+
 //Waits until every element is loaded on the DOM to avoid
 window.onload = function() {
     handleRegisterForm();
+    renderHeader();
+    renderFooter();
 };
 
 function handleRegisterForm() {
@@ -24,4 +29,12 @@ function redirectRegister(context) {
     alert(this);
     context.preventDefault();
 };
+
+function renderFooter(){
+    document.getElementById("footer").innerHTML = createFooter();
+}
+
+function renderHeader(){
+    document.getElementById("header").innerHTML = createHeader();
+}
 

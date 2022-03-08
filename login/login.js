@@ -1,9 +1,21 @@
 import {toast} from "../helperFunctions/toast.js";
+import {createFooter} from "../components/footer.js"
+import {createHeader} from "../components/header.js"
 
 window.onload = function() {
     initLogin();
-    addEventListeners()
+    addEventListeners();
+    renderHeader();
+    renderFooter();
 };
+
+function renderFooter(){
+    document.getElementById("footer").innerHTML = createFooter();
+}
+
+function renderHeader(){
+    document.getElementById("header").innerHTML = createHeader();
+}
 
 function initLogin() {
     //Initialize LocalStorage - Hardcoded email and user

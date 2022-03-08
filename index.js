@@ -1,5 +1,4 @@
 import {createFooter} from "./components/footer.js"
-
 import {filterProducts} from "./helperFunctions/filter.js"
 import {createHeader} from "./components/header.js"
 

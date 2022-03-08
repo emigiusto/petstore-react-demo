@@ -1,7 +1,11 @@
+import {createFooter} from "../components/footer.js"
+import {createHeader} from "../components/header.js"
 
 window.onload = function() {
     loadProduct();
     addEventListeners()
+    renderFooter();
+    renderHeader();
 };
 var data;
 function loadProduct() {
@@ -9,6 +13,16 @@ function loadProduct() {
     var data = JSON.parse(MyDataString)
     render(data)
 }
+
+function renderFooter(){
+    document.getElementById("footer").innerHTML = createFooter();
+}
+
+function renderHeader(){
+    document.getElementById("header").innerHTML = createHeader();
+}
+
+function addEventListeners(){}
 
 function render(data) {
     data.forEach(element => { 

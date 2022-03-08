@@ -1,6 +1,11 @@
+import {createFooter} from "../components/footer.js"
+import {createHeader} from "../components/header.js"
+
 window.onload = function() {
     loadProduct();
     addEventListeners()
+    renderHeader();
+    renderFooter();
 };
 var data;
 function loadProduct() {
@@ -9,6 +14,14 @@ function loadProduct() {
     fetch("../../ShopifyProducts.json")
         .then(response => response.json())
         .then(data => render(filterProduct(data, id)));
+}
+
+function renderFooter(){
+    document.getElementById("footer").innerHTML = createFooter();
+}
+
+function renderHeader(){
+    document.getElementById("header").innerHTML = createHeader();
 }
 
 
