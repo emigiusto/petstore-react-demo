@@ -6,6 +6,30 @@ export function clearCart() {
     localStorage.removeItem("cart size")
 }
 
+export function deleteProduct(productTodelete) {
+
+    let cartProducts = JSON.parse(localStorage.getItem("product-array"))
+    if (productTodelete.amount > 1) {
+        let newProducts = cartProducts.filter(el => el.id !== productTodelete.id);
+        console.log(cartProducts)
+        console.log(newProducts)
+        let updatedProduct = { amount: productTodelete.amount - 1, ...productTodelete }
+        newProducts.push(updatedProduct)
+        localStorage.setItem("product-array", JSON.stringify(newProducts));
+        let cartString = localStorage.getItem("cart size")
+        let cartInt = parseInt(cartString)
+        localStorage.setItem("cart size", cartInt - 1)  
+    } else {
+        let newProducts = cartProducts.filter(el => el.id !== productTodelete.id);
+        console.log(cartProducts)
+        console.log(newProducts)
+        localStorage.setItem("product-array", JSON.stringify(newProducts))
+        let cartString = localStorage.getItem("cart size")
+        let cartInt = parseInt(cartString)
+        localStorage.setItem("cart size", cartInt - 1)   
+    }
+}
+
 /*  Function to add products to the cart. Will never run before products are loaded "loadProducts()", 
     so it's safe from the asynchronous perspective ;)
     Receives a Product object as parameter and updates the local storage. Example:

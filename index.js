@@ -1,6 +1,6 @@
-import {createFooter} from "./components/footer.js"
+import {createFooter} from "../components/footer.js"
 import {filterProducts} from "./helperFunctions/filter.js"
-import {createHeader} from "./components/header.js"
+import {createHeader} from "../components/header.js"
 import {addToCart} from "../helperFunctions/cart.js";
 
 

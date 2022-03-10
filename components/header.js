@@ -134,6 +134,8 @@ function cart() {
   var cartsize;
   if (localStorage.getItem("cart size") == null) {
     cartsize = "0"
+  } else if (localStorage.getItem("cart size") < 0) {
+    cartsize = "0"
   } else {
     cartsize = localStorage.getItem("cart size")
   }

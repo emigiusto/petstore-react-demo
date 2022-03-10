@@ -1,32 +1,61 @@
 import {createFooter} from "../components/footer.js"
 import {createHeader} from "../components/header.js"
+import { deleteProduct } from "../helperFunctions/cart.js";
 import {clearCart} from "/helperFunctions/cart.js"
+import {filterProducts} from "/helperFunctions/filter.js"
 
 window.onload = function() {
     displayHeader()
     loadProduct();
     addEventListeners()
-    renderFooter();
-    renderHeader();
     displayFooter()
+    handleTotal()
 };
+
+var productsList;
+var productTotal;
+
+window.handleDeleteProduct = handleDeleteProduct;
 
 function displayHeader() {
     document.getElementById("navbar").innerHTML = createHeader()
 }
 function displayFooter() {
-    document.getElementById("footerCart").innerHTML = createFooter()
+    document.getElementById("footer").innerHTML = createFooter()
+}
+
+function handleTotal() {
+    document.getElementById("productTotal").innerHTML = displayTotal(productsList)
+}
+
+function displayTotal(productsList) {
+    if (productsList.length == 0) {
+        return 0
+    } else {
+        let productTotal;
+        productsList.forEach(element => {
+        productTotal = productTotal + element.price
+    });
+    return productTotal
+    }
 }
 
 function loadProduct() {
     var MyDataString = localStorage.getItem("product-array")
     var data = JSON.parse(MyDataString)
+    productsList = data
     render(data)
 }
 
 function handleClearCart() {
     clearCart()
     loadProduct()
+}
+
+function handleDeleteProduct(id){
+    let product = productsList.filter(el => el.id == id)
+    let objectProduct = product[0]
+    deleteProduct(objectProduct)
 }
 
 function addEventListeners() {
@@ -58,6 +87,11 @@ function render(data) {
                 <div class="row">
                     <div class="col">
                         <p class="product-text-subtext">`+ element.description +`</p>
+                    </div>
+                    <div class="col product-price-container">
+                        <button id="deleteButton" onClick="handleDeleteProduct(` +
+                        element.id +
+                        `)" type="button" class="btn btn-outline-danger">Delete product</button>
                     </div>
                 </div>
             </div>
