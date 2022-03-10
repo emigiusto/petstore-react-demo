@@ -115,7 +115,7 @@ export function createHeader() {
           </ul>
           <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/cart/cart.html">
+              <a id="numCartItems" class="nav-link" aria-current="page" href="/cart/cart.html">
                 Cart (`+ cart() +`)
               </a>
             </li>

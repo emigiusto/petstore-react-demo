@@ -10,10 +10,10 @@ window.onload = function() {
     addEventListeners()
     displayFooter()
     handleTotal()
+    handleCartSize()
 };
 
 var productsList;
-var productTotal;
 
 window.handleDeleteProduct = handleDeleteProduct;
 
@@ -24,27 +24,38 @@ function displayFooter() {
     document.getElementById("footer").innerHTML = createFooter()
 }
 
-function handleTotal() {
-    document.getElementById("productTotal").innerHTML = displayTotal(productsList)
+export function handleTotal() {
+    const total = displayTotal(productsList)
+    document.getElementById("productTotal").innerHTML = total
+}
+
+export function handleCartSize() {
+    let numberOfItems = localStorage.getItem("cart size")
+    document.getElementById("numCartItems").innerHTML = "Cart (" + numberOfItems + ")"
+    console.log(numberOfItems)
 }
 
 function displayTotal(productsList) {
-    if (productsList.length == 0) {
-        return 0
-    } else {
-        let productTotal;
-        productsList.forEach(element => {
-        productTotal = productTotal + element.price
-    });
-    return productTotal
-    }
-}
+    const total = productsList.reduce(function (acc, next) {
+      return acc + (next.price*next.amount)
+    }, 0)
+    return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "eur",
+        minimumFractionDigits: 0,
+      }).format(total)
+  }
 
 function loadProduct() {
     var MyDataString = localStorage.getItem("product-array")
     var data = JSON.parse(MyDataString)
+    /* handleTotal() */
+    if (data.length > 0) {
+        render(data)
+    } else {
+        render()
+    }
     productsList = data
-    render(data)
 }
 
 function handleClearCart() {
@@ -55,7 +66,10 @@ function handleClearCart() {
 function handleDeleteProduct(id){
     let product = productsList.filter(el => el.id == id)
     let objectProduct = product[0]
-    deleteProduct(objectProduct)
+    const newProductList = deleteProduct(objectProduct)
+    loadProduct()
+    handleTotal()
+    handleCartSize()
 }
 
 function addEventListeners() {
@@ -81,7 +95,7 @@ function render(data) {
                         <p>`+ element.title +`</p>
                     </div>
                     <div class="col product-price-container">
-                        <p class= "product-text-price">`+ element.price +`</p>
+                        <p class= "product-text-price">`+ (element.price*element.amount) +`</p>
                     </div>
                 </div>
                 <div class="row">
