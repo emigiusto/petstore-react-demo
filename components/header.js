@@ -3,7 +3,7 @@ export function createHeader() {
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="../index.html">
-          Navbar
+          Our Awesome Pet Store
         </a>
         <button
           class="navbar-toggler"

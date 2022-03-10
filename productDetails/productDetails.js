@@ -49,7 +49,7 @@ function render(data) {
         <div class="col-sm">
           <div class="col px-2 pb-2"><h3>`+ element.title +`</h3></div>
           <div class="col px-2 pb-2">`+ element.description +`</div>
-          <div class="col px-2 pb-2"><h3>`+ element.price +` EURO</h3></div>
+          <div class="col px-2 pb-2"><h3>`+ element.price +` €</h3></div>
           <div class="col px-2 pb-2"><button type="button" class="btn btn-dark">Add to cart</button></div>
         </div>
         <div class="col-sm">
