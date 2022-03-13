@@ -27,7 +27,7 @@ function renderAllCategories(jsonData) {
         render(filterByArrival, 'arrivalProducts');
     render(filterByDelivery, 'deliveryProducts');
 }
-
+ 
 
 function addEventListeners() {
     //
