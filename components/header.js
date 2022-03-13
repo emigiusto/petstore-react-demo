@@ -127,7 +127,7 @@ export function createHeader() {
               <a class="nav-link" aria-current="page" href="login/login.html">
                 
           `+
-  greeting() +
+  name() +
   `
       
               </a>
@@ -157,7 +157,7 @@ function cart() {
   return cartsize;
 }
 
-function greeting() {
+function name() {
   if (localStorage.firstName != null) {
     let greeting = (localStorage.getItem("firstName") + " (Profile)");
     return greeting;
