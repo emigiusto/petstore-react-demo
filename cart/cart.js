@@ -31,11 +31,20 @@ export function handleTotal() {
 
 export function handleCartSize() {
     let numberOfItems = localStorage.getItem("cart size")
+    if (!numberOfItems) numberOfItems = 0
     document.getElementById("numCartItems").innerHTML = "Cart (" + numberOfItems + ")"
     console.log(numberOfItems)
 }
 
 function displayTotal(productsList) {
+    if (!productsList) {
+        return new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "eur",
+            minimumFractionDigits: 0,
+          }).format(0)
+    }
+
     const total = productsList.reduce(function (acc, next) {
       return acc + (next.price*next.amount)
     }, 0)
@@ -49,8 +58,7 @@ function displayTotal(productsList) {
 function loadProduct() {
     var MyDataString = localStorage.getItem("product-array")
     var data = JSON.parse(MyDataString)
-    /* handleTotal() */
-    if (data.length > 0) {
+    if (data && data.length > 0) {
         render(data)
     } else {
         render()
@@ -61,6 +69,8 @@ function loadProduct() {
 function handleClearCart() {
     clearCart()
     loadProduct()
+    handleTotal()
+    handleCartSize()
 }
 
 function handleDeleteProduct(id){
@@ -106,6 +116,11 @@ function render(data) {
                         <button id="deleteButton" onClick="handleDeleteProduct(` +
                         element.id +
                         `)" type="button" class="btn btn-outline-danger">Delete product</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p> Quantity: `+ element.amount +`</p>
                     </div>
                 </div>
             </div>

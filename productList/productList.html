@@ -28,6 +28,18 @@
                 <p class="main__section__header__description" id="description">Filters</p>
                 <section id="filters" class="main__section__filters row d-flex flex-row align-items-center my-3">
                     <div class="m-2 px-0 main__section__filters__item filters-select dropdown">
+                        <button name="breed" class="btn btn-outline-secondary dropdown-toggle" type="button" id="type"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Animal
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><button class="dropdown-item" onclick="addFilter('type','all')">All</button></li>
+                            <li><button class="dropdown-item" onclick="addFilter('type','catfood')">Cat food</button></li>
+                            <li><button class="dropdown-item" onclick="addFilter('type','dogfood')">Dog food</button></li>
+                            <li><button class="dropdown-item" onclick="addFilter('type','birdfood')">Bird food</button></li>
+                        </ul>
+                    </div>
+                    <div class="m-2 px-0 main__section__filters__item filters-select dropdown">
                         <button name="breed" class="btn btn-outline-secondary dropdown-toggle" type="button" id="breed"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Breed

@@ -23,6 +23,7 @@ window.handleAddToCart = handleAddToCart;
 function init() {
   const urlParams = new URLSearchParams(window.location.search);
   const filterObject = paramsToObject(urlParams.entries());
+  console.log(filterObject)
   loadProducts(filterObject);
   loadFilters(filterObject);
 }
@@ -61,10 +62,17 @@ function renderFooter() {
         }
     */
     function loadFilters(filterObject) {
+        
         filtersList = filterObject; //Updates global variable
+        console.log(filterObject)
         Object.keys(filtersList).forEach((key, index) => {
             if (typeof filtersList[key]=="string") {
-                document.getElementById(key).innerHTML = capitalizeFirstLetter(filtersList[key]);
+
+                const docElement = document.getElementById(key)
+
+                if (docElement) {
+                    docElement.innerHTML = capitalizeFirstLetter(filtersList[key]);
+                }
             }
         });
     }
