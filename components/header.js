@@ -1,10 +1,12 @@
 export function createHeader() {
-  return `
+  return (
+    `
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="../index.html">
-          Our Awesome Pet Store
-        </a>
+          Our Awesome Pet Store 
+        </a> 
+        
         <button
           class="navbar-toggler"
           type="button"
@@ -116,28 +118,49 @@ export function createHeader() {
           <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="/cart/cart.html">
-                Cart (`+ cart() +`)
+                Cart (` +
+    cart() +
+    `)
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="login/login.html">
-                Profile
+                
+          `+
+  greeting() +
+  `
+      
               </a>
             </li>
           </ul>
         </div>
-      </div>
-    </nav>`;
+      </div>       
+    </nav>
+
+    
+     
+    
+    
+    
+    
+    `
+  );
 }
 
 function cart() {
   var cartsize;
   if (localStorage.getItem("cart size") == null) {
-    cartsize = "0"
+    cartsize = "0";
   } else {
-    cartsize = localStorage.getItem("cart size")
+    cartsize = localStorage.getItem("cart size");
   }
   return cartsize;
 }
 
-
+function greeting() {
+  if (localStorage.firstName != null) {
+    let greeting = (localStorage.getItem("firstName") + " (Profile)");
+    return greeting;
+  }
+  return "Login";
+}
