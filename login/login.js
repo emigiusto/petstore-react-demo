@@ -5,6 +5,7 @@ import {createHeader} from "../components/header.js"
 window.onload = function() {
     initLogin();
     addEventListeners();
+    check_signIn();
     renderHeader();
     renderFooter();
 };
@@ -62,13 +63,55 @@ function addEventListeners() {
     }
 
 //Auxiliar functions
-    //Check if the user and password entered are correct and returns an object with message and status.
-    function checkUserPassword(user,password) {
-        if (user !== localStorage.getItem("email")) {
-            return {message: "The email does not correspond to an existing account", status: false}
-        }
-        if (password !== localStorage.getItem("password")) {
-            return {message: "The password is incorrect", status: false}
-        }
-        return {message: "Login successful into PetStore", status: true}
+//Check if the user and password entered are correct and returns an object with message and status.
+function checkUserPassword(user,password) {
+    if (user !== localStorage.getItem("email")) {
+        return {message: "The email does not correspond to an existing account", status: false}
     }
+    if (password !== localStorage.getItem("password")) {
+        return {message: "The password is incorrect", status: false}
+    }
+    return {message: "Login successful into PetStore", status: true}
+}
+
+
+function check_signIn(){
+    if(!window.localStorage.hasOwnProperty("firstName")){
+        document.getElementById("loginContent").innerHTML = `
+        <img class="mb-4 d-flex mx-auto form-signin__logo" src="https://img.icons8.com/color/96/000000/dog-bowl.png"
+        alt="" width="80" height="80">
+        <h1 class="h3 mb-3 font-weight-normal form-signin__title">Sign in</h1>
+        <!--<label for="inputEmail" class="sr-only form-signin__label">Email address</label>-->
+        <input type="email" name="email" id="inputEmail" class="form-control form-signin__input"
+        placeholder="Email address" required autofocus>
+        <!--<label for="inputPassword" class="sr-only form-signin__label">Password</label>-->
+        <input type="password" name="password" id="inputPassword" class="form-control form-signin__input"
+        placeholder="Password" required>
+        <div class="checkbox mb-3 form-signin__remember">
+        <input type="checkbox" value="false" name="remember" id="inputRemember" onclick="handleCheckbox(this)">
+        <label>Remember me</label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block mb-2 form-signin__submit" type="submit">Sign in</button>
+        <p class="mt-3 mb-1">Don't have an account yet?</p>
+        <p class="mt-0 mb-2">Register
+        <a href="../register.html" class="link-primary">here</a>
+        </p>
+        `
+        }else{
+            document.getElementById("loginContent").innerHTML = `
+            <img class="mb-4 d-flex mx-auto form-signin__logo" src="https://img.icons8.com/color/96/000000/dog-bowl.png"
+            alt="" width="80" height="80">
+            <h1 class="h3 mb-3 font-weight-normal form-signin__title">You're currently signed in as `+ window.localStorage.getItem("firstName") + ` :)</h1>
+            <p class="mt-3 mb-1">Want to switch accounts?</p>
+            <p class="mt-0 mb-2">Log in
+            <a id="resetButton" onclick="resetUser()" href="\" class="link-primary">here</a>
+            </p> 
+            `
+        }
+    }
+    window.resetUser = resetUser;
+    function resetUser(){
+        console.log("work");
+        window.localStorage.clear();
+    }
+    //document.getElementById("resetButton").addEventListener("click", resetUser(), false);

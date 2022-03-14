@@ -43,6 +43,7 @@ function renderHeader(){
 
 //Defining global function
 window.handleAddToCart = handleAddToCart;
+
 function handleAddToCart(id){
     let newProduct = filterProducts(productsList, { id: id })[0];
     addToCart(newProduct);
