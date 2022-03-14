@@ -1,7 +1,7 @@
-import {createFooter} from "./components/footer.js"
-import {filterProducts} from "./helperFunctions/filter.js"
-import {createHeader} from "./components/header.js"
-import {addToCart} from "./helperFunctions/cart.js";
+import {createFooter} from "../components/footer.js"
+import { filterProducts } from "../helperFunctions/filter.js";
+import {createHeader} from "../components/header.js"
+import {addToCart} from "../helperFunctions/cart.js";
 
 
 window.onload = function() {
@@ -10,10 +10,16 @@ window.onload = function() {
     renderFooter();
     renderHeader();
 };
+
+var productsList;
+
 function loadProducts() {
     fetch("../ShopifyProducts.json")
         .then(response => response.json())
-        .then(jsonData => renderAllCategories(jsonData));
+        .then(jsonData => {
+            productsList = jsonData
+            renderAllCategories(jsonData)
+        });
 }
 
 function renderAllCategories(jsonData) {
@@ -43,10 +49,12 @@ function renderHeader(){
 
 //Defining global function
 window.handleAddToCart = handleAddToCart;
+
 function handleAddToCart(id){
     let newProduct = filterProducts(productsList, { id: id })[0];
     addToCart(newProduct);
 }
+
 function render(data, elementId) {
     data.forEach(element => {
         let newCard = document.createElement('div');

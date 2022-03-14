@@ -1,10 +1,60 @@
 import {toast} from "../helperFunctions/toast.js";
+import {handleCartSize} from "../cart/cart.js"
 
 //Clears the cart in local storage - Should be combined with a refresh in rendering
 export function clearCart() {
     localStorage.removeItem("product-array");
     localStorage.removeItem("cart size")
 }
+
+/* export function deleteProduct(productTodelete) {
+
+    let cartProducts = JSON.parse(localStorage.getItem("product-array"))
+    if (productTodelete.amount > 1) {
+        let newProducts = cartProducts.filter(el => el.id !== productTodelete.id);$
+        let updatedProduct = { amount: productTodelete.amount - 1, ...productTodelete }
+        newProducts.push(updatedProduct)
+        localStorage.setItem("product-array", JSON.stringify(newProducts));
+        let cartString = localStorage.getItem("cart size")
+        let cartInt = parseInt(cartString)
+        localStorage.setItem("cart size", cartInt - 1)  
+    } else {
+        let newProducts = cartProducts.filter(el => el.id !== productTodelete.id);
+        console.log(cartProducts)
+        console.log(newProducts)
+        localStorage.setItem("product-array", JSON.stringify(newProducts))
+        let cartString = localStorage.getItem("cart size")
+        let cartInt = parseInt(cartString)
+        localStorage.setItem("cart size", cartInt - 1)   
+    }
+} */
+
+export function deleteProduct(productTodelete) {
+    let cartProducts = JSON.parse(localStorage.getItem("product-array"))
+    let productIndex = cartProducts.findIndex(
+      (el) => el.id === productTodelete.id
+    )
+  
+    let productToUpdate = cartProducts[productIndex]
+  
+    if (productToUpdate.amount === 1) {
+      cartProducts.splice(productIndex, 1)
+    } else {
+      productToUpdate = {
+        ...productToUpdate,
+        amount: productToUpdate.amount - 1,
+      }
+      cartProducts[productIndex] = productToUpdate
+    }
+    console.log(cartProducts)
+    localStorage.setItem("product-array", JSON.stringify(cartProducts))
+  
+    const cartSize = cartProducts.length
+    console.log("Cart size: ", cartSize)
+    localStorage.setItem("cart size", cartSize)
+
+    return cartProducts
+  }
 
 /*  Function to add products to the cart. Will never run before products are loaded "loadProducts()", 
     so it's safe from the asynchronous perspective ;)
@@ -44,4 +94,6 @@ export function addToCart(newProduct) {
     toast("Product added to cart","success")
     console.log("Updated Cart:")
     console.log(currentProductList)
+    handleCartSize()
+    
 }

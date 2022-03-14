@@ -25,15 +25,19 @@
             <div class="widthsetter">
             <!-- Header -->
             <div class="row align-middle">
-                <div class="col align-self-center"><h1 id = "title"></h1></div>
+                <div class="col align-self-center"><h1 id = "title">Cart</h1></div>
                 <div class="col-auto align-self-center"><button id="clearCartButton" class="btn btn-outline-secondary">Clear cart</button></div>
             </div>
             <!-- Products (list) -->
                 <ul id="cartList" style="padding-left: 0px;"  >
                 </ul>
                 <div class="row">
-                    <a class="button" href="/checkout/checkout.html">Go to checkout</a>
+                    <div class="col"><p style = "font-weight: bold;">Total</p></div>
+                    <div class="col"><p id= "productTotal" class="text-end"></p></div>
                 </div>
+                <a href="../checkout/checkout.html">
+                    <button type="button" class="btn btn-dark">Go to checkout</button>
+                 </a>
             </div>
         </div>
     <!-- Content end-->
