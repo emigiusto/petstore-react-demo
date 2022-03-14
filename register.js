@@ -30,7 +30,7 @@ function handleRegisterForm() {
       localStorage.setItem("state", data.get("state"));
 
       //CHECK STUFF, IF EVERYTHING IS RIGHT THEN REDIRECT:
-      window.location.href = "/index.html?email=" + email;
+      window.location.href = "index/index.html?email=" + email;
     }
   );
 }
