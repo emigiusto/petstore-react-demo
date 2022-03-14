@@ -16,6 +16,7 @@ function saveForm(){
     // save last name
     localStorage.setItem("lastName", inputLname.value);
   }
+
   
   function saveUsername() {
     // get username
