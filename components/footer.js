@@ -5,5 +5,5 @@ export function createFooter() {
     <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Imprint</a></li>
     <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
     </ul>
-    <p class="text-center text-muted">© 2022 Our Awesome Pet Store</p>`);
+    <p class="text-center text-muted">© 2022 Pet Store</p>`);
 }
