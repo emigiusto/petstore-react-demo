@@ -71,7 +71,7 @@ function cart() {
 
 function name() {
   if (localStorage.firstName != null) {
-    let greeting = (localStorage.getItem("firstName") + " (Profile)");
+    let greeting = (localStorage.getItem("firstName"));
     return greeting;
   }
   return "Login";

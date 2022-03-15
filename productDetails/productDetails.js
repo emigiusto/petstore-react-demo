@@ -61,12 +61,12 @@ function render(selectedProduct) {
           <div class="col px-2 pb-2"><h3>` +
     selectedProduct.title +
     `</h3></div>
-          <div class="col px-2 pb-2">` +
+          <div class="col px-2 pb-2">` + 
     selectedProduct.description +
     `</div>
-          <div class="col px-2 pb-2"><h3>` +
+          <div class="col px-2 pb-2"><h3>` +'€' +
     selectedProduct.price +
-    ` €</h3></div>
+    ` </h3></div>
           <div class="col px-2 pb-2"><button onClick="handleAddToCart()" type="button" class="btn btn-dark">Add to cart</button></div>
         </div>
         <div class="col-sm">
