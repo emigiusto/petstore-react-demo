@@ -120,9 +120,9 @@ function renderFooter() {
                         <p class="card-text card__body__type">Pet size: ` +
       element.size +
       `</p>
-                        <p class="card-text card__body__type fs-5 fw-bolder">` +
+                        <p class="card-text card__body__type fs-5 fw-bolder">` + '€'+
       element.price +
-      ` €</p>
+      ` </p>
                         <div class="d-flex justify-content-between card__body__button-cont">
                             <a href="../productDetails/productDetails.html?id=` +
       element.id +

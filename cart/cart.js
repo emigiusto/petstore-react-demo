@@ -113,7 +113,7 @@ function render(data) {
         `</p>
                     </div>
                     <div class="col product-price-container">
-                        <p class= "product-text-price">`+ (element.price*element.amount) +`</p>
+                        <p class= "product-text-price">`+ '€' + (element.price*element.amount) +`</p>
                     </div>
                 </div>
                 <div class="row">
