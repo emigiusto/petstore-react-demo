@@ -11,6 +11,7 @@ window.onload = function() {
     displayFooter()
     handleTotal()
     handleCartSize()
+    title();
 };
 
 var productsList;
