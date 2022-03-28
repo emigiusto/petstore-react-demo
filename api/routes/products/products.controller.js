@@ -22,7 +22,7 @@ async function addProduct(req, res) {
   }
   async function getProduct (req, res) {
     try {
-      let id = parseInt(req.params.id)
+      let id = req.params.id
       let product = await productModel.getByID(id);
       res.json(product);
     } catch (error) {

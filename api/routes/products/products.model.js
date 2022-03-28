@@ -4,16 +4,17 @@ var db = require("../../dba/firestore")
 async function getAll() {
   try {
     const products = []
-    const productColletion = db.collection('products');
-    const snapshot = await productColletion.get();
-    snapshot.forEach(doc => {
-      products.push(
-        {
-          ...doc.data(),
-          id: doc.id
-        }
-      );
-    });
+    const productCollection = db.collection('products');
+    
+    const snapshot = await productCollection.get();
+      snapshot.forEach(doc => {
+        products.push(
+          {
+            ...doc.data(),
+            id: doc.id
+          }
+        );
+      });
     return products
   } catch (err) {
       throw err.message;
@@ -21,12 +22,24 @@ async function getAll() {
 }
 
 // Return a product by ID
-async function getByID(customerId) {
-  let customerArray = await getAll();
-  let index = findCustomer(customerArray, customerId);
-  if (index === -1)
-    throw new Error(`Customer with ID:${customerId} doesn't exist`);
-  else return customerArray[index];
+async function getByID(productId) {
+  try {
+    const products = [];
+    const productCollection = db.collection('products');
+    
+    const snapshot = await productCollection.doc(productId).get();
+    console.log(snapshot)
+    snapshot.forEach(doc => {
+      products.push(
+        {
+          ...doc.data(),
+          id: doc.id
+        });
+    });
+    return products;
+  } catch (err) {
+      throw err.message;
+  }
 }
 
 // create a new customer
