@@ -1,5 +1,6 @@
 // index.js
 var express = require('express');
+//call all functions from product controller
 var {getAllProducts, addProduct, getProduct,updateProduct, deleteProduct } = require('./products.controller.js');
 
 const productRouter = express.Router();
