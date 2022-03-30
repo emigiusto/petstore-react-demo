@@ -24,36 +24,41 @@ async function getAll() {
 // Return a product by ID
 async function getByID(productId) {
   try {
-    const products = [];
     const productCollection = db.collection('products');
-    
-    const snapshot = await productCollection.doc(productId).get();
-    console.log(snapshot)
-    snapshot.forEach(doc => {
-      products.push(
-        {
-          ...doc.data(),
-          id: doc.id
-        });
-    });
-    return products;
+    //array based on productId
+    const product = await productCollection.doc(productId).get();
+ const finalProd = {
+   id: product.id,
+   ...product.data(),
+ }
+    return finalProd;
   } catch (err) {
       throw err.message;
   }
 }
 
-// create a new customer
-async function add(newCustomer) {
-  let customerArray = await getAll();
-  if (findCustomer(customerArray, newCustomer.customerId) !== -1 )
-    throw new Error(
-      `Customer with Id:${newCustomer.customerId} already exists`
-    );
-  customerArray.push(newCustomer);
-  await save(customerArray);
+// create a new product
+async function add(newProduct) {
+try {
+  const exampleProd =  {
+    name: "nicholas",
+    price: 45
+  }
+  const newProduct= db.collection('products').doc();
+
+  // Later...
+  const newId = await newProduct.set(exampleProd);
+  console.log(newId)
+
+console.log("added!")
+
+} catch (err) {
+  throw err.message;
+  
+}
 }
 
-// update existing customer
+// update existing product
 async function update(customerId, customer) {
   let customerArray = await getAll();
   let index = findCustomer(customerArray, customerId); // findIndex
@@ -65,7 +70,7 @@ async function update(customerId, customer) {
   }
 }
 
-// delete existing customer
+// delete existing product
 async function remove(customerId) {
   let customerArray = await getAll();
   let index = findCustomer(customerArray, customerId); // findIndex
