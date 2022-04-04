@@ -13,6 +13,7 @@ async function getAllOrders(req, res) {
 async function addOrder(req, res) {
     try {
       let newOrder = req.body;
+      console.log(newOrder)
       await orderModel.add(newOrder);
       res.end()
     } catch (error) {
