@@ -1,62 +1,62 @@
 var db = require("../../dba/firestore")
 
-// Return all products from Firebase
+// Return all users from Firebase
 async function getAll() {
   try {
-    const products = []
-    const productCollection = db.collection('products');
-    const snapshot = await productCollection.get();
+    const users = []
+    const userCollection = db.collection('users');
+    const snapshot = await userCollection.get();
       snapshot.forEach(doc => {
-        products.push(
+        users.push(
           {
             ...doc.data(),
             id: doc.id
           }
         );
       });
-    return products
+    return users
   } catch (err) {
       throw err.message;
   }
 }
 
 // Return a product by ID
-async function getByID(productId) {
+async function getByID(userID) {
   try {
-    const productCollection = db.collection('products');
-    
-    // Array based on productId
-    let customerArray = await getAll();
-    let index = findProduct(customerArray, productId); // findIndex
+    const userCollection = db.collection("users");
 
-    // If product does not exits
+    // Array based on userID
+    let userArray = await getAll();
+    let index = findUser(userArray, userID); // findIndex
+
+    // If user does not exits
     if (index === -1){
-      return `Product with ID: ${productId} doesn't exist`
-      /* throw new Error(`Product with ID:${productId} doesn't exist`); */
+      return `User with ID: ${userID} doesn't exist`
     }
-    // If product does exits
-    const product = await productCollection.doc(productId).get();
-    const finalProd = {
-      id: product.id,
-      ...product.data(),
-    }
-    return finalProd;
+
+    //array based on userID
+    const user = await userCollection.doc(userID).get();
+    const finalUser = {
+      id: user.id,
+      ...user.data(),
+    };
+    return finalUser;
   } catch (err) {
       throw err.message;
   }
 }
 
 // create a new product
-async function add(newProduct) {
+async function add(newUser) {
 try {
   const exampleProd =  {
     name: "nicholas",
     price: 45
   }
-  const products = db.collection('products').doc();
+  const users = db.collection('users').doc();
 
   // Later...
-  const newId = await products.set(exampleProd);
+  const newId = await users.set(exampleProd);
   console.log(newId)
 
 console.log("added!")
@@ -108,8 +108,8 @@ module.exports = {getAll,add,update,remove,getByID};
     );
   }
 
-  function findProduct(productArray,productid) {
-    return productArray.findIndex(
-      (product) => product.id === productid
+  function findUser(userArray,userId) {
+    return userArray.findIndex(
+      (user) => user.id === userId
     )
   }
