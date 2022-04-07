@@ -12,7 +12,7 @@ router.get('/:id', function (req, res, next) {
   getAllProducts().then(response =>  res.send(response) )
 });
 
-const getAllProducts = async () => {
+/* const getAllProducts = async () => {
   const products = []
     const productColletion = db.collection('products');
     const snapshot = await productColletion.get();
@@ -23,7 +23,7 @@ const getAllProducts = async () => {
       });
     });
     return products
-}
+} */
 
 
 

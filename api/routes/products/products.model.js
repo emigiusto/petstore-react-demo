@@ -5,7 +5,6 @@ async function getAll() {
   try {
     const products = []
     const productCollection = db.collection('products');
-    
     const snapshot = await productCollection.get();
       snapshot.forEach(doc => {
         products.push(
@@ -25,12 +24,22 @@ async function getAll() {
 async function getByID(productId) {
   try {
     const productCollection = db.collection('products');
-    //array based on productId
+    
+    // Array based on productId
+    let customerArray = await getAll();
+    let index = findProduct(customerArray, productId); // findIndex
+
+    // If product does not exits
+    if (index === -1){
+      return `Product with ID: ${productId} doesn't exist`
+      /* throw new Error(`Product with ID:${productId} doesn't exist`); */
+    }
+    // If product does exits
     const product = await productCollection.doc(productId).get();
- const finalProd = {
-   id: product.id,
-   ...product.data(),
- }
+    const finalProd = {
+      id: product.id,
+      ...product.data(),
+    }
     return finalProd;
   } catch (err) {
       throw err.message;
@@ -44,10 +53,10 @@ try {
     name: "nicholas",
     price: 45
   }
-  const newProduct= db.collection('products').doc();
+  const products = db.collection('products').doc();
 
   // Later...
-  const newId = await newProduct.set(exampleProd);
+  const newId = await products.set(exampleProd);
   console.log(newId)
 
 console.log("added!")
@@ -97,4 +106,10 @@ module.exports = {getAll,add,update,remove,getByID};
     return customerArray.findIndex(
       (currCustomer) => currCustomer.customerId === Id
     );
+  }
+
+  function findProduct(productArray,productid) {
+    return productArray.findIndex(
+      (product) => product.id === productid
+    )
   }
