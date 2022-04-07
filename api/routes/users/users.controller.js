@@ -13,6 +13,7 @@ async function getAllUsers(req, res) {
 async function addUser(req, res) {
     try {
       let newUser = req.body;
+      console.log(newUser);
       await userModel.add(newUser);
       res.end()
     } catch (error) {

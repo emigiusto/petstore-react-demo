@@ -49,14 +49,10 @@ async function getByID(userID) {
 // create a new product
 async function add(newUser) {
 try {
-  const exampleProd =  {
-    name: "nicholas",
-    price: 45
-  }
   const users = db.collection('users').doc();
-
+  
   // Later...
-  const newId = await users.set(exampleProd);
+  const user = await users.set(newUser);
   console.log(newId)
 
 console.log("added!")
