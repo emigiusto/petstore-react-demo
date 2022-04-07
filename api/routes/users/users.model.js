@@ -1,3 +1,4 @@
+const res = require("express/lib/response");
 var db = require("../../dba/firestore")
 
 // Return all users from Firebase
@@ -23,68 +24,93 @@ async function getAll() {
 // Return a product by ID
 async function getByID(userID) {
   try {
-    const userCollection = db.collection("users");
+    const user = await db.collection("users").doc(userID).get();
+    // user will always contain the wrong id searched for
 
-    // Array based on userID
-    let userArray = await getAll();
-    let index = findUser(userArray, userID); // findIndex
-
-    // If user does not exits
-    if (index === -1){
-      return `User with ID: ${userID} doesn't exist`
+    var response = {
+      message: "",
+      userExists: true,
+      //array based on userID
+      finalUser: {
+        id: user.id,
+        ...user.data()
+      }
+    }
+    
+    if (!user.data()) {
+      response.message = `User with ID: ${userID} doesn't exist`
+      response.userExists = false
     }
 
-    //array based on userID
-    const user = await userCollection.doc(userID).get();
-    const finalUser = {
-      id: user.id,
-      ...user.data(),
-    };
-    return finalUser;
+    return response;
   } catch (err) {
       throw err.message;
   }
 }
 
-// create a new product
+// add user to database
 async function add(newUser) {
 try {
-  const users = db.collection('users').doc();
-  
-  // Later...
-  const user = await users.set(newUser);
-  console.log(newId)
-
-console.log("added!")
-
-} catch (err) {
+  console.log(newUser)
+  var response = {
+    message: ""
+  }
+    const users = db
+      .collection("users")
+      .add(newUser)
+      .then(function (docRef) {
+        response.message = docRef.id
+        return response
+      });
+    return users
+  }
+  catch (err) {
   throw err.message;
   
 }
 }
 
+// userModel.update(id, body)
 // update existing product
-async function update(customerId, customer) {
-  let customerArray = await getAll();
-  let index = findCustomer(customerArray, customerId); // findIndex
-  if (index === -1)
-    throw new Error(`Customer with ID:${customerId} doesn't exist`);
-  else {
-    customerArray[index] = customer;
-    await save(customerArray);
+async function update(userID, body) {
+
+  let responseMessage = {
+    message: "User updated",
+    status: true
+  }
+  try {
+    /* console.log(body) */
+    const user = db.collection("users").doc(userID);
+    const res = await user.set({
+      ...body}, {merge: true}
+    )
+    return responseMessage
+
+  } catch (error) {
+    
   }
 }
 
 // delete existing product
 async function remove(customerId) {
-  let customerArray = await getAll();
-  let index = findCustomer(customerArray, customerId); // findIndex
-  if (index === -1)
-    throw new Error(`Customer with ID:${customerId} doesn't exist`);
-  else {
-    customerArray.splice(index, 1); // remove customer from array
-    await save(customerArray);
+  let responseMessage = {
+    message: "",
+    status: false
   }
+  let user = await getByID(customerId);
+  if (user.userExists) {
+    await db.collection('users').doc(customerId).delete()
+    let userTwo = await getByID(customerId)
+    if (!userTwo.userExists) {
+      responseMessage.message = "User deleted"
+      responseMessage.status = true
+    } else {
+      responseMessage.message = "Something went wrong. Try again."
+    }
+  } else {
+    responseMessage.message = "User does not exist"
+  }
+  return responseMessage
 }
 
 module.exports = {getAll,add,update,remove,getByID};
