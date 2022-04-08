@@ -3,10 +3,9 @@ var userModel = require('./users.model.js');
 async function getAllUsers(req, res) {
     try {
         let allUsers = await userModel.getAll();
-        res.json(allUsers);
+        res.json({users: allUsers});
     } catch (error) {
-      // res.statusMessage=
-      res.status(400).send(error.message);
+      res.status(400).send({message:error.message});
     }
   }
 
@@ -15,7 +14,6 @@ async function updateUser(req, res) {
   try {
     let id = req.params.id;
     let body = req.body;
-    console.log(body)
     let bodyValidaded = {}
     if (body.firstName) { bodyValidaded.firstName = body.firstName }
     if (body.lastName) { bodyValidaded.lastName = body.lastName }
@@ -35,11 +33,9 @@ async function updateUser(req, res) {
     } else {
       throw "User does not exist"
     }
-
-
   } catch (message) {
     // res.statusMessage=
-    res.status(400).send(message);
+    res.status(400).send({message: message});
   }
 }
 
@@ -55,7 +51,7 @@ async function addUser(req, res) {
       }
       if (newUser.firstName && newUser.lastName && newUser.zip && newUser.street && newUser.city) {
         let responseID = await userModel.add(newUser);
-        res.json(responseID.message)
+        res.json({id: responseID.message})
       } else {
         let errorResponse = {
           message: "Cannot add user as it is missing required fields."
@@ -63,8 +59,7 @@ async function addUser(req, res) {
         throw errorResponse.message
       }
     } catch (message) {
-      // res.statusMessage=
-      res.status(400).send(message);
+      res.status(400).send({message: message});
     }
   }
 
@@ -73,7 +68,6 @@ async function getUser(req, res) {
   try {
     let id = req.params.id;
     let user = await userModel.getByID(id);
-
     if (user.userExists) {
       res.json(user.finalUser)
     } else {
@@ -81,9 +75,7 @@ async function getUser(req, res) {
     }
 
   } catch (message) {
-    // res.statusMessage=
-    console.log(message)
-    res.status(400).send(message);
+    res.status(400).send({message: message});
   }
 }
 
@@ -94,14 +86,14 @@ async function deleteUser(req, res) {
     let responseMessage = await userModel.remove(id);
 
     if (responseMessage.status) {
-      res.json(responseMessage.message)
+      res.json({message: responseMessage.message})
     } else {
       throw responseMessage.message
     }
 
   } catch (message) {
     // res.statusMessage=
-    res.status(400).send(message);
+    res.status(400).send({message: message});
   }
 }
 
