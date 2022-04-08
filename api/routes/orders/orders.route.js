@@ -1,21 +1,33 @@
 // index.js
-var express = require('express');
+var express = require("express");
 //call all functions from orders controller
-var {getAllOrders, addOrder, getOrder,updateOrder, deleteOrder } = require('./orders.controller.js');
+var {
+  getAllOrders,
+  addOrder,
+  getOrder,
+  updateOrder,
+  deleteOrder,
+} = require("./orders.controller.js");
 
 const orderRouter = express.Router();
 
 // middleware specific to this route
-orderRouter.use(express.json())
+orderRouter.use(express.json());
 
 // route handlers
+
+//get all orders
 orderRouter.get("/", getAllOrders);
+//get a single order by id
 orderRouter.get("/:id", getOrder);
 
+//add a new order
 orderRouter.post("/", addOrder);
 
-orderRouter.put("/:id",updateOrder);
+//update an existing order or create it, if it does not exist
+orderRouter.put("/:id", updateOrder);
 
+//delete an order
 orderRouter.delete("/:id", deleteOrder);
 
 module.exports = orderRouter;

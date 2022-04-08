@@ -1,11 +1,12 @@
+const res = require("express/lib/response");
 var db = require("../../dba/firestore");
 
-// Return all orders from Firebase
+// Return all orders from database
+// Tested successfully
 async function getAll() {
   try {
     const orders = [];
     const orderCollection = db.collection("orders");
-
     const snapshot = await orderCollection.get();
     snapshot.forEach((doc) => {
       orders.push({
@@ -19,70 +20,128 @@ async function getAll() {
   }
 }
 
-// Return an order by ID
-async function getByID(orderId) {
+// Return a single order by ID
+//Tested successfully
+async function getByID(orderID) {
   try {
-    const orderCollection = db.collection("orders");
-    //array based on orderId
-    const order = await orderCollection.doc(orderId).get();
-    const finalOrder = {
-      id: order.id,
-      ...order.data(),
+    // Get order with ID from database
+    const order = await db.collection("orders").doc(orderID).get();
+
+    // Create a response message with order data
+    var response = {
+      message: "",
+      orderExists: true,
+      // Array based on orderID
+      finalOrder: {
+        id: order.id,
+        ...order.data(),
+      },
     };
-    return finalOrder;
+
+    // If the order does not exist set response to error message
+    if (!order.data()) {
+      response.message = `Order with ID: ${orderID} doesn't exist`;
+      response.orderExists = false;
+    }
+
+    // return response
+    return response;
   } catch (err) {
     throw err.message;
   }
 }
 
-// create a new order
+// Add order to database
+//Tested successfully
 async function add(newOrder) {
+  // Create object for response message
   try {
+    var response = {
+      message: "",
+    };
+
+    // Add new order and return response message containing the new orderID
     const orders = db
       .collection("orders")
       .add(newOrder)
       .then(function (docRef) {
-        console.log("Document written with ID: ", docRef.id);
+        response.message = docRef.id;
+        return response;
       });
-
-    //console.log("added!");
+    return orders;
   } catch (err) {
     throw err.message;
   }
 }
 
 // update existing order
-async function update(orderId, order) {
-  let orderArray = await getAll();
-  let index = findOrder(orderArrray, orderId); // findIndex
-  if (index === -1) throw new Error(`Order with ID:${orderId} doesn't exist`);
-  else {
-    orderArray[index] = order;
-    await save(orderArray);
-  }
+// Tested successfully
+async function update(orderID, body) {
+  // Create object for response message
+
+  let responseMessage = {
+    message: "Order updated",
+    status: true,
+  };
+
+  // Update order and return response message
+
+  try {
+    const order = db.collection("orders").doc(orderID);
+    const res = await order.set(
+      {
+        ...body,
+      },
+      { merge: true }
+    );
+    return responseMessage;
+  } catch (error) {}
 }
 
-// delete existing order
+// Delete existing order
+// Tested successfully
 async function remove(orderId) {
-  let orderArray = await getAll();
-  let index = findOrder(orderArray, orderId); // findIndex
-  if (index === -1) throw new Error(`Order with ID:${orderId} doesn't exist`);
-  else {
-    orderArray.splice(index, 1); // remove order from array
-    await save(orderArray);
+  // Create object for response message
+
+  let responseMessage = {
+    message: "",
+    status: false,
+  };
+
+  // Delete order if it exists, print error message otherwise.
+
+  let order = await getByID(orderId);
+  if (order.orderExists) {
+    await db.collection("orders").doc(orderId).delete();
+    let orderTwo = await getByID(orderId);
+    if (!orderTwo.orderExists) {
+      responseMessage.message = "Order deleted";
+      responseMessage.status = true;
+    } else {
+      responseMessage.message = "Something went wrong. Try again.";
+    }
+  } else {
+    responseMessage.message = "Order does not exist";
   }
+  return responseMessage;
 }
 
 module.exports = { getAll, add, update, remove, getByID };
 
 //Helper functions --- Delete?
-// save array of orders to file
-async function save(orders = []) {
-  let ordersTxt = JSON.stringify(orders);
-  await fs.writeFile(ORDERS_FILE, ordersTxt);
+// save array of customers to file
+async function save(customers = []) {
+  let customersTxt = JSON.stringify(customers);
+  await fs.writeFile(CUSTOMERS_FILE, customersTxt);
 }
 
-// test function for order ID
-function findOrder(orderArray, Id) {
-  return orderArray.findIndex((currOrder) => currOrder.orderId === Id);
+// test function for customer ID
+function findCustomer(customerArray, Id) {
+  return customerArray.findIndex(
+    (currCustomer) => currCustomer.customerId === Id
+  );
+}
+
+function findUser(orderArray, orderId) {
+  return orderArray.findIndex((order) => order.id === orderId);
 }
