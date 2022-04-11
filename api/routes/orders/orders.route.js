@@ -7,6 +7,9 @@ var {
   getOrder,
   updateOrder,
   deleteOrder,
+  increaseProduct,
+  decreaseProduct,
+  removeProductFromOrder
 } = require("./orders.controller.js");
 
 const orderRouter = express.Router();
@@ -29,5 +32,13 @@ orderRouter.put("/:id", updateOrder);
 
 //delete an order
 orderRouter.delete("/:id", deleteOrder);
+
+//increaseProduct from order
+orderRouter.put("/increaseproduct/:orderid", increaseProduct);
+//decreaseProduct from order
+orderRouter.put("/decreaseproduct/:orderid", decreaseProduct);
+
+//remove Product from order
+orderRouter.put("/removeproduct/:orderid", removeProductFromOrder);
 
 module.exports = orderRouter;

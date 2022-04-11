@@ -104,15 +104,12 @@ async function addProduct(req, res) {
     try {
       let id = req.params.id
       let responseMessage = await productModel.remove(id)
-
       if (responseMessage.status) {
         res.json({message: responseMessage.message})
       } else {
         throw responseMessage.message
       }
-
     } catch (message) {
-      // res.statusMessage=
       res.status(400).send({message: message});
     }
   }
