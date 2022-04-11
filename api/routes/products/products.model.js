@@ -23,24 +23,22 @@ async function getAll() {
 // Return a product by ID
 async function getByID(productId) {
   try {
-    const productCollection = db.collection('products');
-    
-    // Array based on productId
-    let customerArray = await getAll();
-    let index = findProduct(customerArray, productId); // findIndex
+    const product = await db.collection('products').doc(productId).get();
+    var response = {
+      message: "",
+      productExists: true,
+      finalProd: {
+        id: product.id,
+        ...product.data()
+      }
+    }
 
-    // If product does not exits
-    if (index === -1){
-      return `Product with ID: ${productId} doesn't exist`
-      /* throw new Error(`Product with ID:${productId} doesn't exist`); */
+    if (!product.data()) {
+      response.message = `Product with ID: ${productId} doesn't exist`
+      response.productExists = false
     }
-    // If product does exits
-    const product = await productCollection.doc(productId).get();
-    const finalProd = {
-      id: product.id,
-      ...product.data(),
-    }
-    return finalProd;
+
+    return response;
   } catch (err) {
       throw err.message;
   }
@@ -49,26 +47,43 @@ async function getByID(productId) {
 // create a new product
 async function add(newProduct) {
 try {
-  const exampleProd =  {
-    name: "nicholas",
-    price: 45
+  console.log(newProduct)
+  var response = {
+    message: ""
   }
-  const products = db.collection('products').doc();
-
-  // Later...
-  const newId = await products.set(exampleProd);
-  console.log(newId)
-
-console.log("added!")
+  const products = db
+      .collection('products')
+      .add(newProduct)
+      .then(function (docRef) {
+        response.message = docRef.id
+        return response
+      })
+    return products;
 
 } catch (err) {
   throw err.message;
-  
 }
 }
 
 // update existing product
-async function update(customerId, customer) {
+async function update(id, body) {
+
+  let responseMessage = {
+    message: "Product updated",
+    status: true
+  }
+  try {
+
+    const product = db.collection('products').doc(id)
+    const res = await product.set({
+      ...body}, {merge: true}
+    )
+    return responseMessage
+
+  } catch (error) {
+    
+  }
+
   let customerArray = await getAll();
   let index = findCustomer(customerArray, customerId); // findIndex
   if (index === -1)
@@ -80,15 +95,26 @@ async function update(customerId, customer) {
 }
 
 // delete existing product
-async function remove(customerId) {
-  let customerArray = await getAll();
-  let index = findCustomer(customerArray, customerId); // findIndex
-  if (index === -1)
-    throw new Error(`Customer with ID:${customerId} doesn't exist`);
-  else {
-    customerArray.splice(index, 1); // remove customer from array
-    await save(customerArray);
+async function remove(id) {
+  let responseMessage = {
+    message: "",
+    status: false
   }
+  let product = await getByID(id)
+  if (product.productExists) {
+    await db.collection('products').doc(id).delete()
+    let productCheck = await getByID(id)
+    if (!productCheck.productExists) {
+      responseMessage.message = "Product deleted"
+      responseMessage.status = true
+    } else {
+      responseMessage.message = "Something went wrong. Try again."
+    }
+  } else {
+    responseMessage.message = "Product does not exist"
+  }
+  return responseMessage
+  
 }
 
 module.exports = {getAll,add,update,remove,getByID};
