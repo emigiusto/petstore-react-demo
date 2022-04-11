@@ -10,6 +10,7 @@ productRouter.use(express.json())
 
 // route handlers
 productRouter.get("/", getAllProducts);
+
 productRouter.get("/:id", getProduct);
 
 productRouter.post("/", addProduct);
