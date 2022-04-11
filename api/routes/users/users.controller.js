@@ -26,7 +26,7 @@ async function updateUser(req, res) {
     if (user.userExists) {
       let responseMessage = await userModel.update(id, bodyValidaded)
       if (responseMessage.status) {
-        res.json(responseMessage.message)
+        res.json({message: responseMessage.message})
       } else {
         throw responseMessage.message
       }

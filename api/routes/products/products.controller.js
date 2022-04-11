@@ -86,7 +86,7 @@ async function addProduct(req, res) {
       if (product.productExists) {
         let responseMessage = await productModel.update(id, bodyValidated);
         if (responseMessage.status) {
-          res.json(responseMessage.message)
+          res.json({message: responseMessage.message})
         } else {
           throw responseMessage.message
         }
