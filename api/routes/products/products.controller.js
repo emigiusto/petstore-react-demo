@@ -13,20 +13,20 @@ async function getAllProducts(req, res) {
 async function addProduct(req, res) {
     try {
       let newProduct = {
-        arrival: req.body.arrival,
+        arrival: req.body.arrival ? req.body.arrival : false,
         breed: req.body.breed,
-        delivery: req.body.delivery,
+        delivery: req.body.delivery ? req.body.delivery : false,
         description: req.body.description,
         image: req.body.image,
-        offer: req.body.offer,
-        package: req.body.package,
+        offer: req.body.offer ? req.body.offer : false,
+        package: req.body.package ? req.body.package : "",
         price: req.body.price,
         size: req.body.size,
-        sterilized: req.body.sterilized,
-        stock: req.body.stock,
+        sterilized: req.body.sterilized ? req.body.sterilized : false,
+        stock: req.body.stock ? req.body.stock : 0,
         title: req.body.title,
+        vendor: req.body.vendor,
         type: req.body.type,
-        vendor: req.body.vendor
       };
       if (newProduct.breed && newProduct.image && newProduct.offer && newProduct.price && newProduct.sterilized && newProduct.type) {
         let responseID = await productModel.add(newProduct);
