@@ -1,4 +1,5 @@
 var productModel = require('./products.model.js');
+var categoryModel = require('../categories/categories.model');
 
 async function getAllProducts(req, res) {
     try {
@@ -115,15 +116,20 @@ async function addProduct(req, res) {
 
   async function getProductsByCategory (req, res) {
     try {
-      let categId = req.params.categId
-      let allProductsResponse = await productModel.getAll()
-     /*  let filteredProducts = allProductsResponse.filter((product) => product.type =) */
-
-      if (responseMessage.status) {
-        res.json({message: responseMessage.message})
-      } else {
-        throw responseMessage.message
+      let categoryName = req.params.categoryName
+      let allCategories = await categoryModel.getAll()
+      let typeCategory = allCategories.filter((category) => category.value.toLowerCase() == "type")
+      if (!typeCategory.options.some((option) => option == categoryName)) {
+        throw "Category does not exist."
       }
+      /*  category = {
+        options:["Cat food","Dog Food", "Fish Food"],
+        value: "Type",
+        id: "",
+      } */
+      let allProductsResponse = await productModel.getAll()
+      let filteredProducts = allProductsResponse.filter((product) => product.type = categoryName)
+      res.json({products: filteredProducts})
     } catch (message) {
       res.status(400).send({message: message});
     }
