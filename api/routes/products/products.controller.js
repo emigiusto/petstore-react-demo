@@ -4,9 +4,8 @@ async function getAllProducts(req, res) {
     try {
         let allProducts = await productModel.getAll();
         res.json({products: allProducts});
-    } catch (error) {
-      // res.statusMessage=
-      res.status(400).send({message:error.message});
+    } catch (message) {
+      res.status(400).send({message: message});
     }
   }
 
@@ -114,4 +113,20 @@ async function addProduct(req, res) {
     }
   }
 
-  module.exports = {getAllProducts, addProduct, getProduct,updateProduct, deleteProduct};
+  async function getProductsByCategory (req, res) {
+    try {
+      let categId = req.params.categId
+      let allProductsResponse = await productModel.getAll()
+     /*  let filteredProducts = allProductsResponse.filter((product) => product.type =) */
+
+      if (responseMessage.status) {
+        res.json({message: responseMessage.message})
+      } else {
+        throw responseMessage.message
+      }
+    } catch (message) {
+      res.status(400).send({message: message});
+    }
+  }
+
+  module.exports = {getAllProducts, addProduct, getProduct,updateProduct, deleteProduct, getProductsByCategory};

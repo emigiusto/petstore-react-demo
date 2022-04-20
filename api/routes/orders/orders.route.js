@@ -24,7 +24,7 @@ orderRouter.get("/", getAllOrders);
 //get a single order by id
 orderRouter.get("/:id", getOrder);
 
-//add a new order
+//add a new order / CART?
 orderRouter.post("/", addOrder);
 
 //update an existing order or create it, if it does not exist

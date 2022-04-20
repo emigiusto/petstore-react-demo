@@ -78,14 +78,11 @@ async function add(newOrder) {
 // Tested successfully
 async function update(orderID, body) {
   // Create object for response message
-
   let responseMessage = {
     message: "Order updated",
     status: true,
   };
-
   // Update order and return response message
-
   try {
     const order = db.collection("orders").doc(orderID);
     const res = await order.set(
@@ -95,21 +92,20 @@ async function update(orderID, body) {
       { merge: true }
     );
     return responseMessage;
-  } catch (error) {}
+  } catch (error) {
+    throw error.message;
+  }
 }
 
 // Delete existing order
 // Tested successfully
 async function remove(orderId) {
   // Create object for response message
-
   let responseMessage = {
     message: "",
     status: false,
   };
-
   // Delete order if it exists, print error message otherwise.
-
   let order = await getByID(orderId);
   if (order.orderExists) {
     await db.collection("orders").doc(orderId).delete();

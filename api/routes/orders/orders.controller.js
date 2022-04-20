@@ -67,7 +67,6 @@ async function addOrder(req, res) {
       throw errorResponse.message;
     }
   } catch (message) {
-    // res.statusMessage=
     res.status(400).send(message);
   }
 }
