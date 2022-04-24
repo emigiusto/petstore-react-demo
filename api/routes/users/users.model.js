@@ -26,7 +26,6 @@ async function getByID(userID) {
   try {
     const user = await db.collection("users").doc(userID).get();
     // user will always contain the wrong id searched for
-
     var response = {
       message: "",
       userExists: true,
@@ -51,7 +50,6 @@ async function getByID(userID) {
 // add user to database
 async function add(newUser) {
 try {
-  console.log(newUser)
   var response = {
     message: ""
   }
@@ -70,24 +68,20 @@ try {
 }
 }
 
-// userModel.update(id, body)
-// update existing product
+// update existing user
 async function update(userID, body) {
-
   let responseMessage = {
     message: "User updated",
     status: true
   }
   try {
-    /* console.log(body) */
     const user = db.collection("users").doc(userID);
     const res = await user.set({
       ...body}, {merge: true}
     )
     return responseMessage
-
   } catch (error) {
-    
+      throw error.message;
   }
 }
 

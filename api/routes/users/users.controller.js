@@ -46,12 +46,9 @@ async function addUser(req, res) {
       }
       if (newUser.firstName && newUser.lastName && newUser.address) {
         let responseID = await userModel.add(newUser);
-        res.json({id: responseID.message})
+        res.status(201).send({id: responseID.message})
       } else {
-        let errorResponse = {
-          message: "Cannot add user as it is missing required fields."
-        }
-        throw errorResponse.message
+        throw "Cannot add user as it is missing required fields."
       }
     } catch (message) {
       res.status(400).send({message: message});

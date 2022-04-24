@@ -28,14 +28,12 @@ async function addProduct(req, res) {
         vendor: req.body.vendor,
         type: req.body.type,
       };
-      if (newProduct.breed && newProduct.image && typeof newProduct.offer !== 'undefined' && typeof newProduct.sterilized !== 'undefined' && newProduct.type) {
+      console.log(newProduct.offer)
+      if (newProduct.breed && newProduct.image && newProduct.type && newProduct.title && newProduct.vendor && newProduct.size && newProduct.price) {
         let responseID = await productModel.add(newProduct);
-        res.json({id:responseID.message})
+        res.status(201).send({id:responseID.message})
       } else {
-        let errorMessage = {
-          message: "Cannot add product as some fields are missing."
-        }
-        throw errorMessage.message
+        throw "Cannot add product as some fields are missing."
       }
     } catch (message) {
       res.status(400).send({message: message});
@@ -91,7 +89,6 @@ async function addProduct(req, res) {
       } else {
         throw "Product does not exist"
       }
-
     } catch (message) {
       res.status(400).send({message: message});
     }

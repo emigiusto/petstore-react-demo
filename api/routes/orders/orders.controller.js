@@ -58,7 +58,7 @@ async function addOrder(req, res) {
     };
     if (newOrder.address && newOrder.items && newOrder.userid) {
       let responseID = await orderModel.add(newOrder);
-      res.json({id:responseID.message});
+      res.status(201).send({id:responseID.message});
     } else {
       let errorResponse = {
         message: "Cannot add order as it is missing required fields.",

@@ -19,7 +19,7 @@ async function addCategory(req, res) {
     };
     if (newCategory.options && newCategory.value && newCategory.description) {
       let responseID = await categoryModel.add(newCategory);
-      res.json(responseID.message);
+      res.status(201).send(responseID.message);
     } else {
       throw "Cannot add Category as it is missing required fields.";
     }
