@@ -17,10 +17,8 @@ async function updateUser(req, res) {
     let bodyValidaded = {}
     if (body.firstName) { bodyValidaded.firstName = body.firstName }
     if (body.lastName) { bodyValidaded.lastName = body.lastName }
-    if (body.zip) { bodyValidaded.zip = body.zip }
-    if (body.street) { bodyValidaded.street = body.street }
-    if (body.city) { bodyValidaded.city = body.city }
-    if (body.active) { bodyValidaded.active = body.active }
+    if (body.address) { bodyValidaded.address = body.address }
+    if (typeof(body.active) !== 'undefined') { bodyValidaded.active = body.active }
 
     let user = await userModel.getByID(id);
     if (user.userExists) {
