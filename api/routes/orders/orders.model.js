@@ -141,4 +141,16 @@ async function getShoppingBasket(user) {
   return filteredOrders;
 }
 
-module.exports = { getAll, add, update, remove, getByID, getOrdersByUser, getShoppingBasket};
+//Close all open orders
+async function closeOpenOrders(userid) {
+  let ordersFilteredByUser = await getOrdersByUser(userid)
+  let ordersInProgress = ordersFilteredByUser.filter(order => order.status == "in progress")
+  ordersInProgress.forEach(order => {
+    let modifiedStatus = {status: "closed"}
+    update(order.id, modifiedStatus)
+  });
+}
+
+module.exports = { getAll, add, update, remove, getByID, getOrdersByUser, getShoppingBasket, closeOpenOrders};
+
+

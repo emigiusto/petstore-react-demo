@@ -50,13 +50,23 @@ async function updateOrder(req, res) {
 // Add order to database
 async function addOrder(req, res) {
   try {
+    let userID = req.body.userid
+    //Checks if user exists
+    let user = await usersModel.getByID(userID)
+    if (!user.userExists) {
+      throw 'User does not exist';
+    }
+    //New order template
     let newOrder = {
       address: req.body.address,
-      items: req.body.items,
-      userid: req.body.userid,
+      items: req.body.items.length ? req.body.items : [],
+      userid: userID,
       status: "in progress",
     };
-    if (newOrder.address && newOrder.items && newOrder.userid) {
+    if (newOrder.address) {
+      //Close all open orders so there is only one in progress
+      await orderModel.closeOpenOrders(userID)
+      //Adds the new order with status "in progress"
       let responseID = await orderModel.add(newOrder);
       res.status(201).send({id:responseID.message});
     } else {
@@ -110,7 +120,7 @@ async function increaseProduct(req, res) {
     let productId = body.productId;
     let productResponse = await productModel.getByID(productId);
     if (!productResponse.productExists) {
-      throw responseMessage.message;
+      throw "Product does not exist"
     }
     //Handles update of Order
     let responseOrder = await orderModel.getByID(id);
@@ -142,7 +152,7 @@ async function decreaseProduct(req, res) {
     let productId = body.productId;
     let productResponse = await productModel.getByID(productId);
     if (!productResponse.productExists) {
-      throw productResponse.message;
+      throw "Product does not exist"
     }
     
     //Checks if the order exists
@@ -164,18 +174,16 @@ async function decreaseProduct(req, res) {
 async function removeProductFromOrder(req, res) {
   try {
     let id = req.params.orderid;
-    let body = req.body;
     //Checks if the product exists
-    let productId = body.productId;
+    let productId = req.body.productId;
     let productResponse = await productModel.getByID(productId);
     if (!productResponse.productExists) {
-      throw productResponse.message;
+      throw "Product does not exist"
     }
-    
     //Checks if the order exists
     let responseOrder = await orderModel.getByID(id);
     if (!responseOrder.orderExists) {
-      throw responseOrder.message;
+      throw "Order does not exist"
     }
     //Handles update of Order
     if (responseOrder.orderExists && responseOrder.finalOrder.status =='in progress') {
@@ -194,7 +202,7 @@ async function getShoppingBasket(req, res) {
     let userid = req.params.userid;
     let user = await usersModel.getByID(userid)
     if (!user.userExists) {
-      throw 'User does not exists';
+      throw 'User does not exist';
     }
     let order = await orderModel.getShoppingBasket(user.finalUser);
     res.json(order);
@@ -209,7 +217,7 @@ async function getOrdersByUser(req, res) {
     let userid = req.params.userid;
     let user = await usersModel.getByID(userid)
     if (!user.userExists) {
-      throw 'User does not exists';
+      throw 'User does not exist';
     }
     let ordersArray = await orderModel.getOrdersByUser(userid)
       res.json(ordersArray);
@@ -235,15 +243,19 @@ function isProductOnOrder(order, productId) {
 }
 
 async function updateProductFromOrder(order, productId, operation) {
-  let modifiedItems = {}
+  let modifiedItems = {
+    items: []
+  }
   if (operation == "increase") {
-        if (isProductOnOrder(order,productId)) {
+        if (isProductOnOrder(order,productId)) { //product is already in order
           let updatedProduct = order.items.filter(product => product.productid == productId)[0]
           updatedProduct.quantity++
           modifiedItems.items = order.items.filter(product => !(product.productid == productId))
           modifiedItems.items.push(updatedProduct)
-        } else {
-          modifiedItems.items = order.items.push({ productid: productId, quantity: 1})
+        } else { //product is not in order
+          modifiedItems.items = order.items.filter(product => !(product.productid == productId)) 
+          order.items.push({ productid: productId, quantity: 1})
+          modifiedItems.items = order.items
         }
   } else if (operation == "decrease") {
         if (isProductOnOrder(order,productId)) {
