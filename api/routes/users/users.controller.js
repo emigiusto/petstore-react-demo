@@ -44,12 +44,10 @@ async function addUser(req, res) {
       let newUser = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        zip: req.body.zip,
-        street: req.body.street,
-        city: req.body.city,
+        address: req.body.address,
         active: true
       }
-      if (newUser.firstName && newUser.lastName && newUser.zip && newUser.street && newUser.city) {
+      if (newUser.firstName && newUser.lastName && newUser.address) {
         let responseID = await userModel.add(newUser);
         res.json({id: responseID.message})
       } else {

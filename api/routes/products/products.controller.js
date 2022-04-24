@@ -16,7 +16,7 @@ async function addProduct(req, res) {
         arrival: req.body.arrival ? req.body.arrival : false,
         breed: req.body.breed,
         delivery: req.body.delivery ? req.body.delivery : false,
-        description: req.body.description,
+        description: req.body.description ? req.body.description : "",
         image: req.body.image,
         offer: req.body.offer ? req.body.offer : false,
         package: req.body.package ? req.body.package : "",
@@ -28,7 +28,7 @@ async function addProduct(req, res) {
         vendor: req.body.vendor,
         type: req.body.type,
       };
-      if (newProduct.breed && newProduct.image && newProduct.offer && newProduct.price && newProduct.sterilized && newProduct.type) {
+      if (newProduct.breed && newProduct.image && typeof newProduct.offer !== 'undefined' && typeof newProduct.sterilized !== 'undefined' && newProduct.type) {
         let responseID = await productModel.add(newProduct);
         res.json({id:responseID.message})
       } else {
