@@ -1,4 +1,4 @@
-const res = require("express/lib/response");
+const { status } = require("express/lib/response");
 var db = require("../../dba/firestore");
 
 // Return all orders from database
@@ -26,7 +26,6 @@ async function getByID(orderID) {
   try {
     // Get order with ID from database
     const order = await db.collection("orders").doc(orderID).get();
-
     // Create a response message with order data
     var response = {
       message: "",
@@ -57,7 +56,6 @@ async function add(newOrder) {
     var response = {
       message: "",
     };
-
     // Add new order and return response message containing the new orderID
     const orders = db
       .collection("orders")
@@ -120,22 +118,33 @@ async function remove(orderId) {
   return responseMessage;
 }
 
-module.exports = { getAll, add, update, remove, getByID };
-
-//Helper functions --- Delete?
-// save array of customers to file
-async function save(customers = []) {
-  let customersTxt = JSON.stringify(customers);
-  await fs.writeFile(CUSTOMERS_FILE, customersTxt);
+//Returns all orders that have a match on userid field
+async function getOrdersByUser(userid) {
+  let allOrders = await getAll();
+  let filteredOrders = allOrders.filter(order => order.userid == userid)
+  return filteredOrders;
 }
 
-// test function for customer ID
-function findCustomer(customerArray, Id) {
-  return customerArray.findIndex(
-    (currCustomer) => currCustomer.customerId === Id
-  );
+//Returns all orders that have a match on userid field
+async function getShoppingBasket(user) {
+  let ordersFilteredByUser = await getOrdersByUser(user.id)
+  let ordersInProgress = ordersFilteredByUser.filter(order => order.status == "in progress")
+  if (ordersInProgress.length == 0) {
+    //0 orders in progress --> create one
+    let newOrder = {
+      address: user.address ? user.address : '',
+      items: [],
+      userid: user.id,
+      status: "in progress",
+    };
+    
+    let createMessage = await add(newOrder)
+    let createdOrder = await getByID(createMessage.message)
+    return createdOrder.finalOrder;
+  } else if (ordersInProgress.length == 1){ 
+    return ordersInProgress[0];
+  } 
+  return filteredOrders;
 }
 
-function findUser(orderArray, orderId) {
-  return orderArray.findIndex((order) => order.id === orderId);
-}
+module.exports = { getAll, add, update, remove, getByID, getOrdersByUser, getShoppingBasket};

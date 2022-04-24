@@ -9,7 +9,9 @@ var {
   deleteOrder,
   increaseProduct,
   decreaseProduct,
-  removeProductFromOrder
+  removeProductFromOrder,
+  getShoppingBasket,
+  getOrdersByUser
 } = require("./orders.controller.js");
 
 const orderRouter = express.Router();
@@ -23,6 +25,10 @@ orderRouter.use(express.json());
 orderRouter.get("/", getAllOrders);
 //get a single order by id
 orderRouter.get("/:id", getOrder);
+//get open order
+orderRouter.get("/basket/:userid", getShoppingBasket);
+//get order by user
+orderRouter.get("/user/:userid", getOrdersByUser);
 
 //add a new order / CART?
 orderRouter.post("/", addOrder);

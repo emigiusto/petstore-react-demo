@@ -9,8 +9,9 @@ const categoryRouter = express.Router();
 categoryRouter.use(express.json())
 
 // route handlers
-categoryRouter.get("/", getAllCategories);
+
 categoryRouter.get("/:id", getCategory);
+categoryRouter.get("/", getAllCategories);
 
 categoryRouter.post("/", addCategory);
 

@@ -114,24 +114,3 @@ async function remove(customerId) {
 }
 
 module.exports = {getAll,add,update,remove,getByID};
-
-
-//Helper functions --- Delete?
-  // save array of customers to file
-  async function save(customers = []) {
-    let customersTxt = JSON.stringify(customers);
-    await fs.writeFile(CUSTOMERS_FILE, customersTxt);
-  }
-
-  // test function for customer ID
-  function findCustomer(customerArray, Id) {
-    return customerArray.findIndex(
-      (currCustomer) => currCustomer.customerId === Id
-    );
-  }
-
-  function findUser(userArray,userId) {
-    return userArray.findIndex(
-      (user) => user.id === userId
-    )
-  }

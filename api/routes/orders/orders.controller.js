@@ -1,5 +1,6 @@
 var orderModel = require("./orders.model.js");
 var productModel = require("../products/products.model");
+var usersModel = require("../users/users.model");
 
 // Return all orders from database
 async function getAllOrders(req, res) {
@@ -7,8 +8,7 @@ async function getAllOrders(req, res) {
     let allOrders = await orderModel.getAll();
     res.json(allOrders);
   } catch (error) {
-    // res.statusMessage=
-    res.status(400).send(error.message);
+    res.status(400).send({message: error.message});
   }
 }
 
@@ -43,8 +43,7 @@ async function updateOrder(req, res) {
       throw "Order does not exist";
     }
   } catch (message) {
-    // res.statusMessage=
-    res.status(400).send(message);
+    res.status(400).send({message:message});
   }
 }
 
@@ -67,7 +66,7 @@ async function addOrder(req, res) {
       throw errorResponse.message;
     }
   } catch (message) {
-    res.status(400).send(message);
+    res.status(400).send({message:message});
   }
 }
 
@@ -82,8 +81,7 @@ async function getOrder(req, res) {
       throw order.message;
     }
   } catch (message) {
-
-    res.status(400).send(message);
+    res.status(400).send({message:message});
   }
 }
 
@@ -99,8 +97,7 @@ async function deleteOrder(req, res) {
       throw responseMessage.message;
     }
   } catch (message) {
-    // res.statusMessage=
-    res.status(400).send(message);
+    res.status(400).send({message:message});
   }
 }
 
@@ -190,7 +187,48 @@ async function removeProductFromOrder(req, res) {
   }
 }
 
-module.exports = { getAllOrders, addOrder, getOrder, deleteOrder, updateOrder, increaseProduct, decreaseProduct, removeProductFromOrder};
+async function getShoppingBasket(req, res) {
+  //Checks if the user has an order "Open" and returns it, if there is none, creates one and returns it
+  try {
+    //Checks if the user has an order
+    let userid = req.params.userid;
+    let user = await usersModel.getByID(userid)
+    if (!user.userExists) {
+      throw 'User does not exists';
+    }
+    let order = await orderModel.getShoppingBasket(user.finalUser);
+    res.json(order);
+  } catch (message) {
+    res.status(400).send({message:message});
+  }
+}
+
+async function getOrdersByUser(req, res) {
+  try {
+    //Checks if the user has an order
+    let userid = req.params.userid;
+    let user = await usersModel.getByID(userid)
+    if (!user.userExists) {
+      throw 'User does not exists';
+    }
+    let ordersArray = await orderModel.getOrdersByUser(userid)
+      res.json(ordersArray);
+  } catch (message) {
+    res.status(400).send({message:message});
+  }
+}
+
+module.exports = {  getAllOrders, 
+                    addOrder, 
+                    getOrder, 
+                    deleteOrder, 
+                    updateOrder, 
+                    increaseProduct, 
+                    decreaseProduct, 
+                    removeProductFromOrder, 
+                    getShoppingBasket,
+                    getOrdersByUser
+                  };
 
 function isProductOnOrder(order, productId) {
   return order.items.some((product) => product.productid == productId)
