@@ -38,7 +38,6 @@ async function addProduct(req, res) {
         throw errorMessage.message
       }
     } catch (message) {
-      // res.statusMessage=
       res.status(400).send({message: message});
     }
   }
@@ -56,7 +55,6 @@ async function addProduct(req, res) {
       }
 
     } catch (message) {
-      // res.statusMessage=
       res.status(400).send({message: message});
     }
   }
@@ -95,7 +93,6 @@ async function addProduct(req, res) {
       }
 
     } catch (message) {
-      // res.statusMessage=
       res.status(400).send({message: message});
     }
   }

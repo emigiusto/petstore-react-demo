@@ -68,7 +68,7 @@ try {
   }
 }
 
-async function update(categoryId, category) {
+async function update(categoryId,body) {
   // Create object for response message
   let responseMessage = {
     message: "Category updated",

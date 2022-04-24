@@ -37,13 +37,11 @@ async function getByID(orderID) {
         ...order.data(),
       },
     };
-
     // If the order does not exist set response to error message
     if (!order.data()) {
       response.message = `Order with ID: ${orderID} doesn't exist`;
       response.orderExists = false;
     }
-
     // return response
     return response;
   } catch (err) {
