@@ -1,8 +1,6 @@
-const { status } = require("express/lib/response");
 var db = require("../../dba/firestore");
 
 // Return all orders from database
-// Tested successfully
 async function getAll() {
   try {
     const orders = [];
@@ -21,7 +19,6 @@ async function getAll() {
 }
 
 // Return a single order by ID
-//Tested successfully
 async function getByID(orderID) {
   try {
     // Get order with ID from database
@@ -49,7 +46,6 @@ async function getByID(orderID) {
 }
 
 // Add order to database
-//Tested successfully
 async function add(newOrder) {
   // Create object for response message
   try {
@@ -71,7 +67,6 @@ async function add(newOrder) {
 }
 
 // update existing order
-// Tested successfully
 async function update(orderID, body) {
   // Create object for response message
   let responseMessage = {
@@ -94,7 +89,6 @@ async function update(orderID, body) {
 }
 
 // Delete existing order
-// Tested successfully
 async function remove(orderId) {
   // Create object for response message
   let responseMessage = {
