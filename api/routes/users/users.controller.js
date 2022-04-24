@@ -32,7 +32,6 @@ async function updateUser(req, res) {
       throw "User does not exist"
     }
   } catch (message) {
-    // res.statusMessage=
     res.status(400).send({message: message});
   }
 }
@@ -69,7 +68,6 @@ async function getUser(req, res) {
     } else {
       throw user.message
     }
-
   } catch (message) {
     res.status(400).send({message: message});
   }
@@ -88,7 +86,6 @@ async function deleteUser(req, res) {
     }
 
   } catch (message) {
-    // res.statusMessage=
     res.status(400).send({message: message});
   }
 }
