@@ -35,7 +35,7 @@ async function updateOrder(req, res) {
     if (order.orderExists) {
       let responseMessage = await orderModel.update(id, bodyValidaded);
       if (responseMessage.status) {
-        res.json(responseMessage.message);
+        res.json({message:responseMessage.message});
       } else {
         throw responseMessage.message;
       }
@@ -59,7 +59,7 @@ async function addOrder(req, res) {
     };
     if (newOrder.address && newOrder.items && newOrder.userid) {
       let responseID = await orderModel.add(newOrder);
-      res.json(responseID.message);
+      res.json({id:responseID.message});
     } else {
       let errorResponse = {
         message: "Cannot add order as it is missing required fields.",
@@ -95,9 +95,9 @@ async function deleteOrder(req, res) {
     let responseMessage = await orderModel.remove(id);
 
     if (responseMessage.status) {
-      res.json(responseMessage.message);
+      res.json({message:responseMessage.message});
     } else {
-      throw responseMessage.message;
+      throwres.json({message:responseMessage.message});
     }
   } catch (message) {
     // res.statusMessage=
