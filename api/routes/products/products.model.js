@@ -32,12 +32,10 @@ async function getByID(productId) {
         ...product.data()
       }
     }
-
     if (!product.data()) {
       response.message = `Product with ID: ${productId} doesn't exist`
       response.productExists = false
     }
-
     return response;
   } catch (err) {
       throw err.message;
@@ -46,51 +44,42 @@ async function getByID(productId) {
 
 // create a new product
 async function add(newProduct) {
-try {
-  console.log(newProduct)
-  var response = {
-    message: ""
+  try {
+    console.log(newProduct)
+    var response = {
+      message: ""
+    }
+    const products = db
+        .collection('products')
+        .add(newProduct)
+        .then(function (docRef) {
+          response.message = docRef.id
+          return response
+        })
+      return products;
+  } catch (err) {
+    throw err.message;
   }
-  const products = db
-      .collection('products')
-      .add(newProduct)
-      .then(function (docRef) {
-        response.message = docRef.id
-        return response
-      })
-    return products;
-
-} catch (err) {
-  throw err.message;
-}
 }
 
-// update existing product
-async function update(id, body) {
-
+async function update(productId,body) {
+  // Create object for response message
   let responseMessage = {
     message: "Product updated",
-    status: true
-  }
+    status: true,
+  };
+  // Update product and return response message
   try {
-
-    const product = db.collection('products').doc(id)
-    const res = await product.set({
-      ...body}, {merge: true}
-    )
-    return responseMessage
-
+    const category = db.collection("products").doc(productId);
+    const res = await category.set(
+      {
+        ...body,
+      },
+      { merge: true }
+    );
+    return responseMessage;
   } catch (error) {
-    
-  }
-
-  let customerArray = await getAll();
-  let index = findCustomer(customerArray, customerId); // findIndex
-  if (index === -1)
-    throw new Error(`Customer with ID:${customerId} doesn't exist`);
-  else {
-    customerArray[index] = customer;
-    await save(customerArray);
+    throw error.message;
   }
 }
 
@@ -114,28 +103,6 @@ async function remove(id) {
     responseMessage.message = "Product does not exist"
   }
   return responseMessage
-  
 }
 
 module.exports = {getAll,add,update,remove,getByID};
-
-
-//Helper functions --- Delete?
-  // save array of customers to file
-  async function save(customers = []) {
-    let customersTxt = JSON.stringify(customers);
-    await fs.writeFile(CUSTOMERS_FILE, customersTxt);
-  }
-
-  // test function for customer ID
-  function findCustomer(customerArray, Id) {
-    return customerArray.findIndex(
-      (currCustomer) => currCustomer.customerId === Id
-    );
-  }
-
-  function findProduct(productArray,productid) {
-    return productArray.findIndex(
-      (product) => product.id === productid
-    )
-  }

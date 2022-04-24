@@ -5,7 +5,6 @@ async function getAll() {
   try {
     const categories = []
     const categoryCollection = db.collection('category');
-    
     const snapshot = await categoryCollection.get();
       snapshot.forEach(doc => {
         categories.push(
@@ -24,77 +23,93 @@ async function getAll() {
 // Return a category by ID
 async function getByID(categoryId) {
   try {
-    const categoryCollection = db.collection('categories');
-    //array based on categoryId
-    const category = await categoryCollection.doc(categoryId).get();
- const finalCategory = {
-   id: category.id,
-   ...category.data(),
- }
-    return finalCategory;
+    // Get category with ID from database
+    const category = await db.collection("categories").doc(categoryID).get();
+    // Create a response message with categories data
+    var response = {
+      message: "",
+      categoryExists: true,
+      // Array based on categoryID
+      finalCategory: {
+        id: category.id,
+        ...category.data(),
+      },
+    };
+    // If the category does not exist set response to error message
+    if (!category.data()) {
+      response.message = `Category with ID: ${categoryID} doesn't exist`;
+      response.categoryExists = false;
+    }
+    // return response
+    return response;
   } catch (err) {
-      throw err.message;
+    throw err.message;
   }
 }
 
 // create a new category TO MAKE DYNAMIC
 async function add(newCategory) {
 try {
-  const exampleCategory =  {
-    name: "nicholas pants",
-    price: 459
-  }
-  const newCategory= db.collection('categories').doc();
+    var response = {
+      message: "",
+    };
 
-  // Later...
-  const newId = await newCategory.set(exampleCategory);
-  console.log(newId)
-
-console.log("category added!")
-
-} catch (err) {
-  throw err.message;
-  
-}
-}
-
-// update existing category
-async function update(categoryId, category) {
-  let categoryArray = await getAll();
-  let index = findCategory(categoryArray, categoryId); // findIndex
-  if (index === -1)
-    throw new Error(`Category with ID:${categoryId} doesn't exist`);
-  else {
-    categoryArray[index] = customer;
-    await save(categoryArray);
+    // Add new category and return response message containing the new categoryID
+    const categories = db
+      .collection("categories")
+      .add(newCategory)
+      .then(function (docRef) {
+        response.message = docRef.id;
+        return response;
+      });
+    return categories;
+  } catch (err) {
+    throw err.message;
   }
 }
 
-// delete existing category
+async function update(categoryId,body) {
+  // Create object for response message
+  let responseMessage = {
+    message: "Category updated",
+    status: true,
+  };
+  // Update category and return response message
+  try {
+    const category = db.collection("categories").doc(categoryId);
+    const res = await category.set(
+      {
+        ...body,
+      },
+      { merge: true }
+    );
+    return responseMessage;
+  } catch (error) {
+    throw error.message;
+  }
+}
+
 async function remove(categoryId) {
-  let categoryArray = await getAll();
-  let index = findCategory(categoryArray, categoryId); // findIndex
-  if (index === -1)
-    throw new Error(`Category with ID:${categoryId} doesn't exist`);
-  else {
-    categoryArray.splice(index, 1); // remove category from array
-    await save(categoryArray);
+  // Create object for response message
+  let responseMessage = {
+    message: "",
+    status: false,
+  };
+  // Delete category if it exists, print error message otherwise.
+  let category = await getByID(categoryId);
+  if (category.categoryExists) {
+    await db.collection("categories").doc(categoryId).delete();
+    let categoryTwo = await getByID(categoryId);
+    if (!categoryTwo.categoryExists) {
+      responseMessage.message = "Category deleted";
+      responseMessage.status = true;
+    } else {
+      responseMessage.message = "Something went wrong. Try again.";
+    }
+  } else {
+    responseMessage.message = "Category does not exist";
   }
+  return responseMessage;
 }
 
 module.exports = {getAll,add,update,remove,getByID};
-
-
-//Helper functions --- Delete?
-  // save array of category to file
-  async function save(customers = []) {
-    let categoryTxt = JSON.stringify(category);
-    await fs.writeFile(CATEGORY_FILE, categoryTxt);
-  }
-
-  // test function for category ID
-  function findCategory(categoryArray, Id) {
-    return categoryArray.findIndex(
-      (currCategory) => currCategory.categoryId === Id
-    );
-  }

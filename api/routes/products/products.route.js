@@ -1,7 +1,7 @@
 // index.js
 var express = require('express');
 //call all functions from product controller
-var {getAllProducts, addProduct, getProduct,updateProduct, deleteProduct } = require('./products.controller.js');
+var {getAllProducts, addProduct, getProduct,updateProduct, deleteProduct, getProductsByCategory} = require('./products.controller.js');
 
 const productRouter = express.Router();
 
@@ -12,6 +12,8 @@ productRouter.use(express.json())
 productRouter.get("/", getAllProducts);
 
 productRouter.get("/:id", getProduct);
+
+productRouter.get("/category/:categoryId", getProductsByCategory);
 
 productRouter.post("/", addProduct);
 
