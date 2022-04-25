@@ -13,7 +13,7 @@ productRouter.get("/", getAllProducts);
 
 productRouter.get("/:id", getProduct);
 
-productRouter.get("/category/:categoryId", getProductsByCategory);
+productRouter.get("/category/:optionName", getProductsByCategory);
 
 productRouter.post("/", addProduct);
 

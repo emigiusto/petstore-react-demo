@@ -4,7 +4,7 @@ var db = require("../../dba/firestore")
 async function getAll() {
   try {
     const categories = []
-    const categoryCollection = db.collection('category');
+    const categoryCollection = db.collection('categories');
     const snapshot = await categoryCollection.get();
       snapshot.forEach(doc => {
         categories.push(
