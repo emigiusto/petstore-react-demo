@@ -211,6 +211,26 @@ async function getShoppingBasket(req, res) {
   }
 }
 
+async function clearBasket(req, res) {
+  //Clears the basket if there is one order "in progress"
+  try {
+    //Checks if the user has an order
+    let userid = req.params.userid;
+    let user = await usersModel.getByID(userid)
+    if (!user.userExists) {
+      throw 'User does not exist';
+    }
+    let order = await orderModel.getShoppingBasket(user.finalUser);
+
+    let updateResponse = await orderModel.update(order.id, {items: []});
+
+    res.json({message: "The basket of user with id " + userid + " has been cleared"});
+  } catch (message) {
+    res.status(400).send({message:message});
+  }
+}
+
+
 async function getOrdersByUser(req, res) {
   try {
     //Checks if the user has an order
@@ -235,7 +255,8 @@ module.exports = {  getAllOrders,
                     decreaseProduct, 
                     removeProductFromOrder, 
                     getShoppingBasket,
-                    getOrdersByUser
+                    getOrdersByUser,
+                    clearBasket
                   };
 
 function isProductOnOrder(order, productId) {

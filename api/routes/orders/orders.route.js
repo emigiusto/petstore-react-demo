@@ -11,7 +11,8 @@ var {
   decreaseProduct,
   removeProductFromOrder,
   getShoppingBasket,
-  getOrdersByUser
+  getOrdersByUser,
+  clearBasket
 } = require("./orders.controller.js");
 
 const orderRouter = express.Router();
@@ -27,6 +28,9 @@ orderRouter.get("/", getAllOrders);
 orderRouter.get("/:id", getOrder);
 //get open order
 orderRouter.get("/basket/:userid", getShoppingBasket);
+
+//Clear cart by userid
+orderRouter.put("/clearbasket/:userid", clearBasket);
 //get order by user
 orderRouter.get("/user/:userid", getOrdersByUser);
 
@@ -46,5 +50,7 @@ orderRouter.put("/decreaseproduct/:orderid", decreaseProduct);
 
 //remove Product from order
 orderRouter.put("/removeproduct/:orderid", removeProductFromOrder);
+
+
 
 module.exports = orderRouter;
