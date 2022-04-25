@@ -18,6 +18,7 @@ async function updateUser(req, res) {
     if (body.firstName) { bodyValidaded.firstName = body.firstName }
     if (body.lastName) { bodyValidaded.lastName = body.lastName }
     if (body.address) { bodyValidaded.address = body.address }
+    if (body.password) { bodyValidaded.password = body.password }
     if (typeof(body.active) !== 'undefined') { bodyValidaded.active = body.active }
 
     let user = await userModel.getByID(id);
@@ -42,9 +43,10 @@ async function addUser(req, res) {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         address: req.body.address,
+        password: req.body.password,
         active: true
       }
-      if (newUser.firstName && newUser.lastName && newUser.address) {
+      if (newUser.firstName && newUser.lastName && newUser.address && newUser.password) {
         let responseID = await userModel.add(newUser);
         res.status(201).send({id: responseID.message})
       } else {
