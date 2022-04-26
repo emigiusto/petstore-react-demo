@@ -70,10 +70,7 @@ async function addOrder(req, res) {
       let responseID = await orderModel.add(newOrder);
       res.status(201).send({id:responseID.message});
     } else {
-      let errorResponse = {
-        message: "Cannot add order as it is missing required fields.",
-      };
-      throw errorResponse.message;
+      throw "Cannot add order as it is missing required fields.";
     }
   } catch (message) {
     res.status(400).send({message:message});
@@ -124,7 +121,12 @@ async function increaseProduct(req, res) {
     }
     //Handles update of Order
     let responseOrder = await orderModel.getByID(id);
-    if (responseOrder.orderExists && responseOrder.finalOrder.status =='in progress') {
+    //Checks if the order exists
+    if (!responseOrder.orderExists) {
+      throw responseOrder.message;
+    }
+
+    if (responseOrder.finalOrder.status =='in progress') {
       await updateProductFromOrder(responseOrder.finalOrder, productId, "increase")
       res.json({message: "product with id " + productId + " has been added to order " + id});
     } else {
@@ -145,7 +147,6 @@ async function increaseProduct(req, res) {
 // Decrease Product quantityfrom order
 async function decreaseProduct(req, res) {
   try {
-    
     let id = req.params.orderid;
     let body = req.body;
     //Checks if the product exists
@@ -162,7 +163,7 @@ async function decreaseProduct(req, res) {
     }
 
     //Handles update of Order
-    if (responseOrder.orderExists && responseOrder.finalOrder.status =='in progress') {
+    if (responseOrder.finalOrder.status =='in progress') {
       await updateProductFromOrder(responseOrder.finalOrder, productId, "decrease")
       res.json({message: "the quantity of product with id " + productId + " has been reduced from order " + id});
     }
