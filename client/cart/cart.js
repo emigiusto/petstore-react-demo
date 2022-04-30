@@ -1,8 +1,7 @@
 import {createFooter} from "../components/footer.js"
 import {createHeader} from "../components/header.js"
-import { deleteProduct } from "../helperFunctions/cart.js";
-import {clearCart} from "/helperFunctions/cart.js"
-import {filterProducts} from "/helperFunctions/filter.js"
+import { addToCart, deleteProduct } from "../helperFunctions/cart-helper.js";
+import {clearCart} from "../helperFunctions/cart-helper.js"
 
 window.onload = function() {
     displayHeader()
@@ -154,3 +153,5 @@ function title() {
     document.getElementById("title").innerHTML = "My Shopping Cart";
   }
 }
+
+export default {clearCart,addToCart};

@@ -22,7 +22,7 @@ export function createHeader() {
             <li class="nav-item dropdown">
             <a
             class="dropdown-item"
-            href="/productList/productList.html"
+            href="../productList/productList.html"
           >
             Products
           </a>
@@ -30,12 +30,12 @@ export function createHeader() {
           </ul>
           <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a id="numCartItems" class="nav-link" aria-current="page" href="/cart/cart.html">
+              <a id="numCartItems" class="nav-link" aria-current="page" href="../cart/cart.html">
                 Cart (`+ cart() +`)
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/login/login.html">
+              <a class="nav-link" aria-current="page" href="../login/login.html">
                 
           `+
   name() +

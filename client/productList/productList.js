@@ -1,7 +1,8 @@
 import { capitalizeFirstLetter } from "../helperFunctions/text.js";
 import { paramsToObject } from "../helperFunctions/helper.js";
 import { filterProducts } from "../helperFunctions/filter.js";
-import { clearCart, addToCart } from "../helperFunctions/cart.js";
+import  clearCart from "../cart/cart.js";
+import  addToCart from "../cart/cart.js";
 import { createFooter } from "../components/footer.js";
 import { createHeader } from "../components/header.js";
 
@@ -45,7 +46,7 @@ function renderFooter() {
     */
     function loadProducts(filterObject) {
         //Fetch dba
-        productsList = fetch("../../ShopifyProducts.json")
+        productsList = fetch("../ShopifyProducts.json")
             .then(response => response.json())
             .then(data => {
                 render(filterProducts(data, filterObject)); //Renders the list of products filtered by the filterObject received

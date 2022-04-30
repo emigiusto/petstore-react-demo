@@ -1,4 +1,4 @@
-import {toast} from "../helperFunctions/toast.js";
+import {toast} from "./toast.js";
 import {handleCartSize} from "../cart/cart.js"
 
 //Clears the cart in local storage - Should be combined with a refresh in rendering
