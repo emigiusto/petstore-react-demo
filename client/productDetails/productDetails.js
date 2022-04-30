@@ -1,6 +1,6 @@
 import { createFooter } from "../components/footer.js";
 import { createHeader } from "../components/header.js";
-import { addToCart } from "../helperFunctions/cart.js";
+import { addToCart } from "../helperFunctions/cart-helper.js";
 import { filterProducts } from "../helperFunctions/filter.js";
 
 window.onload = function () {
@@ -20,7 +20,7 @@ function loadProduct() {
   let id = urlParams.get("id");
 
   // fetch all products
-  fetch("../../ShopifyProducts.json")
+  fetch("../ShopifyProducts.json")
     .then((response) => response.json())
     .then((data) => {
       // find selected product among those
