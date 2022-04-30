@@ -2,6 +2,9 @@ import React from 'react';
 //React Router Dom
 import {Routes,Route, BrowserRouter} from 'react-router-dom'
 
+//React-bootstrap import
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 //Components
 import Register from './components/Register/Register'
 import NotFound from './components/NotFound'
