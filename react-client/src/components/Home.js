@@ -1,9 +1,11 @@
 import React from 'react'
+import ProductContainer from './ProductList/ProductContainer'
+import ProductList from './ProductList/ProductList'
 
 function Home() {
   return (
     <div>
-        Welcome to PetStore
+      Hej
     </div>
   )
 }
