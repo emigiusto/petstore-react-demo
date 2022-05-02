@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+
 const ProductContext = React.createContext()
 //Context has 2 components
     //Provider
@@ -28,6 +29,7 @@ class ProductProvider extends Component {
             return {products: tempProducts}
         })
     }
+    
 
     render() {
         return (

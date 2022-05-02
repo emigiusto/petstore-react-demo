@@ -21,8 +21,8 @@ export default function ProductContainer() {
 
   return (
     <ProductConsumer>
-        {(value)=>{
-            return value.products.map(product=>{
+        {(contextState)=>{
+            return contextState.products.map(product=>{
                 return <Product key={product.id} product={product}></Product>
             })
         }}
