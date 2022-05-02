@@ -5,7 +5,7 @@ const ProductContext = React.createContext()
 //Context has 2 components
     //Provider
     //Consumer
-
+    
 class ProductProvider extends Component {
     state={
         products: [],
@@ -29,6 +29,8 @@ class ProductProvider extends Component {
             return {products: tempProducts}
         })
     }
+
+    
     
 
     render() {
