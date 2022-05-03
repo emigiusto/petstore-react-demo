@@ -1,10 +1,10 @@
 import React from 'react'
 import Header from '../GeneralComponents/Header'
 import Footer from '../GeneralComponents/Footer'
-import Filters from './Filters'
-import ProductContainer from './ProductContainer'
+import Filters from './Filters/Filters'
+import ProductContainer from './ProductContainer/ProductContainer'
 
-export default function ProductList() {
+export default function ProductsPage() {
   return (
       <div>
         <Header/>

@@ -9,7 +9,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Register from './components/Register/Register'
 import NotFound from './components/NotFound'
 import Home from './components/Home'
-import ProductList from './components/ProductList/ProductList';
+import ProductsPage from './components/ProductsPage/ProductsPage';
+
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/product-list" element={<ProductList/>} />
+          <Route path="/product-list" element={<ProductsPage/>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
