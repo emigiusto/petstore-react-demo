@@ -10,6 +10,7 @@ import Register from './components/Register/Register'
 import NotFound from './components/NotFound'
 import Home from './components/Home'
 import ProductsPage from './components/ProductsPage/ProductsPage';
+import ProductDetailsPage from './components/ProductDetailspage/ProductDetailsPage';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/product-list" element={<ProductsPage/>} />
+          <Route path="/product-list/:id" element={<ProductDetailsPage/>}/>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
