@@ -4,7 +4,7 @@ export default function ProductDetails(props) {
   return (
     <div className="row p-5 mx-5">
         <div className="col-sm">
-            <div class="col px-2 pb-2">
+            <div className="col px-2 pb-2">
                 <h3>{props.product.title}</h3>
             </div>
 
