@@ -17,23 +17,23 @@ async function updateOrder(req, res) {
   try {
     let id = req.params.id;
     let body = req.body;
-    let bodyValidaded = {};
+    let bodyValidated = {};
     if (body.address) {
-      bodyValidaded.address = body.address;
+      bodyValidated.address = body.address;
     }
     if (body.items) {
-      bodyValidaded.items = body.items;
+      bodyValidated.items = body.items;
     }
     if (body.status) {
-      bodyValidaded.status = body.status;
+      bodyValidated.status = body.status;
     }
     if (body.userid) {
-      bodyValidaded.street = body.userid;
+      bodyValidated.userid = body.userid;
     }
 
     let order = await orderModel.getByID(id);
     if (order.orderExists) {
-      let responseMessage = await orderModel.update(id, bodyValidaded);
+      let responseMessage = await orderModel.update(id, bodyValidated);
       if (responseMessage.status) {
         res.json({message:responseMessage.message});
       } else {
