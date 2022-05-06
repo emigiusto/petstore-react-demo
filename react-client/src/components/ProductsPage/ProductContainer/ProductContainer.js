@@ -11,7 +11,10 @@ export default function ProductContainer() {
                 {
                     (contextState)=>{
                         return contextState.products.map(product=>{
-                            return <Product key={product.id} product={product}></Product>
+                            return <Product key={product.id} 
+                                            product={product} 
+                                            handleAddToCart={contextState.addToCart}
+                                    ></Product>
                         })
                     }
                 }
