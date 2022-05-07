@@ -13,7 +13,7 @@ export default function Product(props) {
             <h5 className="card-title card__body__title">{props.product.title}</h5>
             <p>{props.product.description}</p>
             <p>{props.product.price}</p>
-            <button id={props.product.id} /* onClick={props.addToCart(props.product.id)} */ className="btn btn-success align-self-end">Add to Cart</button>
+            <button id={props.product.id} onClick={()=>props.handleAddToCart(props.product.id)} className="btn btn-success align-self-end">Add to Cart</button>
           </div> 
         </div>
     </div>
