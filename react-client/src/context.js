@@ -103,7 +103,7 @@ class ProductProvider extends Component {
             this.setState(()=>{
                 return {cartId: data.id} //Updates cartId in state
             })
-        } else {
+        } /* else {     -------------------NOT NECESSARY, our API handles this case by creating one if there isn't one
             let newOrderBody = {
                     address: "",
                     items: [...this.state.cart],
@@ -111,7 +111,7 @@ class ProductProvider extends Component {
             }
             await post("http://localhost:3005/orders/",newOrderBody)
             console.log("New cart created for user with id: " + user.id) 
-        }  
+        }   */
     }
 
     clearCart = async() => {
