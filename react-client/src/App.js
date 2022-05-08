@@ -6,11 +6,11 @@ import {Routes,Route, BrowserRouter} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 //Components
-import Register from './components/Register/Register'
+import RegisterForm from './components/Register/RegisterForm/RegisterForm'
 import NotFound from './components/NotFound'
 import Home from './components/Home'
 import ProductsPage from './components/ProductsPage/ProductsPage';
-
+import LoginForm from './components/Login/LoginForm/LoginForm';
 
 function App() {
   return (
@@ -18,8 +18,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<RegisterForm />} />
           <Route path="/product-list" element={<ProductsPage/>} />
+          <Route path="/login" element ={<LoginForm />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
