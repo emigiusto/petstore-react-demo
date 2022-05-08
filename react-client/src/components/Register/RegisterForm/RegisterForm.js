@@ -3,25 +3,25 @@ import classes from "./RegisterForm.module.css";
 import { Link } from 'react-router-dom';
 
 function RegisterForm() {
-  const emailAdress = useRef();
+  const emailAddress = useRef();
   const firstName = useRef();
   const lastName = useRef();
-  const deliveryAdress = useRef();
+  const deliveryAddress = useRef();
   const password = useRef();
 
   //Function to read input data and process it. Currently it only prints to console.
   function submitHandler(event) {
     event.preventDefault();
-    const enteredEmailAdress = emailAdress.current.value;
+    const enteredEmailAddress = emailAddress.current.value;
     const enteredfirstName = firstName.current.value;
     const enteredlastName = lastName.current.value;
-    const entereddeliveryAdress = deliveryAdress.current.value;
+    const entereddeliveryAddress = deliveryAddress.current.value;
     const enteredpassword = password.current.value;
 
-    console.log(enteredEmailAdress);
+    console.log(enteredEmailAddress);
     console.log(enteredfirstName);
     console.log(enteredlastName);
-    console.log(entereddeliveryAdress);
+    console.log(entereddeliveryAddress);
     console.log(enteredpassword);
   }
 
@@ -79,23 +79,23 @@ function RegisterForm() {
         {/*Start of new row */}
         <div className="form-row mx-auto">
           <div className="form-group col-md-6">
-            <label htmlFor="email">E-Mail Adress</label>
+            <label htmlFor="email">E-Mail Address</label>
             <input
               type="text"
               required
               id="email"
-              ref={emailAdress}
+              ref={emailAddress}
               className="form-control"
               placeholder="heyheyhey@yogibear.com"
             />
           </div>
           <div className="form-group col-md-6">
-            <label htmlFor="deliveryAdress">Delivery Adress</label>
+            <label htmlFor="deliveryAddress">Delivery Address</label>
             <input
               type="text"
               required
-              id="deliveryAdress"
-              ref={deliveryAdress}
+              id="deliveryAddress"
+              ref={deliveryAddress}
               className="form-control"
               placeholder="Cave Avenue 21, 45678, Jellystone National Park, Wyoming USA"
             />
