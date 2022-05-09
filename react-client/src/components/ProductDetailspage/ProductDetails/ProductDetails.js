@@ -19,7 +19,7 @@ export default function ProductDetails(props) {
             </div>
 
             <div className="col px-2 pb-2">
-                <button /* onClick="handleAddToCart()" */ type="button" className="btn btn-dark">Add to cart</button>
+                <button  onClick={()=>props.handleAddToCart(props.product.id)}  type="button" className="btn btn-dark">Add to cart</button>
             </div>
         </div>
         <div className="col-sm">

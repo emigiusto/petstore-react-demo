@@ -16,8 +16,8 @@ export default function ProductDetailsPage(props) {
         <ProductConsumer>
             {(contextState) => {
                 if (contextState.products.length !== 0){
-                let pDetails = contextState.products.find((product) => product.id === id);
-                return <ProductDetails product = {pDetails}/>
+                  let pDetails = contextState.products.find((product) => product.id === id);
+                  return <ProductDetails product = {pDetails} handleAddToCart={contextState.addToCart}/>
                 } else {
                     return <div>Placeholder</div>
                 }
