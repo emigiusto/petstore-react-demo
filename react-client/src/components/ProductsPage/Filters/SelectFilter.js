@@ -1,22 +1,20 @@
 import React from 'react'
 
-function SelectFilter({filter}, updateFilters) {
+function SelectFilter(props) {
 
     const handleFilterSelection = (filter,option) =>{
-        console.log(filter,option)
-        updateFilters(filter,option)
+        props.updateActiveFilters(filter,option)
     }
 
     return (
         <div>
-            <button>{filter.value}</button>
-            <ul  aria-labelledby="dropdownMenuButton1">
-                <li><button  onClick={() => handleFilterSelection()} >All</button></li>
+            <button>{props.filter.value}</button>
+            <ul aria-labelledby="dropdownMenuButton1">
+                <li><button onClick={() => handleFilterSelection(props.filter.value, "All")} >All</button></li>
                 {
-                    filter.options.map(option => {
-                        return <li key={option}><button onClick={() => handleFilterSelection(filter.value, option)}>{option}</button></li>
+                    props.filter.options.map(option => {
+                        return <li key={option}><button onClick={() => handleFilterSelection(props.filter.value, option)}>{option}</button></li>
                     })
-                
                 }
             </ul>
         </div>

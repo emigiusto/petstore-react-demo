@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ToggleFilter({filter}) {
+function ToggleFilter(props) {
     return (
         <div>
             toggle
