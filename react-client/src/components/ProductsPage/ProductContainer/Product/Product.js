@@ -22,6 +22,7 @@ export default function Product(props) {
             <p>{props.product.description}</p>
             <p>{props.product.price}</p>
             <button id={props.product.id} onClick={routechange} className="btn btn-success align-self-end">Product Details</button>
+            <button id={props.product.id} onClick={()=>props.handleAddToCart(props.product.id)} className="btn btn-success align-self-end">Add to Cart</button>
           </div> 
         </div>
     </div>

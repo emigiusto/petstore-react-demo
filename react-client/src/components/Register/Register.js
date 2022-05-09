@@ -1,11 +1,9 @@
-import React from 'react'
+//Currently unused, see RegisterForm instead
+
+import React from "react";
 
 function Register() {
-  return (
-    <div>
-      Register
-    </div>
-  )
+   return <div></div>
 }
 
-export default Register
+export default Register;
