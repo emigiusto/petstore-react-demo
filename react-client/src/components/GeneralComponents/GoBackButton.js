@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import MaterialIcon from 'react-google-material-icons'
 
 export default function GoBackButton() {
 
@@ -7,7 +8,7 @@ export default function GoBackButton() {
 
   return (
     <div className="col-sm-12 d-flex justify-content-left px-5 mx-5">
-        <button className="goback px-3" onClick = {() => navigate(-1)}>Go back</button>
+        <button className="goback px-3" onClick = {() => navigate(-1)}><MaterialIcon icon="arrow_back" size={24}/> Go back</button>
     </div>
   )
 }
