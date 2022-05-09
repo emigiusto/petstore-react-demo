@@ -14,7 +14,8 @@ class ProductProvider extends Component {
         cartTotal: 0,
         userId: null, //If userId is not null, means that the user is Logged in
         productInDetail: null,
-        filters: []
+        filters: [],
+        activeFilters: []
     }
     
     componentDidMount = async () =>{
@@ -86,16 +87,22 @@ class ProductProvider extends Component {
     }
 
     //Method to update current filters and reset product
-    updateFilters = async (filter,option) =>{
-        let filterFound = this.state.cart.find( (filter) => filter.value === filter )
+    updateActiveFilters = async (newFilter,option) =>{
+        let filterFound = this.state.activeFilters.find( filter => filter.filter === newFilter )
         if (filterFound) {
-            let filteredFilters = this.state.cart.filter( (filter) => filter.value === filter )
+            let filteredFilters = this.state.activeFilters.filter( (filter) => filter.filter !== newFilter )
+            if (option === "All") {
+                this.setState(()=>{
+                    return {activeFilters: [...filteredFilters]}
+                })
+            } else {
+                this.setState(()=>{
+                    return {activeFilters: [...filteredFilters, {filter: newFilter, option: option}]}
+                })
+            }
+        } else if (option !== "All"){
             this.setState(()=>{
-                return {filters: [...filteredFilters, {filter: filter, option: option}]}
-            })
-        } else {
-            this.setState(()=>{
-                return {filters: [...this.state.filters, {filter: filter, option: option}]}
+                return {activeFilters: [...this.state.activeFilters, {filter: newFilter, option: option}]}
             })
         }
     }
@@ -251,7 +258,7 @@ class ProductProvider extends Component {
                 signout: this.signout,
                 setProductDetail: this.setProductDetail,
                 userExists: this.userExists,
-                updateFilters: this.updateFilters
+                updateActiveFilters: this.updateActiveFilters
             }}>
                 {this.props.children}
             </ProductContext.Provider>

@@ -11,11 +11,11 @@ export default function Filters() {
             (contextState)=>{
               return contextState.filters.map(filter => {
                 if (filter.type === "toggle") {
-                  return <ToggleFilter key={filter.id} filter={filter}></ToggleFilter>
+                  return <ToggleFilter key={filter.id} filter={filter} updateActiveFilters={contextState.updateActiveFilters}></ToggleFilter>
                 } else if  (filter.type === "select"){
-                  return <SelectFilter key={filter.id} filter={filter}></SelectFilter>
-                } else {
-                  return <div></div>
+                  return <SelectFilter key={filter.id} filter={filter} updateActiveFilters={contextState.updateActiveFilters}></SelectFilter>
+                } else { 
+                  return <div ></div>
                 }
               })
             }
