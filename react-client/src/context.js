@@ -227,6 +227,7 @@ class ProductProvider extends Component {
 const ProductConsumer = ProductContext.Consumer
 export {ProductProvider,ProductConsumer};
 
+
 //Helper Fetch functions
 var post = function(url, data) {
     return fetch(url, {method: "POST", headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)});
