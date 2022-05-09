@@ -13,13 +13,15 @@ class ProductProvider extends Component {
         cartId: null,
         cartTotal: 0,
         userId: null, //If userId is not null, means that the user is Logged in
-        productInDetail: null
+        productInDetail: null,
+        filters: []
     }
     
     componentDidMount = async () =>{
-        await this.getSessionInfo();
-        await this.setProducts();
-        await this.setCart();
+        this.getSessionInfo();
+        this.setProducts();
+        this.setCart();
+        this.setFilters();
     }
 
     //Method to get userId (and more info?) from localStorage when app starts
@@ -60,6 +62,15 @@ class ProductProvider extends Component {
         }
     }
 
+    //Method to set the filters available in Firestore
+    setFilters = async () =>{
+        const storeProducts = await fetch("http://localhost:3005/categories")
+        const data = await storeProducts.json();
+        this.setState(()=>{
+            return {filters: [...data]}
+        })
+    }
+
     //Method to update the cart
     addToCart = async (productId) =>{
         if (this.state.userId) {
@@ -71,6 +82,21 @@ class ProductProvider extends Component {
             if(data.status===200){
                 this.localCartOperation(productId,"increase")
             } else { console.log("Product with id " + productId + " does not exist")}
+        }
+    }
+
+    //Method to update current filters and reset product
+    updateFilters = async (filter,option) =>{
+        let filterFound = this.state.cart.find( (filter) => filter.value === filter )
+        if (filterFound) {
+            let filteredFilters = this.state.cart.filter( (filter) => filter.value === filter )
+            this.setState(()=>{
+                return {filters: [...filteredFilters, {filter: filter, option: option}]}
+            })
+        } else {
+            this.setState(()=>{
+                return {filters: [...this.state.filters, {filter: filter, option: option}]}
+            })
         }
     }
 
@@ -224,7 +250,8 @@ class ProductProvider extends Component {
                 signin: this.signin,
                 signout: this.signout,
                 setProductDetail: this.setProductDetail,
-                userExists: this.userExists
+                userExists: this.userExists,
+                updateFilters: this.updateFilters
             }}>
                 {this.props.children}
             </ProductContext.Provider>

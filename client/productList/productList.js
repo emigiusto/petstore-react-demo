@@ -68,9 +68,7 @@ function renderFooter() {
         console.log(filterObject)
         Object.keys(filtersList).forEach((key, index) => {
             if (typeof filtersList[key]=="string") {
-
                 const docElement = document.getElementById(key)
-
                 if (docElement) {
                     docElement.innerHTML = capitalizeFirstLetter(filtersList[key]);
                 }
