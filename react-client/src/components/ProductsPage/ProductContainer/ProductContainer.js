@@ -12,6 +12,7 @@ export default function ProductContainer() {
                             return <Product key={product.id} 
                                             product={product} 
                                             handleAddToCart={contextState.addToCart}
+                                            setProductDetail={contextState.setProductDetail}
                                     ></Product>
                         })
                     }

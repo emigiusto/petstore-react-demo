@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 export default function Product(props) {
 
   let navigate = useNavigate();
+
   const routechange = () => {
+    props.setProductDetail(props.product)
     let path = '/product-list/' + props.product.id
     navigate(path)
   }

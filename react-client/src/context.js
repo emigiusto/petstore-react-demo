@@ -13,7 +13,7 @@ class ProductProvider extends Component {
         cartId: null,
         cartTotal: 0,
         userId: null, //If userId is not null, means that the user is Logged in
-        
+        productInDetail: null
     }
     
     componentDidMount = async () =>{
@@ -27,6 +27,13 @@ class ProductProvider extends Component {
         let userIdStored = localStorage.getItem("userid")
         this.setState(()=>{
             return {userId: userIdStored} 
+        })
+    }
+
+    setProductDetail = (productToAssign) =>{
+        let product = this.state.products.find((product) => product.id === productToAssign.id)
+        this.setState(()=>{
+            return {productInDetail: product} 
         })
     }
 
@@ -209,6 +216,7 @@ class ProductProvider extends Component {
                 clearCart: this.clearCart,
                 signin: this.signin,
                 signout: this.signout,
+                setProductDetail: this.setProductDetail
             }}>
                 {this.props.children}
             </ProductContext.Provider>
