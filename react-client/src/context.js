@@ -172,6 +172,13 @@ class ProductProvider extends Component {
         }
     }
 
+    userExists = async (email) =>{
+        const users = await fetch("http://localhost:3005/users")
+        const data = await users.json();
+        const user = data.users.find( (user) => user.email === email )
+        return user ? true : false
+    }
+
     //Attempts to log in user
     //Logic behind login and offline carts: If the user has a local cart with at least 1 item, 
     // Then it replace the content of the cart in the API (Cart meaning order "in progress")
@@ -216,7 +223,8 @@ class ProductProvider extends Component {
                 clearCart: this.clearCart,
                 signin: this.signin,
                 signout: this.signout,
-                setProductDetail: this.setProductDetail
+                setProductDetail: this.setProductDetail,
+                userExists: this.userExists
             }}>
                 {this.props.children}
             </ProductContext.Provider>
