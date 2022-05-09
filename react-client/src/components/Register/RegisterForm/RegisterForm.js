@@ -20,10 +20,19 @@ function RegisterForm() {
   function renderSuccessToast() {
     setRegistered(true);
     setError(false);
+    removeToasts();
   }
   function renderErrorToast() {
     setError(true);
     setRegistered(false);
+    removeToasts();
+  }
+
+  function removeToasts() {
+    setTimeout(function () {
+      setRegistered(false);
+      setError(false);
+    }, 5000);
   }
 
   //Function to read input data and process it. Currently it only prints to console.
