@@ -4,7 +4,7 @@ import { ProductConsumer } from '../../context';
 import Header from '../GeneralComponents/Header'
 import Footer from '../GeneralComponents/Footer';
 import ProductDetails from './ProductDetails/ProductDetails';
-import Loader from 'react-dom'
+import GoBackButton from '../GeneralComponents/GoBackButton';
 
 export default function ProductDetailsPage(props) {
 
@@ -12,9 +12,10 @@ export default function ProductDetailsPage(props) {
   return (
     <div>
       <Header />
+        <GoBackButton></GoBackButton>
         <ProductConsumer>
             {(contextState) => {
-                if (!contextState.products.length !== 0){
+                if (contextState.products.length !== 0){
                 let pDetails = contextState.products.find((product) => product.id === id);
                 return <ProductDetails product = {pDetails}/>
                 } else {

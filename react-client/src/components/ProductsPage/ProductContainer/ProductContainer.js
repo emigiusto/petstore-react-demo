@@ -2,9 +2,12 @@ import React/* , {useState,useEffect} */ from 'react'
 /* import axios from 'axios' */
 import Product from './Product/Product'
 import {ProductConsumer} from '../../../context'
+import { useState } from 'react'
 import ProductDetails from '../../ProductDetailspage/ProductDetails/ProductDetails'
+import ProductDetailsPage from '../../ProductDetailspage/ProductDetailsPage'
 
 export default function ProductContainer() {
+
     return (
       <div className="main__section__products row">
         {<ProductConsumer>

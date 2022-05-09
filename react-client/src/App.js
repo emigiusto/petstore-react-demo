@@ -11,6 +11,7 @@ import NotFound from './components/NotFound'
 import Home from './components/Home'
 import ProductsPage from './components/ProductsPage/ProductsPage';
 import ProductDetailsPage from './components/ProductDetailspage/ProductDetailsPage';
+import './components/GeneralComponents/GoBackButton.css'
 
 
 function App() {
