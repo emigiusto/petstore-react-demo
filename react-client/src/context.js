@@ -166,9 +166,9 @@ class ProductProvider extends Component {
     }
 
     //Attempts to log in user
-    //Logic behind login and offline carts: If the user has a cart (meaning order "in progress") with at least 1 item  
-    // on the API,login retrieves that cart
-    // In case the users
+    //Logic behind login and offline carts: If the user has a local cart with at least 1 item, 
+    // Then it replace the content of the cart in the API (Cart meaning order "in progress")
+    // If there are no items on the local cart ,login retrieves the cart content of the API
     signin = async (email,password) =>{
         const users = await fetch("http://localhost:3005/users")
         const data = await users.json();
