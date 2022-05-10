@@ -2,6 +2,10 @@ import { useRef } from "react";
 import classes from "./RegisterForm.module.css";
 import { Link } from "react-router-dom";
 import { ProductConsumer, ProductProvider } from "../../../context";
+import SuccessToast from "../../GeneralComponents/Toasts/SuccessToast";
+import ErrorToast from "../../GeneralComponents/Toasts/ErrorToast";
+
+import { useState } from "react";
 
 function RegisterForm() {
   const emailAddress = useRef();
@@ -10,10 +14,30 @@ function RegisterForm() {
   const deliveryAddress = useRef();
   const password = useRef();
 
+  const [isregistered, setRegistered] = useState(false);
+  const [iserror, setError] = useState(false);
+
+  function renderSuccessToast() {
+    setRegistered(true);
+    setError(false);
+    removeToasts();
+  }
+  function renderErrorToast() {
+    setError(true);
+    setRegistered(false);
+    removeToasts();
+  }
+
+  function removeToasts() {
+    setTimeout(function () {
+      setRegistered(false);
+      setError(false);
+    }, 5000);
+  }
+
   //Function to read input data and process it. Currently it only prints to console.
   function submitHandler(event, registerUser) {
     event.preventDefault();
-    console.log(event.target);
 
     let newUser = {
       email: emailAddress.current.value,
@@ -23,8 +47,9 @@ function RegisterForm() {
       lastName: lastName.current.value,
     };
 
-    console.log(newUser);
-    registerUser(newUser);
+    registerUser(newUser).then(function (result) {
+      result ? renderSuccessToast() : renderErrorToast();
+    });
   }
 
   return (
@@ -129,6 +154,8 @@ function RegisterForm() {
                   Submit
                 </button>
               </form>
+              {isregistered && <SuccessToast />}
+              {iserror && <ErrorToast />}
             </div>
           );
         }}
