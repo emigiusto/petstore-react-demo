@@ -109,7 +109,7 @@ class ProductProvider extends Component {
         let filterFound = this.getActiveFilter(newFilter)
         if (filterFound) {
             let filteredFilters = this.state.activeFilters.filter((filter) => filter.filter !== newFilter)
-            if (option === "All") {
+            if (option === "All" || option ===false) {
                 this.setState(() => {
                     return { activeFilters: [...filteredFilters] }
                 })

@@ -13,7 +13,7 @@ export default function ProductContainer(props) {
     const filterProductByActiveFilters = (product) =>{
         for (let index = 0; index < props.activeFilters.length; index++) {
             const filterElement = props.activeFilters[index];
-            if (product[filterElement.filter].toLowerCase().trim().replace(/\s/g, '') !== filterElement.option.toLowerCase().trim().replace(/\s/g, '')) {
+            if (product[filterElement.filter].toString().toLowerCase().trim().replace(/\s/g, '') !== filterElement.option.toString().toLowerCase().trim().replace(/\s/g, '')) {
                 return false
             }
         }
