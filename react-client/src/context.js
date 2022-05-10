@@ -86,9 +86,14 @@ class ProductProvider extends Component {
         }
     }
 
+    getActiveFilter = (filterToSearch) =>{
+        let filterFound = this.state.activeFilters.find( filter => filter.filter === filterToSearch )
+        return filterFound ? filterFound : false
+    }
+
     //Method to update current filters and reset product
-    updateActiveFilters = async (newFilter,option) =>{
-        let filterFound = this.state.activeFilters.find( filter => filter.filter === newFilter )
+    updateActiveFilters = (newFilter,option) =>{
+        let filterFound = this.getActiveFilter(newFilter)
         if (filterFound) {
             let filteredFilters = this.state.activeFilters.filter( (filter) => filter.filter !== newFilter )
             if (option === "All") {
@@ -258,7 +263,8 @@ class ProductProvider extends Component {
                 signout: this.signout,
                 setProductDetail: this.setProductDetail,
                 userExists: this.userExists,
-                updateActiveFilters: this.updateActiveFilters
+                updateActiveFilters: this.updateActiveFilters,
+                getActiveFilter: this.getActiveFilter
             }}>
                 {this.props.children}
             </ProductContext.Provider>

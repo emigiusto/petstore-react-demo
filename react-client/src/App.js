@@ -19,11 +19,11 @@ function App() {
     <React.Fragment>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="/product-list" element={<ProductsPage/>} />
-          <Route path="/product-list/:id" element={<ProductDetailsPage/>}/>
-          <Route path="/login" element ={<LoginForm />} />
+          <Route exact path="/" element={<Home />} />
+          <Route path="register" element={<RegisterForm />} />
+          <Route path="product-list" element={<ProductsPage/>} />
+          <Route path="product-list/:id" element={<ProductDetailsPage/>}/>
+          <Route path="login" element ={<LoginForm />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

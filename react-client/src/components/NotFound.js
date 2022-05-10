@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from "react-router-dom";
 
 function NotFound() {
   return (
@@ -9,6 +10,7 @@ function NotFound() {
                         <h1> error</h1>
                         <h2> PAGE NOT FOUND</h2>
                         <p>The requested url was not found.<br></br> Please check your url direction.</p>
+                        <Link to="/">Go back to Home</Link>
                     </div>
                 </div>
             </div>
