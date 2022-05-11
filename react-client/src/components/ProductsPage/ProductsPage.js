@@ -5,6 +5,7 @@ import Filters from './Filters/Filters'
 import ProductContainer from './ProductContainer/ProductContainer'
 import LoginNav from '../GeneralComponents/LoginNav'
 
+import './ProductsPage.css';
 
 import {ProductConsumer} from '../../context'
 
@@ -15,13 +16,13 @@ export default function ProductsPage() {
           <LoginNav></LoginNav>
           <ProductConsumer>{
             (contextState)=>{
-                return    (<>
+                return    (<div className='filters-productlist'>
                             <Filters contextState={contextState} />
                             <ProductContainer products={contextState.products} 
                                               activeFilters={contextState.activeFilters}
                                               handleAddToCart={contextState.addToCart}
                                               setProductDetail={contextState.setProductDetail}/>
-                            </>
+                            </div>
                           )
               }
             }

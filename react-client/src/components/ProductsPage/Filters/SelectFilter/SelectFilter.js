@@ -8,7 +8,7 @@ function SelectFilter(props) {
     }
 
     return (
-        <div>
+        <div className="m-2 col px-0 main__section__filters__item filters-select dropdown">
             <button>{props.filter.value}</button>
             <ul aria-labelledby="dropdownMenuButton1">
                 <li><button onClick={() => handleFilterSelection(props.filter.value, "All")} >All</button></li>

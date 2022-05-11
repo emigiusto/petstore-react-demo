@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import SelectFilter from './SelectFilter/SelectFilter'
 import ToggleFilter from './ToggleFilter/ToggleFilter'
 import './Filters.css';
 
 export default function Filters({ contextState }) {
 
-  useEffect(() => {
-    contextState.clearActiveFilters();
-  },[]);
+  const handleClearFilters = () =>{
+    contextState.clearActiveFilters()
+  }
 
   return (
-    <div className="m-2 px-0 main__section__filters__item filters-select dropdown">
+    <div className="main__section__filters row d-flex flex-row align-items-center my-3">
       {
         contextState.filters.map(filter => {
           if (filter.type === "toggle") {
@@ -18,20 +18,22 @@ export default function Filters({ contextState }) {
               key={filter.id}
               filter={filter}
               updateActiveFilters={contextState.updateActiveFilters}
-              getActiveFilter={contextState.getActiveFilter}>
+              getActiveFilter={contextState.getActiveFilter}
+              activeFilters={contextState.activeFilters}>
             </ToggleFilter>
           } else if (filter.type === "select") {
             return <SelectFilter
               key={filter.id}
               filter={filter}
-              updateActiveFilters={contextState.updateActiveFilters}>
+              updateActiveFilters={contextState.updateActiveFilters}
+              activeFilters={contextState.activeFilters}>
             </SelectFilter>
           } else {
             return <div ></div>
           } 
         })
       }
-      <button onClick={()=> contextState.clearActiveFilters()}>Clear Filters</button>
+      <button type="button" className="m-2 col px-0 btn btn-dark"  onClick={()=> handleClearFilters()}>Clear Filters</button>
     </div>
   )
 }
