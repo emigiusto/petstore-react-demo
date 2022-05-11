@@ -19,9 +19,9 @@ function ToggleFilter(props) {
 
     return (
         <button type="button" 
-                className={`m-2 col main__section__filters__item btn btn-${active ? "secondary" : "outline-secondary"}`}
+                className={`m-2 col-md-3 col-sm-6 col-lg-2 filters__filter btn btn-${active ? "secondary" : "outline-secondary"}`}
                 onClick={() => handleFilterToggle(props.filter.value)}>
-            {props.filter.value}
+            {props.filter.value.charAt(0).toUpperCase() + props.filter.value.slice(1)}
         </button>
     )
 }

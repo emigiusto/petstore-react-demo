@@ -12,7 +12,7 @@ export default function ProductDetailsPage(props) {
         <GoBackButton></GoBackButton>
         <ProductConsumer>
             {(contextState) => {
-                  return <ProductDetails product = {contextState.productInDetail} handleAddToCart={contextState.addToCart}/>
+                  return <ProductDetails product={contextState.productInDetail} handleAddToCart={contextState.addToCart}/>
             }}
         </ProductConsumer>
       <Footer />
