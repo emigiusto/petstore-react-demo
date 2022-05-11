@@ -125,6 +125,13 @@ class ProductProvider extends Component {
         }
     }
 
+    //Method to update current filters and reset product
+    clearActiveFilters = () => {
+        this.setState(() => {
+            return { activeFilters: [] }
+        })
+    }
+
     //Method to update the cart
     decreaseFromCart = async (productId) => {
         if (this.state.userId) {
@@ -354,7 +361,8 @@ class ProductProvider extends Component {
                 setProductDetail: this.setProductDetail,
                 userExists: this.userExists,
                 updateActiveFilters: this.updateActiveFilters,
-                getActiveFilter: this.getActiveFilter
+                getActiveFilter: this.getActiveFilter,
+                clearActiveFilters: this.clearActiveFilters
             }}>
                 {this.props.children}
             </ProductContext.Provider>

@@ -11,21 +11,22 @@ import {ProductConsumer} from '../../context'
 export default function ProductsPage() {
   return (
       <div>
-        
           <Header/>
           <LoginNav></LoginNav>
-          <Filters/>
           <ProductConsumer>{
-              (contextState)=>{
-                return <ProductContainer  products={contextState.products} 
-                                          activeFilters={contextState.activeFilters}
-                                          handleAddToCart={contextState.addToCart}
-                                          setProductDetail={contextState.setProductDetail}/>
+            (contextState)=>{
+                return    (<>
+                            <Filters contextState={contextState} />
+                            <ProductContainer products={contextState.products} 
+                                              activeFilters={contextState.activeFilters}
+                                              handleAddToCart={contextState.addToCart}
+                                              setProductDetail={contextState.setProductDetail}/>
+                            </>
+                          )
               }
             }
           </ProductConsumer>
           <Footer/>
-        
       </div>
   )
 }

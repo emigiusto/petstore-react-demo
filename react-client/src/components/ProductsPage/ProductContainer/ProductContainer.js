@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import Product from './Product/Product'
 
 export default function ProductContainer(props) {
-    /* const [localActiveFilters, setActiveFilters] = useState([]); */
     const [productList, setProductList] = useState([]);
 
     const filterProducts = () =>{
