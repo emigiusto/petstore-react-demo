@@ -10,6 +10,7 @@ class ProductProvider extends Component {
     state={
         products: [],
         cart: [],
+        cartSize: 0,
         cartId: null,
         cartTotal: 0,
         userId: null, //If userId is not null, means that the user is Logged in
@@ -20,6 +21,12 @@ class ProductProvider extends Component {
         await this.getSessionInfo();
         await this.setProducts();
         await this.setCart();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevState.cart !== this.state.cart) {
+            this.setCartTotal()
+        }
     }
 
     //Method to get userId (and more info?) from localStorage when app starts
@@ -59,6 +66,30 @@ class ProductProvider extends Component {
             })
         }
     }
+
+  getProduct = (id, quantity) => {
+        return {
+          ...this.state.products.find((product) => product.id === id),
+          quantity: quantity,
+        };
+      }
+
+    getSum = (total, productInCart) => {
+        return total + productInCart.price*productInCart.quantity;
+    }
+
+    getCartSize = (total, productInCart) => {
+        return total + productInCart.quantity;
+    }
+
+    setCartTotal = () => {
+        let fullCart = this.state.cart.map(cartItem => this.getProduct(cartItem.productid,cartItem.quantity))
+        let cartSize = fullCart.reduce((this.getCartSize), 0)
+        let total = fullCart.reduce((this.getSum), 0)
+        this.setState(() => {return {cartTotal:total.toFixed(2)}})
+        this.setState(() => {return {cartSize:cartSize}})
+    }
+    
 
     //Method to update the cart
     addToCart = async (productId) =>{
@@ -224,7 +255,8 @@ class ProductProvider extends Component {
                 signin: this.signin,
                 signout: this.signout,
                 setProductDetail: this.setProductDetail,
-                userExists: this.userExists
+                userExists: this.userExists,
+                setCartTotal: this.setCartTotal
             }}>
                 {this.props.children}
             </ProductContext.Provider>

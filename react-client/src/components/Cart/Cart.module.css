@@ -16,6 +16,31 @@ h2 {
     font-size: 24px;
 }
 
+.buttonhover {
+    cursor: pointer;
+}
+
+.quantitybutton {
+    background-color: lightgray;
+    text-align: center;
+    border-radius: 100px;
+    cursor: pointer;
+}
+
+.clearcart {
+    background-color: #F3D8D5;
+    color:#D6021D;
+    margin-right: 12px;
+    max-width: max-content;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.clearcart:hover {
+    background-color: #F8CDC8;
+}
+
 .cart-page-container {
 
     padding-top: 48px;
@@ -114,4 +139,8 @@ h2 {
     padding-top: 16px;
     padding-bottom: 16px;
     color: grey;
+}
+
+.price {
+    padding-bottom: 16px;
 }
