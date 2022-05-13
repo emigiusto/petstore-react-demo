@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
+import { Image } from 'react-bootstrap';
 
 import './Product.css';
 

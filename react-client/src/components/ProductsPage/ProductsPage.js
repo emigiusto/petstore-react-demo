@@ -11,6 +11,7 @@ import {ProductConsumer} from '../../context'
 export default function ProductsPage() {
   return (
       <div>
+
           <Header/> 
           <ProductConsumer>{
             (contextState)=>{
