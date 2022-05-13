@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //Components
 import RegisterForm from './components/Register/RegisterForm/RegisterForm'
 import NotFound from './components/NotFound'
-import Home from './components/Home'
+import Home from './components/Home/Home'
 import ProductsPage from './components/ProductsPage/ProductsPage';
 import ProductDetailsPage from './components/ProductDetailspage/ProductDetailsPage';
 import './components/GeneralComponents/GoBackButton.css'

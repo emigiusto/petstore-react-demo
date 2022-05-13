@@ -1,0 +1,8 @@
+.clear-filters{
+    max-width: fit-content;
+}
+
+.filters__filter{
+    max-height: 3rem !important;
+    max-width: 150px;
+}
