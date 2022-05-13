@@ -9,7 +9,7 @@ export default function ProductsPage() {
   return (
       <div>
         <Header/>
-        <LoginNav></LoginNav>
+        {/* <LoginNav></LoginNav> */}
         <Filters/>
         <ProductContainer/>
         <Footer/>

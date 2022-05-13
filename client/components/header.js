@@ -47,13 +47,6 @@ export function createHeader() {
         </div>
       </div>       
     </nav>
-
-    
-     
-    
-    
-    
-    
     `
   );
 }
