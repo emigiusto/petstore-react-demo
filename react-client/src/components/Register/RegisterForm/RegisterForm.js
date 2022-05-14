@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { ProductConsumer, ProductProvider } from "../../../context";
 import SuccessToast from "../../GeneralComponents/Toasts/SuccessToast";
 import ErrorToast from "../../GeneralComponents/Toasts/ErrorToast";
+import Header from '../../GeneralComponents/Header'
+import Footer from '../../GeneralComponents/Footer'
 
 import { useState } from "react";
 
@@ -54,6 +56,7 @@ function RegisterForm() {
 
   return (
     <div>
+      <Header/> 
       <ProductConsumer>
         {(context) => {
           return (
@@ -160,6 +163,7 @@ function RegisterForm() {
           );
         }}
       </ProductConsumer>
+      <Footer/> 
     </div>
   );
 }

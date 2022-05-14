@@ -391,7 +391,7 @@ class ProductProvider extends Component {
                 signout: this.signout,
                 setProductDetail: this.setProductDetail,
                 userExists: this.userExists,
-                setCartTotal: this.setCartTotal
+                setCartTotal: this.setCartTotal,
                 updateActiveFilters: this.updateActiveFilters,
                 getActiveFilter: this.getActiveFilter,
                 clearActiveFilters: this.clearActiveFilters

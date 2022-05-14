@@ -1,9 +1,9 @@
 import React from 'react'
 import {Navbar, Nav, Container, NavDropdown} from 'react-bootstrap';
-import Backdrop from './Backdrop/Backdrop'
 import Cart from '../Cart/Cart';
 import { useState } from 'react';
 import { ProductConsumer } from "../../context";
+import {Link} from 'react-router-dom';
 
 export default function Header() {
 
@@ -24,15 +24,17 @@ export default function Header() {
           {(contextstate) => {
             return (
               <Container>
-                <Navbar.Brand /* href="#home" */>Pet Store</Navbar.Brand>
+                <Navbar.Brand>
+                  <Link className='text-capitalize text-reset text-decoration-none' to="/">Pet Store</Link>
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                   <Nav className="me-auto">
-                    <Nav.Link /* href="#features" */>Products</Nav.Link>
+                      <Link to="/product-list" className='text-capitalize text-reset text-decoration-none'>Products</Link>
                   </Nav>
                   <Nav>
                     <Nav.Link onClick={cartOpenHandler}>Cart ({contextstate.cartSize})</Nav.Link>
-                    <Nav.Link eventKey={2}>Login</Nav.Link>
+                      <Link to="/login" className='text-capitalize text-reset text-decoration-none d-flex align-items-center mx-4'>Login</Link>
                   </Nav>
                 </Navbar.Collapse>
               </Container>

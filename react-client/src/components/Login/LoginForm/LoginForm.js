@@ -1,7 +1,9 @@
 import { useRef } from "react";
 import classes from "./LoginForm.module.css";
 import { Link } from "react-router-dom";
-import { ProductConsumer, ProductProvider } from "../../../context";
+import { ProductConsumer } from "../../../context";
+import Header from '../../GeneralComponents/Header'
+import Footer from '../../GeneralComponents/Footer'
 
 function RegisterForm() {
   const emailAddress = useRef();
@@ -16,6 +18,7 @@ function RegisterForm() {
 
   return (
     <div>
+      <Header/> 
       <ProductConsumer>
         {(context) => {
           return (
@@ -79,6 +82,7 @@ function RegisterForm() {
           );
         }}
       </ProductConsumer>
+      <Footer/> 
     </div>
   );
 }

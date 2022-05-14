@@ -23,7 +23,6 @@ function App() {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/product-list" element={<ProductsPage/>} />
           <Route path="/product-list/:id" element={<ProductDetailsPage/>}/>
-          <Route path="/cart" element={<ProductDetailsPage/>}/>
           <Route path="/login" element ={<LoginForm />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
