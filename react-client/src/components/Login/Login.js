@@ -25,32 +25,22 @@ function RegisterForm() {
             <div className="container-sm">
               <div className="row justify-content-center">
                 <div className="col-md-6">
-                  <div className="container-sm">
-                    {/*Some Bootstrap stuff that is necessary for the form columns to work.*/}
-                    <meta charSet="UTF-8" />
-                    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-
-                    <link
-                      rel="stylesheet"
-                      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-                      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-                      crossOrigin="anonymous"
+                  {/*Beginning of registration form */}
+                  <form
+                    onSubmit={(e) => submitHandler(e, context.signin)}
+                    className="pb-3 pt-4 px-4 border rounded bg-white shadow-sm form-signin"
+                  >
+                    {/*Logo*/}
+                    <img
+                      className="mb-4 d-flex mx-auto form-signin__logo"
+                      src="https://img.icons8.com/color/96/000000/dog-bowl.png"
+                      alt=""
+                      width="80"
+                      height="80"
                     />
-                    {/*Beginning of registration form */}
-                    <form
-                      onSubmit={(e) => submitHandler(e, context.signin)}
-                      className="pb-3 pt-4 px-4 border rounded bg-white shadow-sm form-signin"
-                    >
-                      {/*Logo*/}
-                      <img
-                        className="mb-4 d-flex mx-auto form-signin__logo"
-                        src="https://img.icons8.com/color/96/000000/dog-bowl.png"
-                        alt=""
-                        width="80"
-                        height="80"
-                      />
-                      {/*Start of new row */}
-                      <div className="form-group col-sm-12">
+                    {/*Start of new row */}
+                    <div className="row mb-3">
+                      <div class="col-12">
                         <label htmlFor="email">E-Mail Address</label>
                         <input
                           type="text"
@@ -60,8 +50,11 @@ function RegisterForm() {
                           className="form-control"
                         />
                       </div>
-                      {/*Start of new row */}
-                      <div className="form-group col-sm-12">
+                    </div>
+
+                    {/*Start of new row */}
+                    <div className="row mb-3">
+                      <div class="col-12">
                         <label htmlFor="password">Password</label>
                         <input
                           type="password"
@@ -71,14 +64,17 @@ function RegisterForm() {
                           className="form-control"
                         />
                       </div>
-                      {/*Submit Button */}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <button type="submit" className="btn btn-primary">
-                        <Link to="/" />
-                        Login
-                      </button>
-                    </form>
-                  </div>
+                    </div>
+                    {/*Submit Button */}
+                    <div className="row mb-3">
+                      <div class="col-3">
+                        <button type="submit" className="btn btn-primary">
+                          <Link to="/" />
+                          Login
+                        </button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>

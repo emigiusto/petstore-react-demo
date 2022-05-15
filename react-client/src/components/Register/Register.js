@@ -63,89 +63,74 @@ function RegisterForm() {
             <div className="container-sm">
               <div className="row justify-content-center">
                 <div className="col-lg-6">
-                  <div className="container">
-                    {/*Some Bootstrap stuff that is necessary for the form columns to work.*/}
-                    <meta charSet="UTF-8" />
-                    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-                    <meta
-                      name="viewport"
-                      content="width=device-width, initial-scale=1.0"
+                  {/*Beginning of registration form */}
+                  <form
+                    onSubmit={(e) => submitHandler(e, context.registerUser)}
+                    className="pb-3 pt-4 px-4 border rounded bg-white shadow-sm form-signin"
+                  >
+                    {/*Logo*/}
+                    <img
+                      className="mb-4 d-flex mx-auto form-signin__logo"
+                      src="https://img.icons8.com/color/96/000000/dog-bowl.png"
+                      alt=""
+                      width="80"
+                      height="80"
                     />
-                    <link
-                      rel="stylesheet"
-                      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-                      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-                      crossOrigin="anonymous"
-                    />
-
-                    {/*Beginning of registration form */}
-                    <form
-                      onSubmit={(e) => submitHandler(e, context.registerUser)}
-                      className="pb-3 pt-4 px-4 border rounded bg-white shadow-sm form-signin"
-                    >
-                      {/*Logo*/}
-                      <img
-                        className="mb-4 d-flex mx-auto form-signin__logo"
-                        src="https://img.icons8.com/color/96/000000/dog-bowl.png"
-                        alt=""
-                        width="80"
-                        height="80"
-                      />
-                      {/*Start of new row */}
-                      <div className="form-row mx-auto">
-                        <div className="form-group col-md-6">
-                          <label htmlFor="firstName">First Name</label>
-                          <input
-                            type="text"
-                            required
-                            id="firstName"
-                            ref={firstName}
-                            className="form-control"
-                            placeholder="Yogi"
-                          />
-                        </div>
-                        <div className="form-group col-md-6">
-                          <label htmlFor="lastName">Last Name</label>
-                          <input
-                            type="text"
-                            required
-                            id="lastName"
-                            ref={lastName}
-                            className="form-control"
-                            placeholder="Bear"
-                          />
-                        </div>
+                    {/*Start of new row */}
+                    <div className="row mb-3">
+                      <div class="col-6">
+                        <label htmlFor="firstName">First Name</label>
+                        <input
+                          type="text"
+                          required
+                          id="firstName"
+                          ref={firstName}
+                          className="form-control"
+                          placeholder="Yogi"
+                        />
                       </div>
-                      {/*Start of new row */}
-                      <div className="form-row mx-auto">
-                        <div className="form-group col-md-6">
-                          <label htmlFor="email">E-Mail Address</label>
-                          <input
-                            type="text"
-                            required
-                            id="email"
-                            ref={emailAddress}
-                            className="form-control"
-                            placeholder="heyheyhey@yogibear.com"
-                          />
-                        </div>
-                        <div className="form-group col-md-6">
-                          <label htmlFor="deliveryAddress">
-                            Delivery Address
-                          </label>
-                          <input
-                            type="text"
-                            required
-                            id="deliveryAddress"
-                            ref={deliveryAddress}
-                            className="form-control"
-                            placeholder="Cave Avenue 21, 45678, Jellystone National Park, Wyoming USA"
-                          />
-                        </div>
+                      <div class="col-6">
+                        <label htmlFor="lastName">Last Name</label>
+                        <input
+                          type="text"
+                          required
+                          id="lastName"
+                          ref={lastName}
+                          className="form-control"
+                          placeholder="Bear"
+                        />
                       </div>
-                      {/*Start of new row */}
-                      <div className="form-row mx-auto">
-                      <div className="form-group col-md-12">
+                    </div>
+                    {/*Start of new row */}
+                    <div className="row mb-3">
+                      <div class="col-6">
+                        <label htmlFor="email">E-Mail Address</label>
+                        <input
+                          type="text"
+                          required
+                          id="email"
+                          ref={emailAddress}
+                          className="form-control"
+                          placeholder="heyheyhey@yogibear.com"
+                        />
+                      </div>
+                      <div class="col-6">
+                        <label htmlFor="deliveryAddress">
+                          Delivery Address
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          id="deliveryAddress"
+                          ref={deliveryAddress}
+                          className="form-control"
+                          placeholder="Cave Avenue 21, 45678, Jellystone National Park, Wyoming USA"
+                        />
+                      </div>
+                    </div>
+                    {/*Start of new row */}
+                    <div className="row mb-3">
+                      <div class="col-12">
                         <label htmlFor="password">Password</label>
                         <input
                           type="password"
@@ -155,19 +140,21 @@ function RegisterForm() {
                           className="form-control"
                           placeholder="password"
                         />
-                      </div>                      </div>
-
-                      {/*Submit Button */}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <button type="submit" className="btn btn-primary">
-                        <Link to="/" />
-                        Register
-                      </button>
-                    </form>
-                    {isregistered && <SuccessToast />}
-                    {iserror && <ErrorToast />}
-                  </div>{" "}
-                </div>
+                      </div>
+                    </div>
+                    {/*Submit Button */}
+                    <div className="row mb-3">
+                      <div class="col-3">
+                        <button type="submit" className="btn btn-primary">
+                          <Link to="/" />
+                          Register
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                  {isregistered && <SuccessToast />}
+                  {iserror && <ErrorToast />}
+                </div>{" "}
               </div>
             </div>
           );
