@@ -35,6 +35,8 @@ export default function Header() {
                   <Nav>
                     <Nav.Link onClick={cartOpenHandler}>Cart ({contextstate.cartSize})</Nav.Link>
                       <Link to="/login" className='text-capitalize text-reset text-decoration-none d-flex align-items-center mx-4'>Login</Link>
+                      <Link to="/register" className='text-capitalize text-reset text-decoration-none d-flex align-items-center mx-4'>Register</Link>
+
                   </Nav>
                 </Navbar.Collapse>
               </Container>

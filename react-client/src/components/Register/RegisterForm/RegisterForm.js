@@ -60,7 +60,7 @@ function RegisterForm() {
       <ProductConsumer>
         {(context) => {
           return (
-            <div className={classes.modal}>
+            <div className= "container">
               {/*Some Bootstrap stuff that is necessary for the form columns to work.*/}
               <meta charSet="UTF-8" />
               <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -89,6 +89,7 @@ function RegisterForm() {
                   height="80"
                 />
                 {/*Start of new row */}
+                <div class="container">
                 <div className="form-row mx-auto">
                   <div className="form-group col-md-6">
                     <label htmlFor="firstName">First Name</label>
@@ -156,6 +157,7 @@ function RegisterForm() {
                   <Link to="/" />
                   Submit
                 </button>
+                </div>
               </form>
               {isregistered && <SuccessToast />}
               {iserror && <ErrorToast />}

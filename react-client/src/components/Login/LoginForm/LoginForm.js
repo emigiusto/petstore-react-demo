@@ -22,7 +22,7 @@ function RegisterForm() {
       <ProductConsumer>
         {(context) => {
           return (
-            <div className={classes.modal}>
+            <div className="container">
               {/*Some Bootstrap stuff that is necessary for the form columns to work.*/}
               <meta charSet="UTF-8" />
               <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
