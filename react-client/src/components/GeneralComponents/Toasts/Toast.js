@@ -5,9 +5,18 @@ function SuccessAlert(props) {
         {props.state.text}
       </div>
     );
-  } else {
+  } else if (
+    props.state.text !==
+    "You are already signed in. Please sign out and try again."
+  ) {
     return (
       <div className="alert alert-danger" role="alert">
+        {props.state.text}
+      </div>
+    );
+  } else {
+    return (
+      <div className="alert alert-warning" role="alert">
         {props.state.text}
       </div>
     );

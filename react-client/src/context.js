@@ -361,43 +361,49 @@ class ProductProvider extends Component {
     } else {
       return true;
     }
-  };
+  }
 
   //Attempts to log in user
   //Logic behind login and offline carts: If the user has a local cart with at least 1 item,
   // Then it replace the content of the cart in the API (Cart meaning order "in progress")
   // If there are no items on the local cart ,login retrieves the cart content of the API
   signin = async (email, password) => {
-    const users = await fetch("http://localhost:3005/users");
-    const data = await users.json();
-    const user = data.users.find((user) => user.email === email);
-    if (user) {
-      //User exists
-      if (user.password === password) {
-        //Logged in!
-        this.setState(() => {
+    if (this.state.userId === null) {
+      const users = await fetch("http://localhost:3005/users");
+      const data = await users.json();
+      const user = data.users.find((user) => user.email === email);
+      if (user) {
+        //User exists
+        if (user.password === password) {
+          //Logged in!
+          this.setState(() => {
             return { userId: user.id }; //Updates app state
-        });
-        localStorage.setItem("userid", user.id); //Updates localStorage for future sessions
-        if (this.state.cart.length > 0) {
-          //If offline cart has items, set them as the valid list in the API
-          this.updateCart(user);
+          });
+          localStorage.setItem("userid", user.id); //Updates localStorage for future sessions
+          if (this.state.cart.length > 0) {
+            //If offline cart has items, set them as the valid list in the API
+            this.updateCart(user);
+          } else {
+            //Otherwise, retrieve user's existing cart in the API
+            this.setCart();
+          }
+          //Retrieves user's Cart
+          console.log("Logged in successfully");
+          this.state.loginState = "You are now logged in!";
+          return this.state;
         } else {
-          //Otherwise, retrieve user's existing cart in the API
-          this.setCart();
+          console.log("Password is incorrect");
+          this.state.loginState = "Incorrect Password.";
+          return this.state;
         }
-        //Retrieves user's Cart
-        console.log("Logged in successfully");
-        this.state.loginState = "You are now logged in!";
-        return this.state;
       } else {
-        console.log("Password is incorrect");
-        this.state.loginState = "Incorrect Password.";
+        console.log("User with email: " + email + " doesn't exist");
+        this.state.loginState = "User with email" + email + " does not exist.";
         return this.state;
       }
     } else {
-      console.log("User with email: " + email + " doesn't exist");
-      this.state.loginState = "User with email" + email + " does not exist.";
+      this.state.loginState =
+        "You are already signed in. Please sign out and try again.";
       return this.state;
     }
   };
