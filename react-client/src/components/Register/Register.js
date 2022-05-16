@@ -1,39 +1,32 @@
 import { useRef } from "react";
-import classes from "./Register.module.css";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ProductConsumer, ProductProvider } from "../../context";
-import SuccessToast from "../GeneralComponents/Toasts/SuccessToast";
-import ErrorToast from "../GeneralComponents/Toasts/ErrorToast";
+
+import Toast from "../GeneralComponents/Toasts/Toast";
 import Header from "../GeneralComponents/Header";
 import Footer from "../GeneralComponents/Footer";
 
-import { useState } from "react";
 
-function RegisterForm() {
+function Register() {
   const emailAddress = useRef();
   const firstName = useRef();
   const lastName = useRef();
   const deliveryAddress = useRef();
   const password = useRef();
 
-  const [isregistered, setRegistered] = useState(false);
-  const [iserror, setError] = useState(false);
+  const [toastState, setToastState] = useState({ show: false, text: "" });
 
-  function renderSuccessToast() {
-    setRegistered(true);
-    setError(false);
-    removeToasts();
-  }
-  function renderErrorToast() {
-    setError(true);
-    setRegistered(false);
+  function renderToast(result) {
+    result === "You are now registered!"
+      ? setToastState({ show: true, text: result, success: true })
+      : setToastState({ show: true, text: result, success: false });
     removeToasts();
   }
 
   function removeToasts() {
     setTimeout(function () {
-      setRegistered(false);
-      setError(false);
+      setToastState({ show: false });
     }, 5000);
   }
 
@@ -50,7 +43,7 @@ function RegisterForm() {
     };
 
     registerUser(newUser).then(function (result) {
-      result ? renderSuccessToast() : renderErrorToast();
+      renderToast(result.registerState);
     });
   }
 
@@ -78,7 +71,7 @@ function RegisterForm() {
                     />
                     {/*Start of new row */}
                     <div className="row mb-3">
-                      <div class="col-6">
+                      <div className="col-6">
                         <label htmlFor="firstName">First Name</label>
                         <input
                           type="text"
@@ -89,7 +82,7 @@ function RegisterForm() {
                           placeholder="Yogi"
                         />
                       </div>
-                      <div class="col-6">
+                      <div className="col-6">
                         <label htmlFor="lastName">Last Name</label>
                         <input
                           type="text"
@@ -103,7 +96,7 @@ function RegisterForm() {
                     </div>
                     {/*Start of new row */}
                     <div className="row mb-3">
-                      <div class="col-6">
+                      <div className="col-6">
                         <label htmlFor="email">E-Mail Address</label>
                         <input
                           type="text"
@@ -114,7 +107,7 @@ function RegisterForm() {
                           placeholder="heyheyhey@yogibear.com"
                         />
                       </div>
-                      <div class="col-6">
+                      <div className="col-6">
                         <label htmlFor="deliveryAddress">
                           Delivery Address
                         </label>
@@ -130,7 +123,7 @@ function RegisterForm() {
                     </div>
                     {/*Start of new row */}
                     <div className="row mb-3">
-                      <div class="col-12">
+                      <div className="col-12">
                         <label htmlFor="password">Password</label>
                         <input
                           type="password"
@@ -144,7 +137,7 @@ function RegisterForm() {
                     </div>
                     {/*Submit Button */}
                     <div className="row mb-3">
-                      <div class="col-3">
+                      <div className="col-3">
                         <button type="submit" className="btn btn-primary">
                           <Link to="/" />
                           Register
@@ -152,11 +145,10 @@ function RegisterForm() {
                       </div>
                     </div>
                   </form>
-                  {isregistered && <SuccessToast />}
-                  {iserror && <ErrorToast />}
-                </div>{" "}
+                  {toastState.show && <Toast state={toastState} />}
+                </div>
               </div>
-            </div>
+            </div>          
           );
         }}
       </ProductConsumer>
@@ -165,4 +157,4 @@ function RegisterForm() {
   );
 }
 
-export default RegisterForm;
+export default Register;

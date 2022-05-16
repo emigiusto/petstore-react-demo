@@ -327,9 +327,11 @@ class ProductProvider extends Component {
         if (!(await this.userExists(newUser.email))) {
             console.log(newUser);
             post("http://localhost:3005/users/", newUser);
-            return true;
+            this.state.registerState = "You are now registered!";
+            return this.state;
         } else {
-            return false;
+            this.state.registerState = "This Email Adress is already in use.";
+            return this.state;
         }
     };
 
@@ -358,13 +360,17 @@ class ProductProvider extends Component {
                 }
                 //Retrieves user's Cart
                 console.log("Logged in successfully");
+                this.state.loginState = "You are now logged in!"
+                return this.state;
             } else {
                 console.log("Password is incorrect");
-                return false;
+                this.state.loginState = "Incorrect Password.";
+                return this.state;
             }
         } else {
             console.log("User with email: " + email + " doesn't exist");
-            return false;
+            this.state.loginState = "User with email" + email + " does not exist.";
+            return this.state;
         }
     };
 
@@ -394,7 +400,8 @@ class ProductProvider extends Component {
                 setCartTotal: this.setCartTotal,
                 updateActiveFilters: this.updateActiveFilters,
                 getActiveFilter: this.getActiveFilter,
-                clearActiveFilters: this.clearActiveFilters
+                clearActiveFilters: this.clearActiveFilters,
+                registerUser : this.registerUser
             }}>
                 {this.props.children}
             </ProductContext.Provider>

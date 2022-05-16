@@ -1,19 +1,40 @@
 import { useRef } from "react";
-import classes from "./Login.module.css";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ProductConsumer } from "../../context";
+
 import Header from "../GeneralComponents/Header";
 import Footer from "../GeneralComponents/Footer";
+import Toast from "../GeneralComponents/Toasts/Toast";
 
-function RegisterForm() {
+function LoginForm() {
   const emailAddress = useRef();
   const password = useRef();
 
+  const [toastState, setToastState] = useState({ show: false, text: "" });
+
   //Function to read input data and process it. Currently it only prints to console.
-  function submitHandler(event, signin) {
+  function submitHandler(event, signin, context) {
     event.preventDefault();
     console.log(event.target);
-    signin(emailAddress.current.value, password.current.value);
+    signin(emailAddress.current.value, password.current.value).then(function (
+      result
+    ) {
+      renderToast(result.loginState);
+    });
+  }
+
+  function renderToast(result) {
+    result === "You are now logged in!"
+      ? setToastState({ show: true, text: result, success: true })
+      : setToastState({ show: true, text: result, success: false });
+    removeToasts();
+  }
+
+  function removeToasts() {
+    setTimeout(function () {
+      setToastState({ show: false });
+    }, 5000);
   }
 
   return (
@@ -27,7 +48,7 @@ function RegisterForm() {
                 <div className="col-md-6">
                   {/*Beginning of registration form */}
                   <form
-                    onSubmit={(e) => submitHandler(e, context.signin)}
+                    onSubmit={(e) => submitHandler(e, context.signin, context)}
                     className="pb-3 pt-4 px-4 border rounded bg-white shadow-sm form-signin"
                   >
                     {/*Logo*/}
@@ -40,7 +61,7 @@ function RegisterForm() {
                     />
                     {/*Start of new row */}
                     <div className="row mb-3">
-                      <div class="col-12">
+                      <div className="col-12">
                         <label htmlFor="email">E-Mail Address</label>
                         <input
                           type="text"
@@ -54,7 +75,7 @@ function RegisterForm() {
 
                     {/*Start of new row */}
                     <div className="row mb-3">
-                      <div class="col-12">
+                      <div className="col-12">
                         <label htmlFor="password">Password</label>
                         <input
                           type="password"
@@ -67,7 +88,7 @@ function RegisterForm() {
                     </div>
                     {/*Submit Button */}
                     <div className="row mb-3">
-                      <div class="col-3">
+                      <div className="col-3">
                         <button type="submit" className="btn btn-primary">
                           <Link to="/" />
                           Login
@@ -75,6 +96,7 @@ function RegisterForm() {
                       </div>
                     </div>
                   </form>
+                  {toastState.show && <Toast state={toastState} />}
                 </div>
               </div>
             </div>
@@ -86,4 +108,4 @@ function RegisterForm() {
   );
 }
 
-export default RegisterForm;
+export default LoginForm;
