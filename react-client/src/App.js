@@ -13,6 +13,7 @@ import ProductsPage from './components/ProductsPage/ProductsPage';
 import ProductDetailsPage from './components/ProductDetailspage/ProductDetailsPage';
 import './components/GeneralComponents/GoBackButton.css'
 import Login from './components/Login/Login';
+import Checkout from './components/Checkout/Checkout';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/product-list/:id" element={<ProductDetailsPage/>}/>
           <Route path="/login" element ={<Login />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </BrowserRouter>
   </React.Fragment>

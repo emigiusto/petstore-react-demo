@@ -7,6 +7,7 @@ import { Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import context from "react-bootstrap/esm/AccordionContext";
+import { Link } from "react-router-dom";
 
 export default function Cart(props) {
   
@@ -58,7 +59,9 @@ export default function Cart(props) {
         </Modal.Body>
         <Modal.Footer>
           <div>
+              <Link to="./checkout">
             <Button variant="dark w-100 p-3">Go to checkout</Button>
+              </Link>
           </div>
         </Modal.Footer>
       </Modal>
