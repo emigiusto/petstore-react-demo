@@ -24,10 +24,10 @@ function LoginForm() {
 
   function renderToast(result) {
     result.message === "You are already signed in. Please sign out and try again." ?
-      setToastState({ show: true, text: result, success: false }) : (
+      setToastState({ show: true, text: result.message, success: false }) : (
         result.message  === "You are now logged in!"
-          ? setToastState({ show: true, text: result, success: true })
-          : setToastState({ show: true, text: result, success: false }));
+          ? setToastState({ show: true, text: result.message, success: true })
+          : setToastState({ show: true, text: result.message, success: false }));
     removeToasts();
   }
 
