@@ -6,7 +6,6 @@ import CartItem from "./CartItem";
 import { Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import context from "react-bootstrap/esm/AccordionContext";
 import { Link } from "react-router-dom";
 
 export default function Cart(props) {

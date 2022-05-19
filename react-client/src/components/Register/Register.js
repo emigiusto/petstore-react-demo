@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ProductConsumer, ProductProvider } from "../../context";
+import { ProductConsumer } from "../../context";
 
 import Toast from "../GeneralComponents/Toasts/Toast";
 import Header from "../GeneralComponents/Header";

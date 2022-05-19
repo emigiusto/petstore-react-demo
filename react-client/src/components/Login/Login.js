@@ -16,7 +16,6 @@ function LoginForm() {
   //Function to read input data and process it. Currently it only prints to console.
   function submitHandler(event, signin, context) {
     event.preventDefault();
-    console.log(event.target);
     signin(emailAddress.current.value, password.current.value).then(function (
       result
     ) {

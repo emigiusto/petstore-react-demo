@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import Cart from "../Cart/Cart";
 import { useState } from "react";
 import { ProductConsumer } from "../../context";
@@ -18,7 +18,7 @@ export default function Header() {
     setCartIsOpen(false);
   }
 
-  function checkSignIn(userId) {
+  function checkSignIn(userId) { //Emi: This function has no use at all. Why not call directly setSignIn(userId)?
     setSignIn(userId);
   }
 
@@ -52,7 +52,7 @@ export default function Header() {
                       Cart ({contextstate.cartSize})
                     </Nav.Link>
                     <LoginLogoutButton userID={signInState} />
-                    {checkSignIn(contextstate.userId)}
+                    {checkSignIn(contextstate.userId)} {/* Emi: This line is creating console errors */}
                     <Link
                       to="/register"
                       className="text-capitalize text-reset text-decoration-none d-flex align-items-center mx-4"
