@@ -15,19 +15,10 @@ export default function Checkout(props){
   const cardDetails = useRef();
   const CVV = useRef();
   const emailAddress = useRef();
+  const firstName = useRef();
   const [toastState, setToastState] = useState({ show: false, text: "" });    
 
-    function renderToast(result) {
-        result === "Your Order is on its way!"
-        ? setToastState({ show: true, text: result, success: true })
-        : setToastState({ show: true, text: result, success: false });
-        removeToasts();
-    }   
-    function removeToasts() {
-      setTimeout(function () {
-        setToastState({ show: false });
-      }, 5000);
-    }   
+
 
     function submitHandler(event, checkoutForm) {
       event.preventDefault();  
@@ -37,9 +28,7 @@ export default function Checkout(props){
         CVV: CVV.current.value,
         billingAddress: billingAddress.current.value,
       };    
-      checkoutForm(newCheckout).then(function (result) {
-        renderToast(result.registerState);
-      });
+
     }   
     return(
       <div>
@@ -47,7 +36,8 @@ export default function Checkout(props){
           <div className="m-auto my-4 p-4"><h1 className="d-flex justify-content-center">Your checkout details</h1></div>
           <ProductConsumer>
           {(context) => {
-        
+          if (context.cart.length === 0) {return <div className="row justify-content-center p-4"><h4>Please add some items before checkout</h4></div>;}
+          
           return( 
           <div className="container-sm">
             <div className="row justify-content-center">
@@ -74,11 +64,12 @@ export default function Checkout(props){
                         required
                         id="billingAddress"
                         ref={ billingAddress }
+                        defaultValue = { context.address || ''}
                         className="form-control"
                         placeholder="Yogi"
                       />
                     </div>
-                    <p>{ context.cartTotal }</p>
+                    <h1>{ context.address }</h1>
                     <div className="col-6">
                       <label htmlFor="deliveryAddress">
                         Delivery Address
@@ -88,26 +79,44 @@ export default function Checkout(props){
                         required
                         id="deliveryAddress"
                         ref={deliveryAddress}
-                        value = "Your house"
+                        defaultValue = { context.address || ''}
                         className="form-control"
                         placeholder="Cave Avenue 21, 45678, Jellystone National Park, Wyoming USA"
                       />
                     </div>
                     </div>
                   {/*Start of new row */}
+ 
                   <div className="row mb-3">
                     <div className="col-6">
                       <label htmlFor="email">E-Mail Address</label>
                       <input
-                        type="text"
+                       id="email"
+                        type="text"  
                         required
-                        id="email"
                         ref={emailAddress}
+                        defaultValue = { context.email || ''}
                         className="form-control"
-                        placeholder="heyheyhey@yogibear.com"
                       />
                     </div>
 
+                </div>
+                <div>
+                <div className="row mb-3">
+                    <div className="col-12">
+                      <label htmlFor="firstName">First Name</label>
+                      <input
+                        type="text" 
+                        required
+                        id="firstName"
+                        ref={ firstName }
+                        className="form-control"
+                        defaultValue = { context.firstName || ''}
+                      />
+                    </div>
+                    </div>
+
+                  
                 </div>
 
                   {/*Start of new row */}
@@ -124,8 +133,8 @@ export default function Checkout(props){
                       />
                     </div>
                   </div>
-                    {/*Insert if function to make CreditCard disappear once selected "paypal" */}
-                    
+                
+                    {/*Insert if function to make CreditCard disappear once selected "paypal" */}                    
                    
                   <div className="row mb-3">
                     <div className="col-12">
@@ -136,7 +145,7 @@ export default function Checkout(props){
                         id="CVV"
                         ref={CVV}
                         className="form-control"
-                        placeholder="cardCode"
+                        placeholder="For example: 123"
                       />
                     </div>
                   </div>
@@ -153,8 +162,8 @@ export default function Checkout(props){
                       </button>
                     </div>
                   </div>
+
                 </form>
-                {toastState.show && <Toast state={toastState} />}
               </div>
             </div>
           </div>          
