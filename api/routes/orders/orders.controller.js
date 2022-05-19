@@ -131,15 +131,20 @@ async function changeOrder(req, res) {
         switch (req.body.action) {
           case "increase":
               await updateProductFromOrder(responseOrder.finalOrder, productid, "increase")
-              res.json({message: "product with id " + productid + " has been added to order " + orderid});
+              res.json(
+                {
+                  message: "product with id " + productid + " has been added to order " + orderid,
+                  status: true});
             break;
           case "decrease":
               await updateProductFromOrder(responseOrder.finalOrder, productid, "decrease")
-              res.json({message: "the quantity of product with id " + productid + " has been reduced from order " + orderid});
+              res.json({  message: "the quantity of product with id " + productid + " has been reduced from order " + orderid,
+                          status: true});
             break;
           case "remove":
               await updateProductFromOrder(responseOrder.finalOrder, productid, "remove")
-              res.json({message: "The product with id " + productid + " has been deleted from order " + orderid});
+              res.json({  message: "The product with id " + productid + " has been deleted from order " + orderid,
+                          status: true}); 
             break;
           default:
             throw "Action not recognized"
@@ -165,7 +170,7 @@ async function changeOrder(req, res) {
         }
       }
   } catch (message) {
-    res.status(400).send({message: message});
+    res.status(400).send({message: message, status: false});
   }
 }
 
@@ -196,7 +201,7 @@ async function clearBasket(req, res) {
     }
     let order = await orderModel.getShoppingBasket(user.finalUser);
 
-    let updateResponse = await orderModel.update(order.id, {items: []});
+    await orderModel.update(order.id, {items: []});
 
     res.json({message: "The basket of user with id " + userid + " has been cleared"});
   } catch (message) {
