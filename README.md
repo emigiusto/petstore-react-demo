@@ -5,4 +5,4 @@ Group Repo for FrameWorks&amp;Architecture Group
 <br>
 /client --> HTML + css + js app supporting a Pet store
 <br>
-/react-client --> react implementation of client + css + HTML supporting a Pet store
+/react-client --> react implementation of a Pet store
