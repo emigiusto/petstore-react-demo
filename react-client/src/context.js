@@ -19,13 +19,13 @@ class ProductProvider extends Component {
   };
 
   componentDidMount = async () => {
-    this.getSessionInfo();
-    this.setProducts();
-    this.setCart();
-    this.setFilters();
+    await this.getSessionInfo();
+    await this.setProducts();
+    await this.setCart();
+    await this.setFilters();
   };
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(_prevProps, prevState, _snapshot) {
     if (prevState.cart !== this.state.cart) {
       this.setCartTotal();
     }
@@ -114,17 +114,18 @@ class ProductProvider extends Component {
   //Method to update the cart
   addToCart = async (productId) => {
     if (this.state.userId) {
-      await put(
-        "http://localhost:3005/orders/increaseproduct/" + this.state.cartId,
-        { productId: productId }
+        let added = await put(
+          "http://localhost:3005/orders/" + this.state.cartId + "/product/" + productId,
+          { action: "increase" }
       );
+      
       this.setCart();
-      console.log(
-        "Product with id " +
-          productId +
-          " was added to the cart with id: " +
-          this.state.cartId
-      );
+      if (added.status) {
+        console.log( "Product with id " + productId + " was added to the cart with id: " + this.state.cartId);
+      } else {
+        console.log( "There was a problem with your request");
+      }
+      
     } else {
       var data = await fetch("http://localhost:3005/products/" + productId);
       if (data.status === 200) {
@@ -186,8 +187,8 @@ class ProductProvider extends Component {
   decreaseFromCart = async (productId) => {
     if (this.state.userId) {
       await put(
-        "http://localhost:3005/orders/decreaseproduct/" + this.state.cartId,
-        { productId: productId }
+        "http://localhost:3005/orders/" + this.state.cartId + "/product/" + productId,
+        { action: "decrease" }
       );
       this.setCart();
     } else {
@@ -205,8 +206,8 @@ class ProductProvider extends Component {
   removeProduct = async (productId) => {
     if (this.state.userId) {
       await put(
-        "http://localhost:3005/orders/removeproduct/" + this.state.cartId,
-        { productId: productId }
+        "http://localhost:3005/orders/" + this.state.cartId + "/product/" + productId,
+        { action: "remove" }
       );
       this.setCart();
     } else {
