@@ -208,6 +208,8 @@ class ProductProvider extends Component {
     }
   };
 
+
+
   //Method to update the cart
   removeProduct = async (productId) => {
     if (this.state.userId) {
@@ -261,6 +263,18 @@ class ProductProvider extends Component {
       this.setState(() => {
         return { cart: [] };
       });
+    }
+  };
+//set order status to "completed" once submitting checkout button "complete ordeggr"
+  completeCheckout = async (userId) => {
+    if (userId != null){
+      console.log(userId)
+      console.log(this.state.cartId)
+      //var data = await fetch("http://localhost:3005/orders/" + this.state.cartId);
+      await put("http://localhost:3005/orders/" + this.state.cartId, {
+        status: "completed",
+      });
+
     }
   };
 
@@ -456,6 +470,7 @@ class ProductProvider extends Component {
           getActiveFilter: this.getActiveFilter,
           clearActiveFilters: this.clearActiveFilters,
           registerUser: this.registerUser,
+          completeCheckout: this.completeCheckout
         }}
       >
         {this.props.children}

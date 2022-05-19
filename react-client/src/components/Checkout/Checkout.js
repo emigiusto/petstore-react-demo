@@ -3,6 +3,7 @@ import classes from "./Checkout.module.css";
 import context from "react-bootstrap/esm/AccordionContext";
 import Header from "../GeneralComponents/Header";
 import Footer from "../GeneralComponents/Footer";
+import Home from "../Home/Home";
 import { useRef } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -20,14 +21,12 @@ export default function Checkout(props){
 
 
 
-    function submitHandler(event, checkoutForm) {
-      event.preventDefault();  
-       
-      let newCheckout = {
-        cardDetails: cardDetails.current.value,
-        CVV: CVV.current.value,
-        billingAddress: billingAddress.current.value,
-      };    
+    function submitCheckoutHandler(event, checkoutForm) {
+      return(
+        <div>
+          <Home></Home>
+        </div>
+      )    
 
     }   
     return(
@@ -44,7 +43,7 @@ export default function Checkout(props){
               <div className="col-lg-6">
                 {/*Beginning of checkout form */}
                 <form
-                  onSubmit={(e) => submitHandler(e, context.newCheckoutForm)}
+                  onSubmit={(e) => submitCheckoutHandler(e, context.completedPurchase)}
                   className="pb-3 pt-4 px-4 border rounded bg-white shadow-sm form-signin"
                 >
                   {/*Logo*/}
@@ -156,10 +155,11 @@ export default function Checkout(props){
 
                   <div className="row mb-3">
                     <div className="col-3">
+                    <Link to = "/" data = {context.userId} onClick={ context.completeCheckout }> 
                       <button type="submit" className="btn btn-primary">
-                        <Link to="/" />
                         Complete Purchase
                       </button>
+                    </Link>
                     </div>
                   </div>
 
