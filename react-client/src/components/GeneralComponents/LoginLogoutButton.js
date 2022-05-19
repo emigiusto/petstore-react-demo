@@ -20,7 +20,7 @@ function LoginLogoutButton(props) {
               onClick={context.signout}
               className="text-capitalize text-reset text-decoration-none d-flex align-items-center mx-4"
             >
-              Logout
+              <span role="button">Logout</span>
             </div>
           );
         }}
