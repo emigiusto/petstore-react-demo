@@ -16,20 +16,18 @@ function LoginForm() {
   //Function to read input data and process it. Currently it only prints to console.
   function submitHandler(event, signin, context) {
     event.preventDefault();
-    signin(emailAddress.current.value, password.current.value).then(function (
-      result
-    ) {
-      renderToast(result.loginState);
-    });
+    signin(emailAddress.current.value, password.current.value)
+      .then(function (result) {
+        renderToast(result);
+      });
   }
 
   function renderToast(result) {
-
-result === "You are already signed in. Please sign out and try again." ?
-setToastState({ show: true, text: result, success: false }) : (
-    result === "You are now logged in!"
-      ? setToastState({ show: true, text: result, success: true })
-      : setToastState({ show: true, text: result, success: false }));
+    result.message === "You are already signed in. Please sign out and try again." ?
+      setToastState({ show: true, text: result, success: false }) : (
+        result.message  === "You are now logged in!"
+          ? setToastState({ show: true, text: result, success: true })
+          : setToastState({ show: true, text: result, success: false }));
     removeToasts();
   }
 

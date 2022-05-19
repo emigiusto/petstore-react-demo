@@ -369,11 +369,16 @@ class ProductProvider extends Component {
   // Then it replace the content of the cart in the API (Cart meaning order "in progress")
   // If there are no items on the local cart ,login retrieves the cart content of the API
   signin = async (email, password) => {
+    var loginResponse = {
+      message: "",
+      loginState: false
+    }
     if (this.state.userId === null) {
       const users = await fetch("http://localhost:3005/users");
       const data = await users.json();
       const user = data.users.find((user) => user.email === email);
       if (user) {
+        
         //User exists
         if (user.password === password) {
           //Logged in!
@@ -390,23 +395,20 @@ class ProductProvider extends Component {
           }
           //Retrieves user's Cart
           console.log("Logged in successfully");
-          this.state.loginState = "You are now logged in!";
-          return this.state;
+          loginResponse.message = "You are now logged in!";
+          loginResponse.loginState = true
         } else {
           console.log("Password is incorrect");
-          this.state.loginState = "Incorrect Password.";
-          return this.state;
+          loginResponse.message = "Incorrect Password.";
         }
       } else {
         console.log("User with email: " + email + " doesn't exist");
-        this.state.loginState = "User with email" + email + " does not exist.";
-        return this.state;
+        loginResponse.message = "User with email" + email + " does not exist.";
       }
     } else {
-      this.state.loginState =
-        "You are already signed in. Please sign out and try again.";
-      return this.state;
+      loginResponse.message = "You are already signed in. Please sign out and try again.";
     }
+    return loginResponse;
   };
 
   signout = () => {
