@@ -12,7 +12,8 @@ var {
   removeProductFromOrder,
   getShoppingBasket,
   getOrdersByUser,
-  clearBasket
+  clearBasket,
+  changeOrder
 } = require("./orders.controller.js");
 
 const orderRouter = express.Router();
@@ -43,13 +44,9 @@ orderRouter.put("/:id", updateOrder);
 //delete an order
 orderRouter.delete("/:id", deleteOrder);
 
-//increaseProduct from order
-orderRouter.put("/increaseproduct/:orderid", increaseProduct);
-//decreaseProduct from order
-orderRouter.put("/decreaseproduct/:orderid", decreaseProduct);
+//Basic Operations on order: Remove product, Increase product by 1, Decrease product by 1
+orderRouter.put("/:orderid/product/:productid", changeOrder);
 
-//remove Product from order
-orderRouter.put("/removeproduct/:orderid", removeProductFromOrder);
 
 
 
