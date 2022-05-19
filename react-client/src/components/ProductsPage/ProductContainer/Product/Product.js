@@ -23,10 +23,10 @@ export default function Product(props) {
           <div className="card-body">
             <h5 className="card-title card__body__title">{props.product.title}</h5>
             <p className="card-title card__body__description">{props.product.description}</p>
-            <p>{props.product.price} eu</p>
+            <p>€ {props.product.price}</p>
             <div className="d-flex justify-content-between">
-            <button className="btn btn-primary card__body__details" id={props.product.id} onClick={routechange}>Details</button>
-            <button className="btn btn-success card__body__addtocart" id={props.product.id} onClick={()=>props.handleAddToCart(props.product.id)} >Add to Cart</button>
+            <button className="btn btn-secondary card__body__details" id={props.product.id} onClick={routechange}>Details</button>
+            <button className="btn btn-dark card__body__addtocart" id={props.product.id} onClick={()=>props.handleAddToCart(props.product.id)} >Add to Cart</button>
             </div>
           </div> 
         </div>

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { ProductConsumer } from "../../context";
 import { Link } from "react-router-dom";
 import LoginLogoutButton from "./LoginLogoutButton";
+import classes from "./Header.module.css"
 
 export default function Header() {
   const [isOpen, setCartIsOpen] = useState(false);
@@ -23,7 +24,7 @@ export default function Header() {
   }
 
   return (
-    <div>
+    <div className={classes.stickyheader}>
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <ProductConsumer>
           {(contextstate) => {

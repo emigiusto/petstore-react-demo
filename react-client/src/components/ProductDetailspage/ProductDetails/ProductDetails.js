@@ -13,7 +13,7 @@ export default function ProductDetails(props) {
                 </div>
 
                 <div className="col px-2 pb-2">
-                    <h3>{props.product.price}</h3>
+                    <h3>€ {props.product.price}</h3>
                 </div>
 
                 <div className="col px-2 pb-2">
