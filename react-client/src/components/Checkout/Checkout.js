@@ -17,6 +17,7 @@ export default function Checkout(props){
   const CVV = useRef();
   const emailAddress = useRef();
   const firstName = useRef();
+  const lastName = useRef();
   const [toastState, setToastState] = useState({ show: false, text: "" });    
 
 
@@ -100,7 +101,6 @@ export default function Checkout(props){
                     </div>
 
                 </div>
-                <div>
                 <div className="row mb-3">
                     <div className="col-12">
                       <label htmlFor="firstName">First Name</label>
@@ -113,10 +113,21 @@ export default function Checkout(props){
                         defaultValue = { context.firstName || ''}
                       />
                     </div>
-                    </div>
+                  </div>
 
-                  
-                </div>
+                  <div className="row mb-3">
+                    <div className="col-12">
+                      <label htmlFor="lastName">Last Name</label>
+                      <input
+                        type="text" 
+                        required
+                        id="lastName"
+                        ref={ lastName }
+                        className="form-control"
+                        defaultValue = { context.lastName || ''}
+                      />
+                    </div>
+                  </div>
 
                   {/*Start of new row */}
                   <div className="row mb-3">

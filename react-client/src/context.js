@@ -39,10 +39,10 @@ class ProductProvider extends Component {
   getSessionInfo = () => {
     let userIdStored = localStorage.getItem("userid");
     let userEmail = localStorage.getItem("email");
-    let userFirstName = localStorage.getItem("firstName");
     this.setState(() => {
       return { userId: userIdStored,
-              email: userEmail };
+              email: userEmail
+              };
     });
   };
 
@@ -404,7 +404,7 @@ class ProductProvider extends Component {
             return { userId: user.id,
                     email: user.email,
                     firstName: user.firstName,
-                    lasttName: user.lasttName,
+                    lastName: user.lastName,
                     address: user.address
                   }; //Updates app state
           });
