@@ -101,8 +101,12 @@ export default function Checkout(props){
                     </div>
 
                 </div>
-                <div className="row mb-3">
-                    <div className="col-12">
+
+                <div className="container">
+                  <div className="row">
+
+                <div className="col mb-3 lg-6">
+                    <div className="col-6">
                       <label htmlFor="firstName">First Name</label>
                       <input
                         type="text" 
@@ -114,9 +118,8 @@ export default function Checkout(props){
                       />
                     </div>
                   </div>
-
-                  <div className="row mb-3">
-                    <div className="col-12">
+                  <div className="col mb-3 lg-6">
+                    <div className="col-6 col order-last">
                       <label htmlFor="lastName">Last Name</label>
                       <input
                         type="text" 
@@ -126,8 +129,11 @@ export default function Checkout(props){
                         className="form-control"
                         defaultValue = { context.lastName || ''}
                       />
+                      </div>
                     </div>
+
                   </div>
+                </div>
 
                   {/*Start of new row */}
                   <div className="row mb-3">
