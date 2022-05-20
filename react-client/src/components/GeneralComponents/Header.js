@@ -6,7 +6,6 @@ import { ProductConsumer } from "../../context";
 import { Link } from "react-router-dom";
 import LoginLogoutButton from "./LoginLogoutButton";
 import classes from "./Header.module.css"
-import context from "react-bootstrap/esm/AccordionContext";
 
 export default function Header() {
   const [isOpen, setCartIsOpen] = useState(false);
@@ -20,7 +19,7 @@ export default function Header() {
     setCartIsOpen(false);
   }
 
-   return (
+  return (
     <div className={classes.stickyheader}>
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <ProductConsumer>
