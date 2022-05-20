@@ -344,15 +344,20 @@ class ProductProvider extends Component {
 
   //Function to add a new user
   registerUser = async (newUser) => {
-    if (!(await this.userExists(newUser.email))) {
-      console.log(newUser);
-      post("http://localhost:3005/users/", newUser);
-      this.state.registerState = "You are now registered!";
-      return this.state;
-    } else {
-      this.state.registerState = "This Email Adress is already in use.";
-      return this.state;
+    var registerResponse = {
+      message: "",
+      registerState: false,
+      category: "danger"
     }
+    if (!(await this.userExists(newUser.email))) {
+      post("http://localhost:3005/users/", newUser);
+      registerResponse.registerState = true;
+      registerResponse.message = "You are now registered!";
+      registerResponse.category = "success";
+    } else { //User doesn't exist
+      registerResponse.message = "This Email Adress is already in use.";
+    }
+    return registerResponse;
   };
 
   //Checks wether a user is currently signed in.
@@ -371,7 +376,8 @@ class ProductProvider extends Component {
   signin = async (email, password) => {
     var loginResponse = {
       message: "",
-      loginState: false
+      loginState: false,
+      category: "danger"
     }
     if (this.state.userId === null) {
       const users = await fetch("http://localhost:3005/users");
@@ -397,6 +403,7 @@ class ProductProvider extends Component {
           console.log("Logged in successfully");
           loginResponse.message = "You are now logged in!";
           loginResponse.loginState = true
+          loginResponse.category = "success"
         } else {
           console.log("Password is incorrect");
           loginResponse.message = "Incorrect Password.";
@@ -407,6 +414,7 @@ class ProductProvider extends Component {
       }
     } else {
       loginResponse.message = "You are already signed in. Please sign out and try again.";
+      loginResponse.category = "warning"
     }
     return loginResponse;
   };

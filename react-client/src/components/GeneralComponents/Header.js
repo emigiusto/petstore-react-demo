@@ -6,6 +6,7 @@ import { ProductConsumer } from "../../context";
 import { Link } from "react-router-dom";
 import LoginLogoutButton from "./LoginLogoutButton";
 import classes from "./Header.module.css"
+import context from "react-bootstrap/esm/AccordionContext";
 
 export default function Header() {
   const [isOpen, setCartIsOpen] = useState(false);
@@ -19,11 +20,7 @@ export default function Header() {
     setCartIsOpen(false);
   }
 
-  function checkSignIn(userId) { //Emi: This function has no use at all. Why not call directly setSignIn(userId)?
-    setSignIn(userId);
-  }
-
-  return (
+   return (
     <div className={classes.stickyheader}>
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <ProductConsumer>
@@ -52,8 +49,7 @@ export default function Header() {
                     <Nav.Link onClick={cartOpenHandler}>
                       Cart ({contextstate.cartSize})
                     </Nav.Link>
-                    <LoginLogoutButton userID={signInState} />
-                    {checkSignIn(contextstate.userId)} {/* Emi: This line is creating console errors */}
+                    <LoginLogoutButton userId={contextstate.userId} signout = {contextstate.signout} />
                     <Link
                       to="/register"
                       className="text-capitalize text-reset text-decoration-none d-flex align-items-center mx-4"

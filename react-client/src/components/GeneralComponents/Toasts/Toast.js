@@ -1,26 +1,18 @@
-function SuccessAlert(props) {
-  if (props.state.success) {
-    return (
-      <div className="alert alert-success" role="alert">
-        {props.state.text}
-      </div>
-    );
-  } else if (
-    props.state.text !==
-    "You are already signed in. Please sign out and try again."
-  ) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        {props.state.text}
-      </div>
-    );
-  } else {
-    return (
-      <div className="alert alert-warning" role="alert">
-        {props.state.text}
-      </div>
-    );
-  }
-}
+import React, { useState, useEffect } from "react";
 
-export default SuccessAlert;
+export default function Toast(props) {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    setShow(true)
+    setTimeout(function () {
+        setShow(false);
+    }, 5000);
+  }, [props.category, props.message, props.show]);
+
+  return (
+    <>
+      { show ? (<div className={`alert alert-${props.category}`} role="alert">{props.message}</div>) : <></>}
+    </>
+  );
+}

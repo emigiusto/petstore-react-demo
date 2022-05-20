@@ -2,10 +2,15 @@ import { useRef } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ProductConsumer } from "../../context";
+import { useNavigate } from "react-router-dom";
+
 
 import Toast from "../GeneralComponents/Toasts/Toast";
 import Header from "../GeneralComponents/Header";
 import Footer from "../GeneralComponents/Footer";
+
+//Style
+import './Register.css';
 
 
 function Register() {
@@ -15,20 +20,11 @@ function Register() {
   const deliveryAddress = useRef();
   const password = useRef();
 
-  const [toastState, setToastState] = useState({ show: false, text: "" });
+  const [showToast, setShowToast] = useState(false);
+  const [categoryToast, setCategoryToast] = useState("danger");
+  const [messageToast, setMessageToast] = useState("");
 
-  function renderToast(result) {
-    result === "You are now registered!"
-      ? setToastState({ show: true, text: result, success: true })
-      : setToastState({ show: true, text: result, success: false });
-    removeToasts();
-  }
-
-  function removeToasts() {
-    setTimeout(function () {
-      setToastState({ show: false });
-    }, 5000);
-  }
+  const navigate = useNavigate();
 
   //Function to read input data and process it. Currently it only prints to console.
   function submitHandler(event, registerUser) {
@@ -42,8 +38,15 @@ function Register() {
       lastName: lastName.current.value,
     };
 
-    registerUser(newUser).then(function (result) {
-      renderToast(result.registerState);
+    registerUser(newUser)
+      .then(function (result) {
+        setShowToast(true)
+        setCategoryToast(result.category);
+        setMessageToast(result.message)
+        //Redirects user to last visited page
+        setTimeout(function () {
+          navigate(-1);
+        }, 2000);
     });
   }
 
@@ -53,7 +56,7 @@ function Register() {
       <ProductConsumer>
         {(context) => {
           return (
-            <div className="container-sm">
+            <div className="container-sm register-container" >
               <div className="row justify-content-center">
                 <div className="col-lg-6">
                   {/*Beginning of registration form */}
@@ -70,8 +73,8 @@ function Register() {
                       height="80"
                     />
                     {/*Start of new row */}
-                    <div className="row mb-3">
-                      <div className="col-6">
+                    <div className="row">
+                      <div className="col-md-6 col-sm-12 mb-3">
                         <label htmlFor="firstName">First Name</label>
                         <input
                           type="text"
@@ -82,7 +85,7 @@ function Register() {
                           placeholder="Yogi"
                         />
                       </div>
-                      <div className="col-6">
+                      <div className="col-md-6 col-sm-12 mb-3">
                         <label htmlFor="lastName">Last Name</label>
                         <input
                           type="text"
@@ -95,8 +98,8 @@ function Register() {
                       </div>
                     </div>
                     {/*Start of new row */}
-                    <div className="row mb-3">
-                      <div className="col-6">
+                    <div className="row">
+                      <div className="col-md-6 col-sm-12 mb-3">
                         <label htmlFor="email">E-Mail Address</label>
                         <input
                           type="text"
@@ -107,7 +110,7 @@ function Register() {
                           placeholder="heyheyhey@yogibear.com"
                         />
                       </div>
-                      <div className="col-6">
+                      <div className="col-md-6 col-sm-12 mb-3">
                         <label htmlFor="deliveryAddress">
                           Delivery Address
                         </label>
@@ -117,13 +120,13 @@ function Register() {
                           id="deliveryAddress"
                           ref={deliveryAddress}
                           className="form-control"
-                          placeholder="Cave Avenue 21, 45678, Jellystone National Park, Wyoming USA"
+                          placeholder="Cave Avenue 21, 45678"
                         />
                       </div>
                     </div>
                     {/*Start of new row */}
-                    <div className="row mb-3">
-                      <div className="col-12">
+                    <div className="row">
+                      <div className="col-12 mb-3">
                         <label htmlFor="password">Password</label>
                         <input
                           type="password"
@@ -136,8 +139,8 @@ function Register() {
                       </div>
                     </div>
                     {/*Submit Button */}
-                    <div className="row mb-3">
-                      <div className="col-3">
+                    <div className="row">
+                      <div className="col-3 m-auto">
                         <button type="submit" className="btn btn-primary">
                           <Link to="/" />
                           Register
@@ -145,7 +148,7 @@ function Register() {
                       </div>
                     </div>
                   </form>
-                  {toastState.show && <Toast state={toastState} />}
+                  {showToast ? <Toast category={categoryToast} message={messageToast}  show={showToast} /> : <></>}
                 </div>
               </div>
             </div>          
