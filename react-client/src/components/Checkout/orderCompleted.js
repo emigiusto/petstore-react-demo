@@ -2,17 +2,18 @@ import React from "react";
 import { ProductConsumer } from "../../context";
 import Header from "../GeneralComponents/Header";
 import Footer from "../GeneralComponents/Footer";
-
-function orderCompleted() {
+import context from "react-bootstrap/esm/AccordionContext";
+/* Landing page for order submitted */
+export default function orderCompleted() {
   return (
     <div>
       <Header />
-      <ProductConsumer>
-        <h1> Order is completed!</h1>
-      </ProductConsumer>
+      <div className="row justify-content-center p-4">
+        <h3> Thanks for Shopping with Us!</h3>
+        <h2> You will receive an email to once we have processed your order</h2>
+      </div>
+
       <Footer />
     </div>
   );
 }
-
-export default orderCompleted;

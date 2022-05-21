@@ -3,11 +3,10 @@ import classes from "./Checkout.module.css";
 import context from "react-bootstrap/esm/AccordionContext";
 import Header from "../GeneralComponents/Header";
 import Footer from "../GeneralComponents/Footer";
-import Home from "../Home/Home";
+import orderCompleted from "../Checkout/orderCompleted";
 import { useRef } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Toast } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Checkout(props) {
   const billingAddress = useRef();
@@ -17,15 +16,16 @@ export default function Checkout(props) {
   const emailAddress = useRef();
   const firstName = useRef();
   const lastName = useRef();
-  const [toastState, setToastState] = useState({ show: false, text: "" });
+  const navigate = useNavigate();
 
-  function submitCheckoutHandler(event, checkoutForm) {
-    return (
-      <div>
-        <Home></Home>
-      </div>
-    );
+  /* 
+function thought to redirect to orderCompleted AND to close the order, could not implement the second
+ */
+  function handleSubmit() {
+    navigate("/ordercompleted");
+    /*     context.completeCheckout(); */
   }
+
   return (
     <div>
       <Header />
@@ -48,10 +48,8 @@ export default function Checkout(props) {
                 <div className="col-lg-6">
                   {/*Beginning of checkout form */}
                   <form
-                    onSubmit={(e) =>
-                      submitCheckoutHandler(e, context.completedPurchase)
-                    }
                     className="pb-3 pt-4 px-4 border rounded bg-white shadow-sm form-signin"
+                    onSubmit={handleSubmit}
                   >
                     {/*Logo*/}
                     <img
@@ -69,9 +67,9 @@ export default function Checkout(props) {
                             Billing Address
                           </label>
                           <input
+                            id="billingAddress"
                             type="text"
                             required
-                            id="billingAddress"
                             ref={billingAddress}
                             defaultValue={context.address || ""}
                             className="form-control"
@@ -84,9 +82,9 @@ export default function Checkout(props) {
                             Delivery Address
                           </label>
                           <input
+                            id="deliveryAddress"
                             type="text"
                             required
-                            id="deliveryAddress"
                             ref={deliveryAddress}
                             defaultValue={context.address || ""}
                             className="form-control"
@@ -118,9 +116,9 @@ export default function Checkout(props) {
                           <div className="col">
                             <label htmlFor="firstName">First Name</label>
                             <input
+                              id="firstName"
                               type="text"
                               required
-                              id="firstName"
                               ref={firstName}
                               className="form-control"
                               defaultValue={context.firstName || ""}
@@ -131,9 +129,9 @@ export default function Checkout(props) {
                           <div className="col col order-last">
                             <label htmlFor="lastName">Last Name</label>
                             <input
+                              id="lastName"
                               type="text"
                               required
-                              id="lastName"
                               ref={lastName}
                               className="form-control"
                               defaultValue={context.lastName || ""}
@@ -145,62 +143,57 @@ export default function Checkout(props) {
 
                     {/*Start of new row */}
                     <div className="container">
-                    <div className="row mb-3">
-                      <div className="col-12">
-                        <label htmlFor="cardDetails">Card Details</label>
-                        <input
-                          type="text"
-                          required
-                          id="cardDetails"
-                          ref={cardDetails}
-                          className="form-control"
-                          placeholder="card details"
-                        />
+                      <div className="row mb-3">
+                        <div className="col-12">
+                          <label htmlFor="cardDetails">Card Details</label>
+                          <input
+                            type="text"
+                            required
+                            id="cardDetails"
+                            ref={cardDetails}
+                            className="form-control"
+                            placeholder="card details"
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    {/*Insert if function to make CreditCard disappear once selected "paypal" */}
+                      {/*Insert if function to make CreditCard disappear once selected "paypal" */}
 
-                    <div className="row mb-3">
-                      <div className="col-12">
-                        <label htmlFor="CVV">CVV Card Code</label>
-                        <input
-                          type="password"
-                          required
-                          id="CVV"
-                          ref={CVV}
-                          className="form-control"
-                          placeholder="For example: 123"
-                        />
+                      <div className="row mb-3">
+                        <div className="col-12">
+                          <label htmlFor="CVV">CVV Card Code</label>
+                          <input
+                            type="password"
+                            required
+                            id="CVV"
+                            ref={CVV}
+                            className="form-control"
+                            placeholder="For example: 123"
+                          />
+                        </div>
                       </div>
-                    </div>
                     </div>
                     <div className="container">
-                    <h4> Total: € {context.cartTotal} </h4>
+                      <h4> Total: € {context.cartTotal} </h4>
 
-                    {/*Submit Button */}
-                   
-                    <div className="row mb-3">
-                      <div className="col-3">
-                        <Link
-                          to="/"
-                          data={context.userId}
-                          onClick={context.completeCheckout}
-                        >
-                          <button type="submit" className="btn btn-primary">
+                      {/*Submit Button */}
+
+                      <div className="row mb-3">
+                        <div className="col-3">
+                          <button
+                            type="submit"
+                            className="btn btn-primary"
+                            onClick={context.completeCheckout}
+                          >
                             Complete Purchase
                           </button>
-                        </Link>
+                        </div>
                       </div>
-                    </div>
                     </div>
                   </form>
                 </div>
               </div>
             </div>
-            
-            
-          
           );
         }}
       </ProductConsumer>
