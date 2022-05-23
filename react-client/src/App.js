@@ -11,7 +11,6 @@ import NotFound from "./components/NotFound";
 import Home from "./components/Home/Home";
 import ProductsPage from "./components/ProductsPage/ProductsPage";
 import ProductDetailsPage from "./components/ProductDetailspage/ProductDetailsPage";
-import "./components/GeneralComponents/GoBackButton.css";
 import Login from "./components/Login/Login";
 import Checkout from "./components/Checkout/Checkout";
 import OrderCompleted from "../src/components/Checkout/orderCompleted";
