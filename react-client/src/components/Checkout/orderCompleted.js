@@ -8,12 +8,19 @@ export default function orderCompleted() {
   return (
     <div>
       <Header />
+      <ProductConsumer>
+        {(context) => {
+          return(
       <div className="row justify-content-center p-4">
         <h3> Thanks for Shopping with Us!</h3>
-        <h2> You will receive an email to once we have processed your order</h2>
+        <h2> You will receive at
+          { localStorage.hasOwnProperty('email') ? (' ' + localStorage.getItem('email') + ' ') : " your email " } 
+          once we have processed your order</h2>
       </div>
-
+          );
+        }}
+      </ProductConsumer>
       <Footer />
     </div>
-  );
+    );
 }
