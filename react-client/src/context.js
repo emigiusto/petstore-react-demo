@@ -12,14 +12,11 @@ class ProductProvider extends Component {
     cartSize: 0,
     cartId: null,
     cartTotal: 0,
-    userId: null, //If userId is not null, means that the user is Logged in
-    firstName: null, // If firstName is not null, means that the user is Logged in
-    lastName: null, //If userId is not null, means that the user is Logged in
-    deliveryAddress: null, //If userId is not null, means that the user is Logged in
-    email: null, //same as above
+    userId: null,
+    user: null,
     productInDetail: null,
     filters: [],
-    activeFilters: []
+    activeFilters: [],
   };
 
   componentDidMount = async () => {
@@ -40,9 +37,7 @@ class ProductProvider extends Component {
     let userIdStored = localStorage.getItem("userid");
     let userEmail = localStorage.getItem("email");
     this.setState(() => {
-      return { userId: userIdStored,
-              email: userEmail
-              };
+      return { userId: userIdStored, email: userEmail };
     });
   };
 
@@ -208,8 +203,6 @@ class ProductProvider extends Component {
     }
   };
 
-
-
   //Method to update the cart
   removeProduct = async (productId) => {
     if (this.state.userId) {
@@ -265,16 +258,19 @@ class ProductProvider extends Component {
       });
     }
   };
-//set order status to "completed" once submitting checkout button "complete ordeggr"
-  completeCheckout = async (userId) => {
-    if (userId != null){
-      console.log(userId)
-      console.log(this.state.cartId)
-      //var data = await fetch("http://localhost:3005/orders/" + this.state.cartId);
+  //set order status to "completed" once submitting checkout button "complete ordeggr"
+  completeCheckout = async (billingAddress) => {
+    console.log(billingAddress);
+    if (this.state.cartId != null) {
       await put("http://localhost:3005/orders/" + this.state.cartId, {
         status: "completed",
+        address: billingAddress,
       });
 
+      //User has last order with status "completed"
+      //User has NO cart (order in progress) assigned
+      await this.setCart();
+      return this.state.cartId;
     }
   };
 
@@ -393,25 +389,27 @@ class ProductProvider extends Component {
       const users = await fetch("http://localhost:3005/users");
       const data = await users.json();
       const user = data.users.find((user) => user.email === email);
-      const address = data.users.find((user) => user.address);
+      /*       const address = data.users.find((user) => user.address);
       const firstName = data.users.find((user) => user.firstName);
-      const lastName = data.users.find((user) => user.lastName);
+      const lastName = data.users.find((user) => user.lastName); */
       if (user) {
         //User exists
         if (user.password === password) {
           //Logged in!
           this.setState(() => {
-            return { userId: user.id,
-                    email: user.email,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    address: user.address
-                  }; //Updates app state
+            return {
+              userId: user.id,
+              user: user,
+              /*               email: user.email,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              address: user.address, */
+            }; //Updates app state
           });
           localStorage.setItem("userid", user.id); //Updates localStorage for future sessions
-          localStorage.setItem("email", user.email);
-          localStorage.setItem("firstName", user.firstName)
-          localStorage.setItem("lastName", user.lastName)
+          /*           localStorage.setItem("email", user.email);
+          localStorage.setItem("firstName", user.firstName);
+          localStorage.setItem("lastName", user.lastName); */
           //localStorage.setItem("address", user.address)
           if (this.state.cart.length > 0) {
             //If offline cart has items, set them as the valid list in the API
@@ -470,7 +468,7 @@ class ProductProvider extends Component {
           getActiveFilter: this.getActiveFilter,
           clearActiveFilters: this.clearActiveFilters,
           registerUser: this.registerUser,
-          completeCheckout: this.completeCheckout
+          completeCheckout: this.completeCheckout,
         }}
       >
         {this.props.children}

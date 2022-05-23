@@ -1,29 +1,21 @@
 import { ProductConsumer } from "../../context";
 import classes from "./Checkout.module.css";
-import context from "react-bootstrap/esm/AccordionContext";
 import Header from "../GeneralComponents/Header";
 import Footer from "../GeneralComponents/Footer";
 import orderCompleted from "../Checkout/orderCompleted";
-import { useRef } from "react";
-import { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Checkout(props) {
-  const billingAddress = useRef();
-  const deliveryAddress = useRef();
-  const cardDetails = useRef();
-  const CVV = useRef();
-  const emailAddress = useRef();
-  const firstName = useRef();
-  const lastName = useRef();
+export default function Checkout() {
   const navigate = useNavigate();
 
-  /* 
-function thought to redirect to orderCompleted AND to close the order, could not implement the second
- */
-  function handleSubmit() {
-    navigate("/ordercompleted");
-    /*     context.completeCheckout(); */
+  /* function thought to redirect to orderCompleted AND to close the order, could not implement the second */
+  function handleSubmit(completeCheckout, e) {
+    e.preventDefault();
+    /*  navigate("/ordercompleted"); */
+    let billingAddress = document.getElementById("billingAddress").value;
+    console.log("Billing address is : " + billingAddress);
+    completeCheckout(billingAddress);
   }
 
   return (
@@ -49,7 +41,7 @@ function thought to redirect to orderCompleted AND to close the order, could not
                   {/*Beginning of checkout form */}
                   <form
                     className="pb-3 pt-4 px-4 border rounded bg-white shadow-sm form-signin"
-                    onSubmit={handleSubmit}
+                    onSubmit={(e) => handleSubmit(context.completeCheckout, e)}
                   >
                     {/*Logo*/}
                     <img
@@ -62,22 +54,23 @@ function thought to redirect to orderCompleted AND to close the order, could not
                     {/*Start of new row */}
                     <div className="container">
                       <div className="row mb-3">
-                        <div className="col-6">
+                        <div className="col-lg-6 col-md-12">
                           <label htmlFor="billingAddress">
                             Billing Address
                           </label>
                           <input
                             id="billingAddress"
+                            name="billingAddress"
                             type="text"
                             required
-                            ref={billingAddress}
-                            defaultValue={context.address || ""}
+                            /*                           defaultValue={context.user.address || ""} */
+                            defaultValue=""
                             className="form-control"
                             placeholder="Yogi"
                           />
                         </div>
 
-                        <div className="col-6">
+                        <div className="col-lg-6 col-md-12">
                           <label htmlFor="deliveryAddress">
                             Delivery Address
                           </label>
@@ -85,8 +78,6 @@ function thought to redirect to orderCompleted AND to close the order, could not
                             id="deliveryAddress"
                             type="text"
                             required
-                            ref={deliveryAddress}
-                            defaultValue={context.address || ""}
                             className="form-control"
                             placeholder="Cave Avenue 21, 45678, Jellystone National Park, Wyoming USA"
                           />
@@ -96,14 +87,13 @@ function thought to redirect to orderCompleted AND to close the order, could not
                       {/*Start of new row */}
 
                       <div className="row mb-3">
-                        <div className="col-6">
+                        <div className="col-lg-6 col-md-12">
                           <label htmlFor="email">E-Mail Address</label>
                           <input
                             id="email"
                             type="text"
                             required
-                            ref={emailAddress}
-                            defaultValue={context.email || ""}
+                            defaultValue=""
                             className="form-control"
                           />
                         </div>
@@ -112,29 +102,27 @@ function thought to redirect to orderCompleted AND to close the order, could not
 
                     <div className="container">
                       <div className="row">
-                        <div className="col mb-3 lg-6">
+                        <div className="col-lg-6 col-md-12">
                           <div className="col">
                             <label htmlFor="firstName">First Name</label>
                             <input
                               id="firstName"
                               type="text"
                               required
-                              ref={firstName}
+                              defaultValue=""
                               className="form-control"
-                              defaultValue={context.firstName || ""}
                             />
                           </div>
                         </div>
-                        <div className="col mb-3 lg-6">
+                        <div className="col-lg-6 col-md-12">
                           <div className="col col order-last">
                             <label htmlFor="lastName">Last Name</label>
                             <input
                               id="lastName"
                               type="text"
                               required
-                              ref={lastName}
+                              defaultValue=""
                               className="form-control"
-                              defaultValue={context.lastName || ""}
                             />
                           </div>
                         </div>
@@ -150,7 +138,8 @@ function thought to redirect to orderCompleted AND to close the order, could not
                             type="text"
                             required
                             id="cardDetails"
-                            ref={cardDetails}
+                            defaultValue=""
+                            /* ref={cardDetails} */
                             className="form-control"
                             placeholder="card details"
                           />
@@ -166,7 +155,6 @@ function thought to redirect to orderCompleted AND to close the order, could not
                             type="password"
                             required
                             id="CVV"
-                            ref={CVV}
                             className="form-control"
                             placeholder="For example: 123"
                           />
@@ -180,11 +168,7 @@ function thought to redirect to orderCompleted AND to close the order, could not
 
                       <div className="row mb-3">
                         <div className="col-3">
-                          <button
-                            type="submit"
-                            className="btn btn-primary"
-                            onClick={context.completeCheckout}
-                          >
+                          <button type="submit" className="btn btn-primary">
                             Complete Purchase
                           </button>
                         </div>

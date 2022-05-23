@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { ProductConsumer } from "../../context";
 
 function LoginLogoutButton(props) {
-  console.log(props.userID);
   if (props.userID === null) {
     return (
       <Link
