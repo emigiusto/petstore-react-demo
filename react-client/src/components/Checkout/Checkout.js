@@ -1,10 +1,8 @@
 import { ProductConsumer } from "../../context";
-import classes from "./Checkout.module.css";
 import Header from "../GeneralComponents/Header";
 import Footer from "../GeneralComponents/Footer";
-import orderCompleted from "../Checkout/orderCompleted";
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Checkout() {
   const navigate = useNavigate();

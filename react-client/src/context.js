@@ -412,17 +412,9 @@ class ProductProvider extends Component {
             return {
               userId: user.id,
               user: user,
-              /*               email: user.email,
-              firstName: user.firstName,
-              lastName: user.lastName,
-              address: user.address, */
             }; //Updates app state
           });
           localStorage.setItem("userid", user.id); //Updates localStorage for future sessions
-          /*           localStorage.setItem("email", user.email);
-          localStorage.setItem("firstName", user.firstName);
-          localStorage.setItem("lastName", user.lastName); */
-          //localStorage.setItem("address", user.address)
           if (this.state.cart.length > 0) {
             //If offline cart has items, set them as the valid list in the API
             this.updateCart(user);

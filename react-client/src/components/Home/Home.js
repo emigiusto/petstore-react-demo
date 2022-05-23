@@ -13,7 +13,7 @@ function Home() {
   return (
     <div>
     <Header/> 
-    <div className="m-auto my-4 p-4"><h1 className="d-flex justify-content-center">Welcome to Pet Store</h1></div>
+    <div className="p-4 welcome"><h1 className="d-flex justify-content-center">Welcome to Pet Store</h1></div>
     <ProductConsumer>{
       (contextState)=>{
           return (

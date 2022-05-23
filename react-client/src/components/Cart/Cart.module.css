@@ -79,6 +79,11 @@ h2 {
     font-size: 12px;
     color: grey;
 }
+@media only screen and (max-width: 600px) {
+    .subtext {
+        display: none;
+    }
+  }
 
 .product-text-price {
     font-weight: bold;
@@ -143,4 +148,10 @@ h2 {
 
 .price {
     padding-bottom: 16px;
+}
+
+.imageResp{
+
+    max-width: 150px;
+    max-height: 150px;
 }

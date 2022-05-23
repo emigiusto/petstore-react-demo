@@ -18,7 +18,7 @@ export default function Cart(props) {
   }
   return (
     <div>
-      <Modal show={true} size="lg">
+      <Modal show={true} size="lg" >
         <Modal.Header>
           <ModalTitle>Cart</ModalTitle>
           <div className={classes.buttonhover} onClick={props.onClick}>
