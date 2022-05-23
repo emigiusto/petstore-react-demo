@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-import { ProductConsumer } from "../../context";
 
 function LoginLogoutButton(props) {
-  if (props.userID === null) {
+  if (props.userId === null) {
     return (
       <Link
         to="/login"
@@ -13,18 +12,12 @@ function LoginLogoutButton(props) {
     );
   } else {
     return (
-      <ProductConsumer>
-        {(context) => {
-          return (
-            <div
-              onClick={context.signout}
-              className="text-capitalize text-reset text-decoration-none d-flex align-items-center mx-4"
-            >
-              Logout
-            </div>
-          );
-        }}
-      </ProductConsumer>
+      <div
+        onClick={props.signout}
+        className="text-capitalize text-reset text-decoration-none d-flex align-items-center mx-4"
+      >
+        <span role="button">Logout</span>
+      </div>
     );
   }
 }

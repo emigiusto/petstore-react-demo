@@ -1,10 +1,11 @@
 import React from "react";
-import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import Cart from "../Cart/Cart";
 import { useState } from "react";
 import { ProductConsumer } from "../../context";
 import { Link } from "react-router-dom";
 import LoginLogoutButton from "./LoginLogoutButton";
+import classes from "./Header.module.css"
 
 export default function Header() {
   const [isOpen, setCartIsOpen] = useState(false);
@@ -18,12 +19,8 @@ export default function Header() {
     setCartIsOpen(false);
   }
 
-  function checkSignIn(userId) {
-    setSignIn(userId);
-  }
-
   return (
-    <div>
+    <div className={classes.stickyheader}>
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <ProductConsumer>
           {(contextstate) => {
@@ -51,8 +48,7 @@ export default function Header() {
                     <Nav.Link onClick={cartOpenHandler}>
                       Cart ({contextstate.cartSize})
                     </Nav.Link>
-                    <LoginLogoutButton userID={signInState} />
-                    {checkSignIn(contextstate.userId)}
+                    <LoginLogoutButton userId={contextstate.userId} signout = {contextstate.signout} />
                     <Link
                       to="/register"
                       className="text-capitalize text-reset text-decoration-none d-flex align-items-center mx-4"

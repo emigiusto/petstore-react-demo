@@ -108,91 +108,69 @@ async function deleteOrder(req, res) {
   }
 }
 
-// IncreaseProduct to order
-async function increaseProduct(req, res) {
+// Change a product in an order
+async function changeOrder(req, res) {
   try {
-    let id = req.params.orderid;
-    let body = req.body;
-    //Checks if the product exists
-    let productId = body.productId;
-    let productResponse = await productModel.getByID(productId);
-    if (!productResponse.productExists) {
-      throw "Product does not exist"
-    }
-    //Handles update of Order
-    let responseOrder = await orderModel.getByID(id);
-    //Checks if the order exists
-    if (!responseOrder.orderExists) {
-      throw responseOrder.message;
-    }
-
-    if (responseOrder.finalOrder.status =='in progress') {
-      await updateProductFromOrder(responseOrder.finalOrder, productId, "increase")
-      res.json({message: "product with id " + productId + " has been added to order " + id});
-    } else {
-      let newOrder = {
-        address: body.address ? body.address : "",
-        items: [body.product],
-        userid: req.body.userid ? body.userid : "",
-        status: "in progress",
-      };
-      let responseID = await orderModel.add(newOrder);
-      res.json({message: responseID.message});
-    }
+    let orderid = req.params.orderid;
+    let productid = req.params.productid;
+    //Validations
+      //Checks if the product exists
+      let productResponse = await productModel.getByID(productid);
+      if (!productResponse.productExists) {
+        throw "Product does not exist"
+      }
+      //Checks if the order exists
+      let responseOrder = await orderModel.getByID(orderid);
+      
+      if (!responseOrder.orderExists) {
+        throw responseOrder.message;
+      }
+      //Checks if the order has status in progress
+      let inProgress = responseOrder.finalOrder.status == "in progress";
+      if (inProgress) {
+        switch (req.body.action) {
+          case "increase":
+              await updateProductFromOrder(responseOrder.finalOrder, productid, "increase")
+              res.json(
+                {
+                  message: "product with id " + productid + " has been added to order " + orderid,
+                  status: true});
+            break;
+          case "decrease":
+              await updateProductFromOrder(responseOrder.finalOrder, productid, "decrease")
+              res.json({  message: "the quantity of product with id " + productid + " has been reduced from order " + orderid,
+                          status: true});
+            break;
+          case "remove":
+              await updateProductFromOrder(responseOrder.finalOrder, productid, "remove")
+              res.json({  message: "The product with id " + productid + " has been deleted from order " + orderid,
+                          status: true}); 
+            break;
+          default:
+            throw "Action not recognized"
+        }
+      } else { 
+        switch (body.action) {
+          case "increase": //The order is not in progress --> create a new one
+              let newOrder = {
+                address: "",
+                items: [{productid:productResponse.finalProd.id, quantity:1}],
+                userid: responseOrder.finalOrder.userid ? responseOrder.finalOrder.userid : "",
+                status: "in progress",
+              };
+              let responseID = await orderModel.add(newOrder);
+              res.json({message: responseID.message});
+            break;
+          case "decrease":
+              throw "Can't decrease product quantity from an order that isn't in progress"
+          case "remove":
+              throw "Can't remove product from an order that isn't in progress"
+          default:
+            throw "Action not recognized"
+        }
+      }
   } catch (message) {
-    res.status(400).send({message: message});
-  }
-}
-
-// Decrease Product quantityfrom order
-async function decreaseProduct(req, res) {
-  try {
-    let id = req.params.orderid;
-    let body = req.body;
-    //Checks if the product exists
-    let productId = body.productId;
-    let productResponse = await productModel.getByID(productId);
-    if (!productResponse.productExists) {
-      throw "Product does not exist"
-    }
-    
-    //Checks if the order exists
-    let responseOrder = await orderModel.getByID(id);
-    if (!responseOrder.orderExists) {
-      throw responseOrder.message;
-    }
-
-    //Handles update of Order
-    if (responseOrder.finalOrder.status =='in progress') {
-      await updateProductFromOrder(responseOrder.finalOrder, productId, "decrease")
-      res.json({message: "the quantity of product with id " + productId + " has been reduced from order " + id});
-    }
-  } catch (message) {
-    res.status(400).send({message: message});
-  }
-}
-
-async function removeProductFromOrder(req, res) {
-  try {
-    let id = req.params.orderid;
-    //Checks if the product exists
-    let productId = req.body.productId;
-    let productResponse = await productModel.getByID(productId);
-    if (!productResponse.productExists) {
-      throw "Product does not exist"
-    }
-    //Checks if the order exists
-    let responseOrder = await orderModel.getByID(id);
-    if (!responseOrder.orderExists) {
-      throw "Order does not exist"
-    }
-    //Handles update of Order
-    if (responseOrder.orderExists && responseOrder.finalOrder.status =='in progress') {
-      await updateProductFromOrder(responseOrder.finalOrder, productId, "remove")
-      res.json({message: "The product with id " + productId + " has been deleted from order " + id});
-    }
-  } catch (message) {
-    res.status(400).send({message: message});
+    res.status(400).send({message: message, status: false});
   }
 }
 
@@ -223,14 +201,13 @@ async function clearBasket(req, res) {
     }
     let order = await orderModel.getShoppingBasket(user.finalUser);
 
-    let updateResponse = await orderModel.update(order.id, {items: []});
+    await orderModel.update(order.id, {items: []});
 
     res.json({message: "The basket of user with id " + userid + " has been cleared"});
   } catch (message) {
     res.status(400).send({message:message});
   }
 }
-
 
 async function getOrdersByUser(req, res) {
   try {
@@ -252,12 +229,10 @@ module.exports = {  getAllOrders,
                     getOrder, 
                     deleteOrder, 
                     updateOrder, 
-                    increaseProduct, 
-                    decreaseProduct, 
-                    removeProductFromOrder, 
                     getShoppingBasket,
                     getOrdersByUser,
-                    clearBasket
+                    clearBasket,
+                    changeOrder
                   };
 
 function isProductOnOrder(order, productId) {

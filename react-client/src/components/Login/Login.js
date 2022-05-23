@@ -2,42 +2,38 @@ import { useRef } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ProductConsumer } from "../../context";
+import { useNavigate } from "react-router-dom";
 
 import Header from "../GeneralComponents/Header";
 import Footer from "../GeneralComponents/Footer";
 import Toast from "../GeneralComponents/Toasts/Toast";
 
+//Styles
+import './Login.css';
+
 function LoginForm() {
   const emailAddress = useRef();
   const password = useRef();
 
-  const [toastState, setToastState] = useState({ show: false, text: "" });
+  const [showToast, setShowToast] = useState(false);
+  const [categoryToast, setCategoryToast] = useState("danger");
+  const [messageToast, setMessageToast] = useState("");
+
+  const navigate = useNavigate();
 
   //Function to read input data and process it. Currently it only prints to console.
   function submitHandler(event, signin, context) {
     event.preventDefault();
-    console.log(event.target);
-    signin(emailAddress.current.value, password.current.value).then(function (
-      result
-    ) {
-      renderToast(result.loginState);
-    });
-  }
-
-  function renderToast(result) {
-
-result === "You are already signed in. Please sign out and try again." ?
-setToastState({ show: true, text: result, success: false }) : (
-    result === "You are now logged in!"
-      ? setToastState({ show: true, text: result, success: true })
-      : setToastState({ show: true, text: result, success: false }));
-    removeToasts();
-  }
-
-  function removeToasts() {
-    setTimeout(function () {
-      setToastState({ show: false });
-    }, 5000);
+    signin(emailAddress.current.value, password.current.value)
+      .then(function (result) {
+          setShowToast(true);
+          setCategoryToast(result.category);
+          setMessageToast(result.message);
+           //Redirects user to last visited page
+          setTimeout(function () {
+            navigate(-1);
+          }, 2000);
+        });
   }
 
   return (
@@ -46,7 +42,7 @@ setToastState({ show: true, text: result, success: false }) : (
       <ProductConsumer>
         {(context) => {
           return (
-            <div className="container-sm">
+            <div className="container-sm login-container">
               <div className="row justify-content-center">
                 <div className="col-md-6">
                   {/*Beginning of registration form */}
@@ -99,7 +95,15 @@ setToastState({ show: true, text: result, success: false }) : (
                       </div>
                     </div>
                   </form>
-                  {toastState.show && <Toast state={toastState} />}
+                  {showToast ? (
+                    <Toast
+                      category={categoryToast}
+                      message={messageToast}
+                      show={showToast}
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
             </div>

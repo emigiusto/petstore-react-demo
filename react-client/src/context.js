@@ -20,13 +20,13 @@ class ProductProvider extends Component {
   };
 
   componentDidMount = async () => {
-    this.getSessionInfo();
-    this.setProducts();
-    this.setCart();
-    this.setFilters();
+    await this.getSessionInfo();
+    await this.setProducts();
+    await this.setCart();
+    await this.setFilters();
   };
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(_prevProps, prevState, _snapshot) {
     if (prevState.cart !== this.state.cart) {
       this.setCartTotal();
     }
@@ -116,17 +116,18 @@ class ProductProvider extends Component {
   //Method to update the cart
   addToCart = async (productId) => {
     if (this.state.userId) {
-      await put(
-        "http://localhost:3005/orders/increaseproduct/" + this.state.cartId,
-        { productId: productId }
+        let added = await put(
+          "http://localhost:3005/orders/" + this.state.cartId + "/product/" + productId,
+          { action: "increase" }
       );
+      
       this.setCart();
-      console.log(
-        "Product with id " +
-          productId +
-          " was added to the cart with id: " +
-          this.state.cartId
-      );
+      if (added.status) {
+        console.log( "Product with id " + productId + " was added to the cart with id: " + this.state.cartId);
+      } else {
+        console.log( "There was a problem with your request");
+      }
+      
     } else {
       var data = await fetch("http://localhost:3005/products/" + productId);
       if (data.status === 200) {
@@ -188,8 +189,8 @@ class ProductProvider extends Component {
   decreaseFromCart = async (productId) => {
     if (this.state.userId) {
       await put(
-        "http://localhost:3005/orders/decreaseproduct/" + this.state.cartId,
-        { productId: productId }
+        "http://localhost:3005/orders/" + this.state.cartId + "/product/" + productId,
+        { action: "decrease" }
       );
       this.setCart();
     } else {
@@ -207,8 +208,8 @@ class ProductProvider extends Component {
   removeProduct = async (productId) => {
     if (this.state.userId) {
       await put(
-        "http://localhost:3005/orders/removeproduct/" + this.state.cartId,
-        { productId: productId }
+        "http://localhost:3005/orders/" + this.state.cartId + "/product/" + productId,
+        { action: "remove" }
       );
       this.setCart();
     } else {
@@ -360,15 +361,20 @@ class ProductProvider extends Component {
 
   //Function to add a new user
   registerUser = async (newUser) => {
-    if (!(await this.userExists(newUser.email))) {
-      console.log(newUser);
-      post("http://localhost:3005/users/", newUser);
-      this.state.registerState = "You are now registered!";
-      return this.state;
-    } else {
-      this.state.registerState = "This Email Adress is already in use.";
-      return this.state;
+    var registerResponse = {
+      message: "",
+      registerState: false,
+      category: "danger"
     }
+    if (!(await this.userExists(newUser.email))) {
+      post("http://localhost:3005/users/", newUser);
+      registerResponse.registerState = true;
+      registerResponse.message = "You are now registered!";
+      registerResponse.category = "success";
+    } else { //User doesn't exist
+      registerResponse.message = "This Email Adress is already in use.";
+    }
+    return registerResponse;
   };
 
   //Checks wether a user is currently signed in.
@@ -385,6 +391,11 @@ class ProductProvider extends Component {
   // Then it replace the content of the cart in the API (Cart meaning order "in progress")
   // If there are no items on the local cart ,login retrieves the cart content of the API
   signin = async (email, password) => {
+    var loginResponse = {
+      message: "",
+      loginState: false,
+      category: "danger"
+    }
     if (this.state.userId === null) {
       const users = await fetch("http://localhost:3005/users");
       const data = await users.json();
@@ -393,6 +404,7 @@ class ProductProvider extends Component {
       const firstName = data.users.find((user) => user.firstName);
       const lastName = data.users.find((user) => user.lastName); */
       if (user) {
+        
         //User exists
         if (user.password === password) {
           //Logged in!
@@ -420,23 +432,22 @@ class ProductProvider extends Component {
           }
           //Retrieves user's Cart
           console.log("Logged in successfully");
-          this.state.loginState = "You are now logged in!";
-          return this.state;
+          loginResponse.message = "You are now logged in!";
+          loginResponse.loginState = true
+          loginResponse.category = "success"
         } else {
           console.log("Password is incorrect");
-          this.state.loginState = "Incorrect Password.";
-          return this.state;
+          loginResponse.message = "Incorrect Password.";
         }
       } else {
         console.log("User with email: " + email + " doesn't exist");
-        this.state.loginState = "User with email" + email + " does not exist.";
-        return this.state;
+        loginResponse.message = "User with email" + email + " does not exist.";
       }
     } else {
-      this.state.loginState =
-        "You are already signed in. Please sign out and try again.";
-      return this.state;
+      loginResponse.message = "You are already signed in. Please sign out and try again.";
+      loginResponse.category = "warning"
     }
+    return loginResponse;
   };
 
   signout = () => {
