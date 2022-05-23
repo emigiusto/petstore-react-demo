@@ -12,7 +12,7 @@ export default function Checkout() {
   /* function thought to redirect to orderCompleted AND to close the order, could not implement the second */
   function handleSubmit(completeCheckout, e) {
     e.preventDefault();
-    /*  navigate("/ordercompleted"); */
+    navigate("/ordercompleted"); 
     let billingAddress = document.getElementById("billingAddress").value;
     console.log("Billing address is : " + billingAddress);
     completeCheckout(billingAddress);

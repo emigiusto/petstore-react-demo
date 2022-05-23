@@ -18,7 +18,7 @@ export default function orderCompleted() {
 
         <h3> Thanks for Shopping with Us!</h3>
         <h2> You will receive an email at
-          { localStorage.hasOwnProperty('email') ? (' ' + localStorage.getItem('email') + ' ') : " your email " } 
+          { (context.user.email != null) ? (' ' + context.user.email + ' ') : " your email " } 
           once we have processed your order</h2>
           <div className="w-50 p-3 row justify-content-center">
             <img
