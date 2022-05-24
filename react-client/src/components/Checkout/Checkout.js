@@ -19,7 +19,7 @@ export default function Checkout() {
     <div>
       <Header />
       <div className="m-auto my-4 p-4">
-        <h1 className="d-flex justify-content-center">Your checkout details</h1>
+        <h1 className="d-flex justify-content-center p-4">Your checkout details</h1>
       </div>
       <ProductConsumer>
         {(context) => {
