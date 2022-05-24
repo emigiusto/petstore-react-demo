@@ -12,7 +12,6 @@ export default function Checkout() {
     e.preventDefault();
     navigate("/ordercompleted"); 
     let billingAddress = document.getElementById("billingAddress").value;
-    console.log("Billing address is : " + billingAddress);
     completeCheckout(billingAddress);
   }
 
