@@ -9,7 +9,6 @@ import classes from "./Header.module.css"
 
 export default function Header() {
   const [isOpen, setCartIsOpen] = useState(false);
-  const [signInState, setSignIn] = useState(null);
 
   function cartOpenHandler() {
     setCartIsOpen(true);
@@ -36,25 +35,26 @@ export default function Header() {
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
-                  <Nav className="me-auto">
-                    <Link
+                  <Nav className="d-flex justify-content">
+                    <Nav.Link
                       to="/product-list"
-                      className="text-capitalize text-reset text-decoration-none"
+                      className="text-capitalize text-reset text-decoration-none mr-2 text-secondary"
                     >
                       Products
-                    </Link>
-                  </Nav>
-                  <Nav>
-                    <Nav.Link onClick={cartOpenHandler}>
+                    </Nav.Link>
+                    <Nav.Link onClick={cartOpenHandler} className="d-flex text-secondary mr-2">
                       Cart ({contextstate.cartSize})
                     </Nav.Link>
-                    <LoginLogoutButton userId={contextstate.userId} signout = {contextstate.signout} />
-                    <Link
+                    <Nav.Link className=" text-secondary">
+                      {contextstate.user ? "Hej " + contextstate.user.firstName : ""}
+                    </Nav.Link>
+                    <LoginLogoutButton userId={contextstate.userId} signout={contextstate.signout} className="mr-2 text-secondary"/>
+                    <Nav.Link
                       to="/register"
-                      className="text-capitalize text-reset text-decoration-none d-flex align-items-center mx-4"
+                      className="text-capitalize text-decoration-none mr-2 text-secondary"
                     >
                       Register
-                    </Link>
+                    </Nav.Link>
                   </Nav>
                 </Navbar.Collapse>
               </Container>

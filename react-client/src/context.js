@@ -33,11 +33,14 @@ class ProductProvider extends Component {
   }
 
   //Method to get userId (and more info?) from localStorage when app starts
-  getSessionInfo = () => {
+  getSessionInfo = async () => {
     let userIdStored = localStorage.getItem("userid");
-    let userEmail = localStorage.getItem("email");
+    if (userIdStored) {
+      await this.getUser(userIdStored)
+    }
+
     this.setState(() => {
-      return { userId: userIdStored, email: userEmail };
+      return { userId: userIdStored };
     });
   };
 
@@ -377,6 +380,15 @@ class ProductProvider extends Component {
     return registerResponse;
   };
 
+  //Function to add a new user
+  getUser = async (userId) => {
+    const users = await fetch("http://localhost:3005/users/" + userId);
+    const data = await users.json();
+    this.setState(() => {
+        return { user: data};
+    });
+  };
+
   //Checks wether a user is currently signed in.
   isSignedIn() {
     if (this.state.userId === null) {
@@ -446,7 +458,7 @@ class ProductProvider extends Component {
     localStorage.removeItem("userid"); //Updates localStorage for future session
     console.log("Signed out successfully");
     this.setState(() => {
-      return { userId: null }; //Updates app state
+      return { userId: null, user: null }; //Updates app state
     });
     this.setState(() => {
       return { cart: [] };

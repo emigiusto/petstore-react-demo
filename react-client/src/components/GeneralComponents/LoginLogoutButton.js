@@ -5,7 +5,7 @@ function LoginLogoutButton(props) {
     return (
       <Link
         to="/login"
-        className="text-capitalize text-reset text-decoration-none d-flex align-items-center mx-4"
+        className="text-capitalize  text-decoration-none d-flex align-items-center"
       >
         Login
       </Link>
@@ -14,7 +14,7 @@ function LoginLogoutButton(props) {
     return (
       <div
         onClick={props.signout}
-        className="text-capitalize text-reset text-decoration-none d-flex align-items-center mx-4"
+        className="text-capitalize text-decoration-none d-flex align-items-center"
       >
         <span role="button">Logout</span>
       </div>
