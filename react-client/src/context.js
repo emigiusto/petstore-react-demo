@@ -36,7 +36,7 @@ class ProductProvider extends Component {
   getSessionInfo = async () => {
     let userIdStored = localStorage.getItem("userid");
     if (userIdStored) {
-      await this.getUser(userIdStored)
+      await this.getUser(userIdStored);
     }
 
     this.setState(() => {
@@ -119,18 +119,25 @@ class ProductProvider extends Component {
   //Method to update the cart
   addToCart = async (productId) => {
     if (this.state.userId) {
-        let added = await put(
-          "http://localhost:3005/orders/" + this.state.cartId + "/product/" + productId,
-          { action: "increase" }
+      let added = await put(
+        "http://localhost:3005/orders/" +
+          this.state.cartId +
+          "/product/" +
+          productId,
+        { action: "increase" }
       );
-      
+
       this.setCart();
       if (added.status) {
-        console.log( "Product with id " + productId + " was added to the cart with id: " + this.state.cartId);
+        console.log(
+          "Product with id " +
+            productId +
+            " was added to the cart with id: " +
+            this.state.cartId
+        );
       } else {
-        console.log( "There was a problem with your request");
+        console.log("There was a problem with your request");
       }
-      
     } else {
       var data = await fetch("http://localhost:3005/products/" + productId);
       if (data.status === 200) {
@@ -192,7 +199,10 @@ class ProductProvider extends Component {
   decreaseFromCart = async (productId) => {
     if (this.state.userId) {
       await put(
-        "http://localhost:3005/orders/" + this.state.cartId + "/product/" + productId,
+        "http://localhost:3005/orders/" +
+          this.state.cartId +
+          "/product/" +
+          productId,
         { action: "decrease" }
       );
       this.setCart();
@@ -211,7 +221,10 @@ class ProductProvider extends Component {
   removeProduct = async (productId) => {
     if (this.state.userId) {
       await put(
-        "http://localhost:3005/orders/" + this.state.cartId + "/product/" + productId,
+        "http://localhost:3005/orders/" +
+          this.state.cartId +
+          "/product/" +
+          productId,
         { action: "remove" }
       );
       this.setCart();
@@ -252,9 +265,7 @@ class ProductProvider extends Component {
 
   clearCart = async () => {
     if (this.state.userId) {
-      await put(
-        "http://localhost:3005/orders/clearbasket/" + this.state.userId
-      );
+      await put("http://localhost:3005/orders/basket/" + this.state.userId);
       this.setCart();
     } else {
       this.setState(() => {
@@ -367,14 +378,15 @@ class ProductProvider extends Component {
     var registerResponse = {
       message: "",
       registerState: false,
-      category: "danger"
-    }
+      category: "danger",
+    };
     if (!(await this.userExists(newUser.email))) {
       post("http://localhost:3005/users/", newUser);
       registerResponse.registerState = true;
       registerResponse.message = "You are now registered!";
       registerResponse.category = "success";
-    } else { //User doesn't exist
+    } else {
+      //User doesn't exist
       registerResponse.message = "This Email Adress is already in use.";
     }
     return registerResponse;
@@ -385,7 +397,7 @@ class ProductProvider extends Component {
     const users = await fetch("http://localhost:3005/users/" + userId);
     const data = await users.json();
     this.setState(() => {
-        return { user: data};
+      return { user: data };
     });
   };
 
@@ -406,8 +418,8 @@ class ProductProvider extends Component {
     var loginResponse = {
       message: "",
       loginState: false,
-      category: "danger"
-    }
+      category: "danger",
+    };
     if (this.state.userId === null) {
       const users = await fetch("http://localhost:3005/users");
       const data = await users.json();
@@ -416,7 +428,6 @@ class ProductProvider extends Component {
       const firstName = data.users.find((user) => user.firstName);
       const lastName = data.users.find((user) => user.lastName); */
       if (user) {
-        
         //User exists
         if (user.password === password) {
           //Logged in!
@@ -437,8 +448,8 @@ class ProductProvider extends Component {
           //Retrieves user's Cart
           console.log("Logged in successfully");
           loginResponse.message = "You are now logged in!";
-          loginResponse.loginState = true
-          loginResponse.category = "success"
+          loginResponse.loginState = true;
+          loginResponse.category = "success";
         } else {
           console.log("Password is incorrect");
           loginResponse.message = "Incorrect Password.";
@@ -448,8 +459,9 @@ class ProductProvider extends Component {
         loginResponse.message = "User with email" + email + " does not exist.";
       }
     } else {
-      loginResponse.message = "You are already signed in. Please sign out and try again.";
-      loginResponse.category = "warning"
+      loginResponse.message =
+        "You are already signed in. Please sign out and try again.";
+      loginResponse.category = "warning";
     }
     return loginResponse;
   };
