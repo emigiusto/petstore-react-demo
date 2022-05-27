@@ -31,7 +31,6 @@ orderRouter.get("/:id", getOrder);
 orderRouter.get("/basket/:userid", getShoppingBasket);
 
 //Clear cart by userid
-/* orderRouter.put("/clearbasket/:userid", clearBasket); */
 
 orderRouter.put("/basket/:userid", clearBasket);
 
