@@ -42,7 +42,7 @@ export default function Header() {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse
                   id="responsive-navbar-nav"
-                  className="d-flex justify-content-end mobile-hamburger"
+                  className="justify-content-end mobile-hamburger"
                 >
                   <Nav className="d-flex">
                     <Nav.Link
