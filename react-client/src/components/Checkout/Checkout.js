@@ -10,7 +10,7 @@ export default function Checkout() {
   /* function thought to redirect to orderCompleted AND to close the order, could not implement the second */
   function handleSubmit(completeCheckout, e) {
     e.preventDefault();
-    navigate("/ordercompleted"); 
+    navigate("/ordercompleted");
     let billingAddress = document.getElementById("billingAddress").value;
     completeCheckout(billingAddress);
   }
@@ -19,13 +19,15 @@ export default function Checkout() {
     <div>
       <Header />
       <div className="m-auto my-4 p-4">
-        <h1 className="d-flex justify-content-center p-4">Your checkout details</h1>
+        <h1 className="d-flex justify-content-center p-4">
+          Your checkout details
+        </h1>
       </div>
       <ProductConsumer>
         {(context) => {
           if (context.cart.length === 0) {
             return (
-              <div className="row justify-content-center p-4">
+              <div className="row justify-content-center p-4 mx-4">
                 <h4>Please add some items before checkout</h4>
               </div>
             );
