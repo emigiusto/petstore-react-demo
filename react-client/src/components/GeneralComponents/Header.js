@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ProductConsumer } from "../../context";
 import { Link } from "react-router-dom";
 import LoginLogoutButton from "./LoginLogoutButton";
-import classes from "./Header.module.css"
+import "./Header.css";
 
 export default function Header() {
   const [isOpen, setCartIsOpen] = useState(false);
@@ -19,7 +19,7 @@ export default function Header() {
   }
 
   return (
-    <div className={classes.stickyheader}>
+    <div className="stickyheader">
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <ProductConsumer>
           {(contextstate) => {
@@ -27,7 +27,7 @@ export default function Header() {
               <Container>
                 <Navbar.Brand className="d-flex align-middle">
                   <Link
-                    className="text-capitalize text-reset text-decoration-none"
+                    className="text-capitalize text-reset text-decoration-none nav-link"
                     to="/"
                   >
                     Pet Store
@@ -40,15 +40,27 @@ export default function Header() {
                   </Nav.Link>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
-                  <Nav className="d-flex justify-content">
-                    <Nav.Link onClick={cartOpenHandler} className="d-flex text-secondary mr-2">
+                <Navbar.Collapse
+                  id="responsive-navbar-nav"
+                  className="d-flex justify-content-end mobile-hamburger"
+                >
+                  <Nav className="d-flex">
+                    <Nav.Link
+                      onClick={cartOpenHandler}
+                      className="d-flex text-secondary mr-2"
+                    >
                       Cart ({contextstate.cartSize})
                     </Nav.Link>
                     <Nav.Link className=" text-secondary">
-                      {contextstate.user ? "Hej " + contextstate.user.firstName : ""}
+                      {contextstate.user
+                        ? "Hej " + contextstate.user.firstName
+                        : ""}
                     </Nav.Link>
-                    <LoginLogoutButton userId={contextstate.userId} signout={contextstate.signout} className="mr-2 text-secondary" />
+                    <LoginLogoutButton
+                      userId={contextstate.userId}
+                      signout={contextstate.signout}
+                      className="mr-2"
+                    />
                     <Nav.Link
                       to="/register"
                       className="text-capitalize text-decoration-none mr-2 text-secondary"
