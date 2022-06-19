@@ -11,3 +11,7 @@
         justify-content: flex-start !important;
     }
 }
+
+.navbar {
+    padding-bottom: 0.1rem;
+}

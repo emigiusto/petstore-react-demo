@@ -32,12 +32,12 @@ export default function Header() {
                   >
                     Pet Store
                   </Link>
-                  <Nav.Link
+                  <Link
                     to="/product-list"
-                    className="text-capitalize text-reset text-decoration-none mr-2 text-secondary"
+                    className="text-capitalize text-decoration-none text-secondary mr-2 nav-link"
                   >
                     Products
-                  </Nav.Link>
+                  </Link>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse
@@ -61,12 +61,12 @@ export default function Header() {
                       signout={contextstate.signout}
                       className="mr-2"
                     />
-                    <Nav.Link
+                    <Link
                       to="/register"
-                      className="text-capitalize text-decoration-none mr-2 text-secondary"
+                      className="text-capitalize text-decoration-none text-secondary mr-2 nav-link"
                     >
                       Register
-                    </Nav.Link>
+                    </Link>
                   </Nav>
                 </Navbar.Collapse>
               </Container>
