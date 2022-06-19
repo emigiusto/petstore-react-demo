@@ -1,5 +1,5 @@
-# FrameWorks-Architecture
-Group Repo for FrameWorks&amp;Architecture Group
+# FrameWorks-Architecture - Group 15 - PetStore API
+
 <br>
 /api -----> Node.js app supporting a Pet store
 <br>
