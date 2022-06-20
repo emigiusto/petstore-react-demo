@@ -43,10 +43,12 @@ function Register() {
         setShowToast(true)
         setCategoryToast(result.category);
         setMessageToast(result.message)
-        //Redirects user to last visited page
-        setTimeout(function () {
-          navigate(-1);
-        }, 2000);
+        if (result.registerState) {
+           //Redirects user to last visited page
+          setTimeout(function () {
+            navigate(-1);
+          }, 2000);
+        }
     });
   }
 

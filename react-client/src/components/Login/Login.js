@@ -29,10 +29,12 @@ function LoginForm() {
           setShowToast(true);
           setCategoryToast(result.category);
           setMessageToast(result.message);
-           //Redirects user to last visited page
-          setTimeout(function () {
-            navigate(-1);
-          }, 2000);
+          //Redirects user to last visited page
+          if (result.loginState) {
+            setTimeout(function () {
+              navigate(-1);
+            }, 2000);
+          }
         });
   }
 

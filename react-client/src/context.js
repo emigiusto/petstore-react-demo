@@ -456,7 +456,7 @@ class ProductProvider extends Component {
         }
       } else {
         console.log("User with email: " + email + " doesn't exist");
-        loginResponse.message = "User with email" + email + " does not exist.";
+        loginResponse.message = "User with email: " + email + " does not exist.";
       }
     } else {
       loginResponse.message =
