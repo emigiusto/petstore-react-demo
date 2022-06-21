@@ -10,7 +10,8 @@ export default function Filters({ contextState }) {
   }
 
   return (
-    <div className="main__section__filters row d-flex my-3">
+    <div className="main__section__filters row d-flex my-3 mt-4">
+      <h4 className="mt-4">Filters</h4>
       {
         contextState.filters.map(filter => {
           if (filter.type === "toggle") {
