@@ -28,3 +28,8 @@ Api online at http://localhost:3005/
 <br>
 <br>
 Pet Store will be online at http://localhost:3000/
+
+<br>
+NOTE: "client" folder is the old frontend client, not in use anymore
+	"react-client" is the current one
+<br>
